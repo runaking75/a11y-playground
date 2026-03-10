@@ -553,16 +553,18 @@ a.ap-sidebar__item {
 .ap-table-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  margin: 0 -4px;
+  padding: 0 4px;
 }
 
 .ap-table {
   width: 100%;
   border-collapse: collapse;
   font-size: var(--text-base);
-  min-width: 480px;
 }
 
 .ap-table th {
+  white-space: nowrap;
   text-align: center;
   padding: 12px var(--space-md);
   font-weight: 600;
@@ -2066,5 +2068,9 @@ kbd {
   .ap-preview__delete-btn,
   .ap-preview__delete-btn--block {
     display: none !important;
+  }
+
+  .ap-table {
+    min-width: 600px;
   }
 }
