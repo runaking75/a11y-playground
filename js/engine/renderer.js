@@ -167,10 +167,10 @@ const Renderer = {
     }
     el.innerHTML =
       '<h2 class="ap-section__title">키보드 인터랙션</h2>' +
-      '<table class="ap-table">' +
+      '<div class="ap-table-wrap"><table class="ap-table">' +
         '<thead><tr><th>Key</th><th>Action</th></tr></thead>' +
         '<tbody>' + trHtml + '</tbody>' +
-      '</table>';
+      '</table></div>';
   },
 
   renderGuideTab: function(guide, playground) {
@@ -202,10 +202,10 @@ const Renderer = {
     }
     el.innerHTML =
       '<h2 class="ap-section__title">적용 기준</h2>' +
-      '<table class="ap-table">' +
+      '<div class="ap-table-wrap"><table class="ap-table">' +
         '<thead><tr><th>기준</th><th>항목</th><th>설명</th><th>레벨</th></tr></thead>' +
         '<tbody>' + trHtml + '</tbody>' +
-      '</table>';
+      '</table></div>';
   },
 
   renderRoles(roles) {
@@ -227,10 +227,10 @@ const Renderer = {
     }
     el.innerHTML =
       '<h2 class="ap-section__title">Role, 속성, 상태</h2>' +
-      '<table class="ap-table">' +
+      '<div class="ap-table-wrap"><table class="ap-table">' +
         '<thead><tr><th>Role</th><th>속성 / 상태</th><th>요소</th><th>설명</th></tr></thead>' +
         '<tbody>' + trHtml + '</tbody>' +
-      '</table>';
+      '</table></div>';
   },
 
   renderDoDont: function(doDont) {
