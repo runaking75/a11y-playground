@@ -2055,4 +2055,10 @@ kbd {
   .ap-dodont {
     grid-template-columns: 1fr;
   }
+
+  .ap-preview__add-bar,
+  .ap-preview__delete-btn,
+  .ap-preview__delete-btn--block {
+    display: none !important;
+  }
 }
