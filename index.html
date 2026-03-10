@@ -14,10 +14,13 @@
 
 <!-- ══ Header ══ -->
 <header class="ap-header">
-  <div class="ap-header__title">A11y Playground</div>
+  <button class="ap-header__hamburger" id="hamburger-btn" aria-label="메뉴 열기">
+    <span class="material-icons-outlined">menu</span>
+  </button>
+  <a href="#" class="ap-header__title" id="logo-link">A11y Playground</a>
   <div class="ap-header__search">
     <span class="material-icons-outlined" style="font-size:18px">search</span>
-    Search documentation...
+    <span class="ap-header__search-text">Search documentation...</span>
     <kbd>Ctrl K</kbd>
   </div>
 </header>

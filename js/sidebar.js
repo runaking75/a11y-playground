@@ -78,7 +78,13 @@ var Sidebar = {
   },
 
   renderItem: function(item) {
-    var html = '<a href="#' + item.id + '" class="ap-sidebar__item" data-page="' + item.id + '" data-type="' + item.type + '">';
+    var disabledCls = item.disabled ? ' ap-sidebar__item--disabled' : '';
+    var html;
+    if (item.disabled) {
+      html = '<span class="ap-sidebar__item' + disabledCls + '">';
+    } else {
+      html = '<a href="#' + item.id + '" class="ap-sidebar__item" data-page="' + item.id + '" data-type="' + item.type + '">';
+    }
 
     // 아이콘 (가이드)
     if (item.icon) {
@@ -106,7 +112,7 @@ var Sidebar = {
       }
     }
 
-    html += '</a>';
+    html += item.disabled ? '</span>' : '</a>';
     return html;
   }
 };

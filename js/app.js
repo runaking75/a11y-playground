@@ -94,6 +94,37 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  // 로고 클릭 → 카드 그리드
+  var logoLink = document.getElementById('logo-link');
+  if (logoLink) {
+    logoLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      history.replaceState(null, '', window.location.pathname);
+      if (typeof Router !== 'undefined') Router.currentPage = null;
+      if (typeof CardGrid !== 'undefined') CardGrid.render();
+      document.querySelectorAll('.ap-sidebar__item').forEach(function(item) {
+        item.classList.remove('is-active');
+      });
+      // 모바일 사이드바 닫기
+      document.querySelector('.ap-sidebar').classList.remove('is-open');
+    });
+  }
+
+  // 햄버거 메뉴
+  var hamburgerBtn = document.getElementById('hamburger-btn');
+  var sidebar = document.querySelector('.ap-sidebar');
+  if (hamburgerBtn && sidebar) {
+    hamburgerBtn.addEventListener('click', function() {
+      sidebar.classList.toggle('is-open');
+    });
+    // 사이드바 항목 클릭 시 모바일에서 닫기
+    sidebar.addEventListener('click', function(e) {
+      if (e.target.closest('.ap-sidebar__item')) {
+        sidebar.classList.remove('is-open');
+      }
+    });
+  }
+
   // 엔진 초기화
   Controls.init();
   AriaViewer.init();

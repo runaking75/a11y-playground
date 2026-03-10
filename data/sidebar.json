@@ -6,38 +6,50 @@
         {
           "id": "wcag22",
           "name": "WCAG 2.2 개요",
+          "icon": "public",
           "type": "guide",
-          "icon": "public"
+          "status": "planned",
+          "disabled": true
         },
         {
           "id": "kwcag22",
           "name": "KWCAG 2.2 개요",
+          "icon": "KR",
           "type": "guide",
-          "icon": "🇰🇷"
+          "status": "planned",
+          "disabled": true
         },
         {
           "id": "mobile",
           "name": "모바일 앱 접근성",
+          "icon": "phone_iphone",
           "type": "guide",
-          "icon": "phone_iphone"
+          "status": "planned",
+          "disabled": true
         },
         {
           "id": "glossary",
           "name": "용어 사전",
+          "icon": "spellcheck",
           "type": "guide",
-          "icon": "spellcheck"
+          "status": "planned",
+          "disabled": true
         },
         {
           "id": "faq",
           "name": "FAQ",
+          "icon": "help_outline",
           "type": "guide",
-          "icon": "help_outline"
+          "status": "planned",
+          "disabled": true
         },
         {
           "id": "resources",
           "name": "리소스/참고 링크",
+          "icon": "bookmark",
           "type": "guide",
-          "icon": "bookmark"
+          "status": "planned",
+          "disabled": true
         }
       ]
     },
