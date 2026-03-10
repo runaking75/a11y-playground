@@ -70,8 +70,9 @@ var Speech = {
     }
     stateHtml += '</div>';
 
-    // 카드
-    var cardsHtml = '<div class="ap-speech-cards">';
+    // 테이블
+    var tableHtml = '<div class="ap-table-wrap"><table class="ap-table ap-table--speech">' +
+      '<thead><tr><th>스크린리더</th><th>발화 텍스트</th></tr></thead><tbody>';
     for (var r = 0; r < readers.length; r++) {
       var reader = readers[r];
       var badgeCls = 'ap-sr-badge--' + reader.id;
@@ -86,21 +87,19 @@ var Speech = {
         if (reader.browserVersion) info += ' ' + reader.browserVersion;
       }
 
-      cardsHtml += '<div class="ap-speech-card">' +
-        '<div class="ap-speech-card__reader">' +
+      tableHtml += '<tr>' +
+        '<td class="ap-speech-reader-cell">' +
           '<span class="ap-sr-badge ' + badgeCls + '">' + reader.badge + '</span>' +
-          '<span class="ap-speech-card__info">' +
-            '<span class="ap-speech-card__name">' + info + '</span>' +
-          '</span>' +
-        '</div>' +
-        '<div class="ap-speech-card__text" data-reader="' + reader.id + '">"' + text + '"</div>' +
-      '</div>';
+          '<span class="ap-speech-reader-info">' + info + '</span>' +
+        '</td>' +
+        '<td class="ap-speech-text-cell" data-reader="' + reader.id + '">"' + text + '"</td>' +
+      '</tr>';
     }
-    cardsHtml += '</div>';
+    tableHtml += '</tbody></table></div>';
 
     this.sectionEl.innerHTML =
       '<h2 class="ap-section__title">스크린리더 발화 텍스트</h2>' +
-      stateHtml + cardsHtml;
+      stateHtml + tableHtml;
 
     this.bindStateButtons();
   },

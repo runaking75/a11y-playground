@@ -553,14 +553,15 @@ a.ap-sidebar__item {
 .ap-table-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  margin: 0 -4px;
-  padding: 0 4px;
+  max-width: 100%;
+  width: 100%;
 }
 
 .ap-table {
   width: 100%;
   border-collapse: collapse;
   font-size: var(--text-base);
+  min-width: 560px;
 }
 
 .ap-table th {
@@ -1339,53 +1340,32 @@ kbd {
   border-color: var(--gray-900);
 }
 
-.ap-speech-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  border: 1px solid var(--gray-200);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
+/* Speech Table */
+.ap-table--speech {
+  min-width: 480px;
 }
 
-.ap-speech-card {
-  display: flex;
-  align-items: center;
-  padding: 14px var(--space-lg);
-  gap: var(--space-md);
-  border-bottom: 1px solid var(--gray-200);
+.ap-speech-reader-cell {
+  white-space: nowrap;
+  width: 220px;
+  min-width: 220px;
 }
 
-.ap-speech-card:last-child {
-  border-bottom: none;
+.ap-speech-reader-cell .ap-sr-badge {
+  vertical-align: middle;
+  margin-right: 8px;
 }
 
-.ap-speech-card__reader {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  width: 240px;
-  flex-shrink: 0;
-  font-weight: 500;
-  font-size: var(--text-base);
-  color: var(--gray-900);
-}
-
-.ap-speech-card__info {
-  display: flex;
-  flex-direction: column;
-}
-
-.ap-speech-card__name {
+.ap-speech-reader-info {
   font-size: var(--text-sm);
   color: var(--gray-700);
   line-height: 1.4;
 }
 
-.ap-speech-card__text {
-  flex: 1;
+.ap-speech-text-cell {
   font-size: 15px;
   color: var(--gray-700);
+  font-style: italic;
 }
 
 
@@ -2070,7 +2050,27 @@ kbd {
     display: none !important;
   }
 
-  .ap-table {
-    min-width: 600px;
+  .ap-table-wrap {
+    max-width: calc(100vw - 32px);
+  }
+
+  .ap-section {
+    padding: var(--space-2xl) var(--space-xl);
+  }
+
+  .ap-page-header {
+    padding: var(--space-xl) var(--space-xl) 0;
+  }
+
+  .ap-preview__canvas {
+    padding: var(--space-xl);
+  }
+
+  .ap-tabs {
+    padding: 0 var(--space-xl);
+  }
+
+  .ap-preview__mode {
+    left: var(--space-xl);
   }
 }
