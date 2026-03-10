@@ -1,0 +1,1043 @@
+{
+  "id": "wcag22",
+  "title": "WCAG 2.2 접근성 지침",
+  "titleEn": "Web Content Accessibility Guidelines 2.2",
+  "source": "https://www.w3.org/TR/WCAG22/",
+  "updated": "2024-12-12",
+  "overview": {
+    "desc": "WCAG 2.2는 웹 콘텐츠의 접근성을 높이기 위한 국제 표준이다. WCAG 2.1을 확장하며, WCAG 2.2를 준수하면 2.1과 2.0도 자동 준수된다. 2023년 10월 W3C 권고안으로 발표되었으며, 2024년 12월 업데이트되었다.",
+    "structure": "4원칙 → 13지침 → 87개 적합 기준(SC)",
+    "levels": "A (최소, 32개) → AA (법적 기준, +24개 = 56개) → AAA (최고, +31개 = 87개)",
+    "changes": "9개 SC 신규 추가, 1개 SC 폐기(4.1.1 Parsing)"
+  },
+  "principles": [
+    {
+      "id": "1",
+      "name": "인식의 용이성",
+      "nameEn": "Perceivable",
+      "desc": "정보와 UI 컴포넌트는 사용자가 인식할 수 있는 방식으로 제시되어야 한다.",
+      "guidelines": [
+        {
+          "id": "1.1",
+          "name": "대체 텍스트",
+          "nameEn": "Text Alternatives",
+          "desc": "모든 비텍스트 콘텐츠에 대체 텍스트를 제공하여 큰 글씨, 점자, 음성, 기호, 쉬운 언어 등 다른 형태로 변환할 수 있게 한다.",
+          "criteria": [
+            {
+              "id": "1.1.1",
+              "name": "비텍스트 콘텐츠",
+              "nameEn": "Non-text Content",
+              "level": "A",
+              "isNew": false,
+              "desc": "사용자에게 제시되는 모든 비텍스트 콘텐츠는 동등한 목적을 전달하는 대체 텍스트를 가져야 한다.",
+              "exceptions": [
+                "컨트롤/입력: 이름(name)이 목적을 설명해야 함",
+                "시간 기반 미디어: 최소한 설명적 식별 정보 제공",
+                "테스트: 텍스트로 제시하면 무효화되는 경우, 설명적 식별 정보 제공",
+                "감각적 경험: 설명적 식별 정보 제공",
+                "CAPTCHA: 목적 설명 + 다른 감각 형태의 대안 제공",
+                "장식/서식/보이지 않는 콘텐츠: 보조 기술이 무시할 수 있도록 구현"
+              ],
+              "components": [
+                "`<img>`: 의미 있는 이미지 → `alt=\"설명\"`, 장식 이미지 → `alt=\"\"` + `aria-hidden=\"true\"`",
+                "`<button>`: 아이콘만 있는 버튼 → `aria-label=\"목적\"`",
+                "`<input>`: 연결된 `<label>` 필수"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "1.2",
+          "name": "시간 기반 미디어",
+          "nameEn": "Time-based Media",
+          "desc": "시간 기반 미디어에 대안을 제공한다.",
+          "criteria": [
+            {
+              "id": "1.2.1",
+              "name": "오디오 전용 및 영상 전용",
+              "nameEn": "녹화",
+              "level": "A",
+              "isNew": false,
+              "desc": "- 녹화된 오디오 전용: 동등한 정보의 시간 기반 미디어 대안 제공\n- 녹화된 영상 전용: 시간 기반 미디어 대안 또는 오디오 트랙 제공"
+            },
+            {
+              "id": "1.2.2",
+              "name": "자막",
+              "nameEn": "녹화",
+              "level": "A",
+              "isNew": false,
+              "desc": "녹화된 동기화 미디어의 모든 오디오 콘텐츠에 자막 제공"
+            },
+            {
+              "id": "1.2.3",
+              "name": "오디오 설명 또는 미디어 대안",
+              "nameEn": "녹화",
+              "level": "A",
+              "isNew": false,
+              "desc": "녹화된 동기화 미디어에 시간 기반 미디어 대안 또는 오디오 설명 제공"
+            },
+            {
+              "id": "1.2.4",
+              "name": "자막",
+              "nameEn": "실시간",
+              "level": "AA",
+              "isNew": false,
+              "desc": "실시간 동기화 미디어의 모든 오디오 콘텐츠에 자막 제공"
+            },
+            {
+              "id": "1.2.5",
+              "name": "오디오 설명",
+              "nameEn": "녹화",
+              "level": "AA",
+              "isNew": false,
+              "desc": "녹화된 동기화 미디어의 모든 영상 콘텐츠에 오디오 설명 제공"
+            },
+            {
+              "id": "1.2.6",
+              "name": "수어",
+              "nameEn": "녹화",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "녹화된 동기화 미디어의 모든 오디오 콘텐츠에 수어 통역 제공"
+            },
+            {
+              "id": "1.2.7",
+              "name": "확장된 오디오 설명",
+              "nameEn": "녹화",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "전경 오디오의 일시정지가 불충분한 경우, 확장된 오디오 설명 제공"
+            },
+            {
+              "id": "1.2.8",
+              "name": "미디어 대안",
+              "nameEn": "녹화",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "모든 녹화된 동기화 미디어와 영상 전용에 시간 기반 미디어 대안 제공"
+            },
+            {
+              "id": "1.2.9",
+              "name": "오디오 전용",
+              "nameEn": "실시간",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "실시간 오디오 전용에 동등한 정보의 시간 기반 미디어 대안 제공"
+            }
+          ]
+        },
+        {
+          "id": "1.3",
+          "name": "적응 가능",
+          "nameEn": "Adaptable",
+          "desc": "정보나 구조를 잃지 않고 다른 방식(예: 더 단순한 레이아웃)으로 제시할 수 있는 콘텐츠를 제작한다.",
+          "criteria": [
+            {
+              "id": "1.3.1",
+              "name": "정보와 관계",
+              "nameEn": "Info and Relationships",
+              "level": "A",
+              "isNew": false,
+              "desc": "표현을 통해 전달되는 정보, 구조, 관계를 프로그래밍 방식으로 결정할 수 있거나 텍스트로 제공한다.",
+              "components": [
+                "제목은 `<h1>`~`<h6>` 사용, 시각적 크기만 크게 하지 말 것",
+                "목록은 `<ul>`, `<ol>`, `<dl>` 사용",
+                "테이블은 `<th>`, `scope`, `<caption>` 사용",
+                "폼 필드는 `<label>`, `<fieldset>`, `<legend>` 사용",
+                "랜드마크는 시맨틱 HTML (`<header>`, `<nav>`, `<main>` 등) 사용"
+              ]
+            },
+            {
+              "id": "1.3.2",
+              "name": "의미 있는 순서",
+              "nameEn": "Meaningful Sequence",
+              "level": "A",
+              "isNew": false,
+              "desc": "콘텐츠 순서가 의미에 영향을 미치는 경우, 올바른 읽기 순서를 프로그래밍 방식으로 결정할 수 있어야 한다.",
+              "components": [
+                "CSS 시각적 순서와 DOM 순서 일치시키기",
+                "`flexbox order`, `grid` 사용 시 논리적 순서 유지"
+              ]
+            },
+            {
+              "id": "1.3.3",
+              "name": "감각적 특성",
+              "nameEn": "Sensory Characteristics",
+              "level": "A",
+              "isNew": false,
+              "desc": "콘텐츠의 이해/조작을 위한 지시문이 모양, 색상, 크기, 시각적 위치, 방향, 소리 등 감각적 특성에만 의존하지 않아야 한다.",
+              "components": [
+                "\"빨간 버튼을 클릭하세요\" ❌ → \"제출 버튼을 클릭하세요\" ✅",
+                "\"오른쪽의 메뉴\" ❌ → \"메인 메뉴\" ✅"
+              ]
+            },
+            {
+              "id": "1.3.4",
+              "name": "방향",
+              "nameEn": "Orientation",
+              "level": "AA",
+              "isNew": false,
+              "desc": "콘텐츠가 특정 방향(세로/가로)으로 제한되지 않아야 한다. 단, 특정 방향이 필수적인 경우 예외."
+            },
+            {
+              "id": "1.3.5",
+              "name": "입력 목적 식별",
+              "nameEn": "Identify Input Purpose",
+              "level": "AA",
+              "isNew": false,
+              "desc": "사용자 정보를 수집하는 입력 필드의 목적을 프로그래밍 방식으로 결정할 수 있어야 한다.",
+              "components": [
+                "`autocomplete` 속성 사용: `autocomplete=\"name\"`, `autocomplete=\"email\"`, `autocomplete=\"tel\"` 등",
+                "Input Purposes 목록: name, honorific-prefix, given-name, family-name, email, tel, street-address, postal-code, country, bday, sex, url, photo 등"
+              ]
+            },
+            {
+              "id": "1.3.6",
+              "name": "목적 식별",
+              "nameEn": "Identify Purpose",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "마크업 언어로 구현된 콘텐츠에서 UI 컴포넌트, 아이콘, 영역의 목적을 프로그래밍 방식으로 결정할 수 있어야 한다."
+            }
+          ]
+        },
+        {
+          "id": "1.4",
+          "name": "구분 가능",
+          "nameEn": "Distinguishable",
+          "desc": "전경과 배경을 분리하는 것을 포함하여, 사용자가 콘텐츠를 더 쉽게 보고 들을 수 있게 한다.",
+          "criteria": [
+            {
+              "id": "1.4.1",
+              "name": "색상 사용",
+              "nameEn": "Use of Color",
+              "level": "A",
+              "isNew": false,
+              "desc": "색상만이 정보 전달, 동작 표시, 응답 유도, 시각적 요소 구분의 유일한 수단이 되어서는 안 된다.",
+              "components": [
+                "오류 표시: 빨간색 + 아이콘 + 텍스트 (색상만 사용 ❌)",
+                "필수 필드: 별표(*) + `aria-required=\"true\"` (빨간색만 사용 ❌)",
+                "링크: 밑줄 또는 3:1 이상 대비 + 호버/포커스 시 추가 시각적 단서"
+              ]
+            },
+            {
+              "id": "1.4.2",
+              "name": "오디오 제어",
+              "nameEn": "Audio Control",
+              "level": "A",
+              "isNew": false,
+              "desc": "3초 이상 자동 재생되는 오디오에 일시정지/정지 메커니즘 또는 시스템 볼륨과 독립적인 볼륨 제어 제공"
+            },
+            {
+              "id": "1.4.3",
+              "name": "명도 대비",
+              "nameEn": "최소) (Contrast Minimum",
+              "level": "AA",
+              "isNew": false,
+              "desc": "텍스트와 텍스트 이미지의 명도 대비 최소 4.5:1",
+              "exceptions": [
+                "큰 텍스트 (18pt 이상 또는 14pt 볼드 이상): 3:1",
+                "비활성 UI, 장식, 보이지 않는 텍스트, 로고: 대비 요구 없음"
+              ]
+            },
+            {
+              "id": "1.4.4",
+              "name": "텍스트 크기 변경",
+              "nameEn": "Resize Text",
+              "level": "AA",
+              "isNew": false,
+              "desc": "보조 기술 없이 200%까지 텍스트 크기를 변경해도 콘텐츠나 기능 손실 없어야 함",
+              "components": [
+                "고정 px 대신 `rem`, `em` 사용",
+                "확대 시 가로 스크롤 없이 리플로우"
+              ]
+            },
+            {
+              "id": "1.4.5",
+              "name": "텍스트 이미지",
+              "nameEn": "Images of Text",
+              "level": "AA",
+              "isNew": false,
+              "desc": "기술적으로 가능하면 텍스트 이미지 대신 실제 텍스트 사용. 예외: 사용자 정의 가능 또는 필수적인 경우"
+            },
+            {
+              "id": "1.4.6",
+              "name": "명도 대비",
+              "nameEn": "향상) (Contrast Enhanced",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "텍스트와 텍스트 이미지의 명도 대비 최소 7:1, 큰 텍스트 최소 4.5:1"
+            },
+            {
+              "id": "1.4.7",
+              "name": "낮은 또는 없는 배경 오디오",
+              "nameEn": "Low or No Background Audio",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "녹화된 음성 오디오에서 배경 소리가 꺼지거나, 20dB 이상 낮거나 끌 수 있어야 함"
+            },
+            {
+              "id": "1.4.8",
+              "name": "시각적 표현",
+              "nameEn": "Visual Presentation",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "텍스트 블록의 시각적 표현을 사용자가 조정 가능해야 함 (전경/배경색, 줄 간격, 정렬 등)"
+            },
+            {
+              "id": "1.4.9",
+              "name": "텍스트 이미지",
+              "nameEn": "예외 없음) (Images of Text - No Exception",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "텍스트 이미지는 장식용이거나 필수적인 경우에만 사용"
+            },
+            {
+              "id": "1.4.10",
+              "name": "리플로우",
+              "nameEn": "Reflow",
+              "level": "AA",
+              "isNew": false,
+              "desc": "320px 너비(세로), 256px 높이(가로)에서 가로/세로 스크롤 없이 콘텐츠 표시",
+              "components": [
+                "반응형 디자인 필수",
+                "320px에서 모든 콘텐츠 접근 가능하도록"
+              ]
+            },
+            {
+              "id": "1.4.11",
+              "name": "비텍스트 대비",
+              "nameEn": "Non-text Contrast",
+              "level": "AA",
+              "isNew": false,
+              "desc": "UI 컴포넌트와 그래픽 요소의 명도 대비 최소 3:1",
+              "components": [
+                "버튼 테두리, 입력 필드 테두리: 배경과 3:1 이상",
+                "포커스 표시기: 배경과 3:1 이상",
+                "아이콘 (의미 있는): 배경과 3:1 이상",
+                "체크박스, 라디오 버튼 테두리: 3:1 이상"
+              ]
+            },
+            {
+              "id": "1.4.12",
+              "name": "텍스트 간격",
+              "nameEn": "Text Spacing",
+              "level": "AA",
+              "isNew": false,
+              "desc": "다음 텍스트 스타일 속성 변경 시 콘텐츠나 기능 손실 없어야 함:\n- 줄 간격: 글꼴 크기의 1.5배 이상\n- 문단 간격: 글꼴 크기의 2배 이상\n- 글자 간격: 글꼴 크기의 0.12배 이상\n- 단어 간격: 글꼴 크기의 0.16배 이상",
+              "components": [
+                "고정 높이 컨테이너에 `overflow: hidden` 사용 주의",
+                "텍스트 간격 변경 시 잘리거나 겹치지 않도록"
+              ]
+            },
+            {
+              "id": "1.4.13",
+              "name": "호버 또는 포커스 시 콘텐츠",
+              "nameEn": "Content on Hover or Focus",
+              "level": "AA",
+              "isNew": false,
+              "desc": "포인터 호버나 키보드 포커스로 추가 콘텐츠가 나타나는 경우:\n- 해제 가능 (Dismissible): Esc 등으로 추가 콘텐츠를 닫을 수 있어야 함\n- 호버 가능 (Hoverable): 추가 콘텐츠 위로 포인터를 이동해도 콘텐츠가 사라지지 않아야 함\n- 지속적 (Persistent): 사용자가 해제하거나 유효하지 않게 될 때까지 유지",
+              "components": [
+                "Tooltip: Esc로 닫기, 포인터가 tooltip 위에 있어도 유지",
+                "Popover: 동일 규칙",
+                "드롭다운 메뉴: 호버 시 서브메뉴 유지"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "운용의 용이성",
+      "nameEn": "Operable",
+      "desc": "UI 컴포넌트와 네비게이션은 조작 가능해야 한다.",
+      "guidelines": [
+        {
+          "id": "2.1",
+          "name": "키보드 접근 가능",
+          "nameEn": "Keyboard Accessible",
+          "desc": "모든 기능을 키보드로 사용 가능하게 한다.",
+          "criteria": [
+            {
+              "id": "2.1.1",
+              "name": "키보드",
+              "nameEn": "Keyboard",
+              "level": "A",
+              "isNew": false,
+              "desc": "모든 기능이 키보드로 조작 가능해야 한다. 개별 키 입력의 타이밍이 중요한 경우 예외.",
+              "components": [
+                "모든 인터랙티브 요소에 키보드 지원",
+                "커스텀 컴포넌트: `tabindex`, 키보드 이벤트 핸들러 구현",
+                "클릭 이벤트만 있는 `<div>` ❌ → `<button>` 또는 `role=\"button\"` + `tabindex=\"0\"` + Enter/Space 핸들러"
+              ]
+            },
+            {
+              "id": "2.1.2",
+              "name": "키보드 트랩 없음",
+              "nameEn": "No Keyboard Trap",
+              "level": "A",
+              "isNew": false,
+              "desc": "키보드로 포커스를 컴포넌트로 이동할 수 있으면, 키보드만으로 포커스를 벗어날 수 있어야 한다.",
+              "components": [
+                "모달: Esc로 닫기, Tab 순환 (포커스 트랩이되 탈출 가능)",
+                "포커스 트랩과 키보드 트랩은 다름: 모달의 포커스 트랩은 OK, 빠져나갈 수 없는 건 ❌"
+              ]
+            },
+            {
+              "id": "2.1.3",
+              "name": "키보드",
+              "nameEn": "예외 없음) (Keyboard - No Exception",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "모든 기능이 예외 없이 키보드로 조작 가능"
+            },
+            {
+              "id": "2.1.4",
+              "name": "문자 키 단축키",
+              "nameEn": "Character Key Shortcuts",
+              "level": "A",
+              "isNew": false,
+              "desc": "문자(글자, 숫자, 구두점)만으로 구성된 단축키가 있다면:\n- 끄기 가능하거나\n- 다시 매핑 가능하거나\n- 해당 UI가 포커스를 받을 때만 활성화",
+              "components": [
+                "단일 문자 단축키 사용 시 Ctrl/Alt 등 수식 키 조합 권장",
+                "음성 인식 사용자가 의도치 않게 트리거할 수 있음"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "2.2",
+          "name": "충분한 시간",
+          "nameEn": "Enough Time",
+          "desc": "사용자에게 콘텐츠를 읽고 사용할 충분한 시간을 제공한다.",
+          "criteria": [
+            {
+              "id": "2.2.1",
+              "name": "시간 조절 가능",
+              "nameEn": "Timing Adjustable",
+              "level": "A",
+              "isNew": false,
+              "desc": "시간 제한이 있으면: 끄기, 조절, 연장 중 하나 이상 가능. 예외: 실시간 이벤트, 필수적, 20시간 이상"
+            },
+            {
+              "id": "2.2.2",
+              "name": "일시정지, 정지, 숨기기",
+              "nameEn": "Pause, Stop, Hide",
+              "level": "A",
+              "isNew": false,
+              "desc": "자동 이동, 깜박임, 스크롤 (5초 이상): 일시정지/정지/숨기기 가능\n자동 업데이트: 일시정지/정지/숨기기 또는 빈도 제어 가능",
+              "components": [
+                "Carousel 자동 재생: 일시정지 버튼 필수",
+                "로딩 애니메이션: 정지 가능하거나 5초 이내 종료",
+                "자동 갱신 콘텐츠: 일시정지 기능 제공"
+              ]
+            },
+            {
+              "id": "2.2.3",
+              "name": "시간 없음",
+              "nameEn": "No Timing",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "시간 제한이 필수적이거나 실시간 이벤트가 아닌 한, 시간 제한 없음"
+            },
+            {
+              "id": "2.2.4",
+              "name": "중단",
+              "nameEn": "Interruptions",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "중단을 연기하거나 억제 가능. 긴급 상황 예외"
+            },
+            {
+              "id": "2.2.5",
+              "name": "재인증",
+              "nameEn": "Re-authenticating",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "인증 세션 만료 후 재인증 시 데이터 손실 없이 활동 계속 가능"
+            },
+            {
+              "id": "2.2.6",
+              "name": "타임아웃",
+              "nameEn": "Timeouts",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "비활성으로 인한 데이터 손실 가능 시 사용자에게 사전 경고. 20시간 이상 데이터 보존 시 예외"
+            }
+          ]
+        },
+        {
+          "id": "2.3",
+          "name": "발작 및 물리적 반응",
+          "nameEn": "Seizures and Physical Reactions",
+          "desc": "발작이나 물리적 반응을 유발하는 방식으로 콘텐츠를 디자인하지 않는다.",
+          "criteria": [
+            {
+              "id": "2.3.1",
+              "name": "세 번 깜박임 또는 임계값 이하",
+              "nameEn": "Three Flashes or Below Threshold",
+              "level": "A",
+              "isNew": false,
+              "desc": "1초에 3번 이상 깜박이는 콘텐츠 없음. 또는 깜박임이 일반 및 붉은색 깜박임 임계값 이하"
+            },
+            {
+              "id": "2.3.2",
+              "name": "세 번 깜박임",
+              "nameEn": "Three Flashes",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "1초에 3번 이상 깜박이는 콘텐츠 없음 (예외 없음)"
+            },
+            {
+              "id": "2.3.3",
+              "name": "상호작용에 의한 애니메이션",
+              "nameEn": "Animation from Interactions",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "기능이나 정보에 필수적이지 않은 한, 상호작용에 의한 모션 애니메이션을 비활성화할 수 있어야 함",
+              "components": [
+                "`prefers-reduced-motion` 미디어 쿼리 지원",
+                "필수적이지 않은 애니메이션에 끄기 옵션"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "2.4",
+          "name": "탐색 가능",
+          "nameEn": "Navigable",
+          "desc": "사용자가 탐색하고, 콘텐츠를 찾고, 현재 위치를 파악할 수 있도록 돕는다.",
+          "criteria": [
+            {
+              "id": "2.4.1",
+              "name": "블록 건너뛰기",
+              "nameEn": "Bypass Blocks",
+              "level": "A",
+              "isNew": false,
+              "desc": "여러 페이지에 반복되는 콘텐츠 블록을 건너뛸 수 있는 메커니즘 제공",
+              "components": [
+                "\"본문 바로가기\" Skip Navigation 링크",
+                "랜드마크로 영역 구분 (`<header>`, `<nav>`, `<main>`)",
+                "적절한 제목 구조"
+              ]
+            },
+            {
+              "id": "2.4.2",
+              "name": "페이지 제목",
+              "nameEn": "Page Titled",
+              "level": "A",
+              "isNew": false,
+              "desc": "웹 페이지에 주제나 목적을 설명하는 제목 제공"
+            },
+            {
+              "id": "2.4.3",
+              "name": "포커스 순서",
+              "nameEn": "Focus Order",
+              "level": "A",
+              "isNew": false,
+              "desc": "순차적으로 탐색 가능한 경우, 의미와 조작성을 보존하는 순서로 포커스 이동",
+              "components": [
+                "DOM 순서 = 시각적 순서",
+                "`tabindex` 양수값 사용 지양 → `tabindex=\"0\"` 또는 `-1`만 사용",
+                "동적 콘텐츠 삽입 시 포커스 관리"
+              ]
+            },
+            {
+              "id": "2.4.4",
+              "name": "링크 목적",
+              "nameEn": "맥락 내) (Link Purpose - In Context",
+              "level": "A",
+              "isNew": false,
+              "desc": "링크 텍스트 단독으로 또는 프로그래밍 방식으로 결정 가능한 맥락과 함께 링크의 목적 확인 가능",
+              "components": [
+                "\"더 보기\" ❌ → \"접근성 가이드 더 보기\" ✅",
+                "또는 `aria-label`, `aria-labelledby`로 보충"
+              ]
+            },
+            {
+              "id": "2.4.5",
+              "name": "다양한 방법",
+              "nameEn": "Multiple Ways",
+              "level": "AA",
+              "isNew": false,
+              "desc": "페이지를 찾는 두 가지 이상의 방법 제공 (사이트맵, 검색, 목차 등). 프로세스의 단계인 경우 예외."
+            },
+            {
+              "id": "2.4.6",
+              "name": "제목과 레이블",
+              "nameEn": "Headings and Labels",
+              "level": "AA",
+              "isNew": false,
+              "desc": "제목과 레이블은 주제나 목적을 설명해야 함"
+            },
+            {
+              "id": "2.4.7",
+              "name": "포커스 표시",
+              "nameEn": "Focus Visible",
+              "level": "AA",
+              "isNew": false,
+              "desc": "키보드 조작 가능한 UI는 키보드 포커스 표시기가 보여야 함",
+              "components": [
+                "`outline: none` 사용 금지 (대안 없이)",
+                "커스텀 포커스 스타일 제공: `:focus-visible` 사용 권장",
+                "모든 인터랙티브 요소에 명확한 포커스 스타일"
+              ]
+            },
+            {
+              "id": "2.4.8",
+              "name": "위치",
+              "nameEn": "Location",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "사용자가 페이지 집합 내에서 현재 위치를 알 수 있는 정보 제공 (Breadcrumb 등)"
+            },
+            {
+              "id": "2.4.9",
+              "name": "링크 목적",
+              "nameEn": "링크 텍스트만) (Link Purpose - Link Only",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "링크 텍스트만으로 링크의 목적 확인 가능. 링크 목적이 일반적으로 모호한 경우 예외"
+            },
+            {
+              "id": "2.4.10",
+              "name": "섹션 제목",
+              "nameEn": "Section Headings",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "콘텐츠를 구성하기 위해 섹션 제목 사용"
+            },
+            {
+              "id": "2.4.11",
+              "name": "포커스 가림 방지",
+              "nameEn": "최소) (Focus Not Obscured - Minimum",
+              "level": "AA",
+              "isNew": true,
+              "desc": "키보드 포커스를 받은 UI 컴포넌트가 작성자가 만든 콘텐츠에 의해 완전히 가려지지 않아야 한다. 최소한 일부분은 보여야 한다.",
+              "components": [
+                "고정 헤더/풋터 아래 포커스 요소가 숨겨지지 않도록",
+                "`scroll-padding-top` 설정",
+                "스티키 배너, 쿠키 배너 주의"
+              ]
+            },
+            {
+              "id": "2.4.12",
+              "name": "포커스 가림 방지",
+              "nameEn": "향상) (Focus Not Obscured - Enhanced",
+              "level": "AAA",
+              "isNew": true,
+              "desc": "키보드 포커스를 받은 UI 컴포넌트의 어떤 부분도 작성자가 만든 콘텐츠에 의해 가려지지 않아야 한다."
+            },
+            {
+              "id": "2.4.13",
+              "name": "포커스 외형",
+              "nameEn": "Focus Appearance",
+              "level": "AAA",
+              "isNew": true,
+              "desc": "키보드 포커스 표시기가 보일 때:\n- 포커스 표시기 영역이 포커스되지 않은 컴포넌트 둘레의 2px 두께 테두리 면적 이상\n- 포커스/비포커스 상태 간 최소 3:1 대비"
+            }
+          ]
+        },
+        {
+          "id": "2.5",
+          "name": "입력 방식",
+          "nameEn": "Input Modalities",
+          "desc": "키보드 외 다양한 입력 방식을 통해 기능을 쉽게 조작할 수 있게 한다.",
+          "criteria": [
+            {
+              "id": "2.5.1",
+              "name": "포인터 제스처",
+              "nameEn": "Pointer Gestures",
+              "level": "A",
+              "isNew": false,
+              "desc": "다중 포인트 또는 경로 기반 제스처로 조작 가능한 기능은 단일 포인터로도 조작 가능해야 함. 제스처가 필수적인 경우 예외.",
+              "components": [
+                "핀치 줌 → 확대/축소 버튼 대안 제공",
+                "스와이프 → 이전/다음 버튼 대안 제공",
+                "Carousel: 스와이프 + 버튼 모두 제공"
+              ]
+            },
+            {
+              "id": "2.5.2",
+              "name": "포인터 취소",
+              "nameEn": "Pointer Cancellation",
+              "level": "A",
+              "isNew": false,
+              "desc": "단일 포인터로 조작 가능한 기능에서:\n- down 이벤트로 실행하지 않거나\n- 완료를 up 이벤트로 하되 중단 메커니즘이 있거나\n- up 이벤트가 down 이벤트의 결과를 되돌리거나\n- 필수적인 경우 예외",
+              "components": [
+                "`mousedown`/`touchstart` 대신 `click`/`mouseup`/`touchend` 사용",
+                "드래그: down으로 시작, up으로 확정, 이동으로 취소 가능"
+              ]
+            },
+            {
+              "id": "2.5.3",
+              "name": "이름 안의 레이블",
+              "nameEn": "Label in Name",
+              "level": "A",
+              "isNew": false,
+              "desc": "텍스트나 텍스트 이미지를 포함한 레이블이 있는 UI 컴포넌트는 접근 가능한 이름에 시각적 레이블 텍스트가 포함되어야 함",
+              "components": [
+                "버튼에 \"검색\"이라고 보이면 `aria-label`에도 \"검색\" 포함",
+                "`aria-label=\"사이트 내 검색\"` ✅ (시각적 텍스트 \"검색\" 포함)",
+                "`aria-label=\"찾기\"` ❌ (시각적 텍스트 \"검색\"과 불일치)"
+              ]
+            },
+            {
+              "id": "2.5.4",
+              "name": "동작 활성화",
+              "nameEn": "Motion Actuation",
+              "level": "A",
+              "isNew": false,
+              "desc": "기기 동작이나 사용자 동작으로 조작 가능한 기능은 UI로도 조작 가능해야 하며, 우발적 활성화 방지를 위해 비활성화 가능. 동작이 필수적인 경우 예외."
+            },
+            {
+              "id": "2.5.5",
+              "name": "터치 타겟 크기",
+              "nameEn": "향상) (Target Size - Enhanced",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "포인터 입력의 타겟 크기 최소 44×44 CSS px. 예외: 인라인, 사용자 에이전트, 필수적, 동등한 대안"
+            },
+            {
+              "id": "2.5.6",
+              "name": "동시 입력 메커니즘",
+              "nameEn": "Concurrent Input Mechanisms",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "플랫폼에서 사용 가능한 입력 방식의 사용을 제한하지 않음 (예: 터치 + 키보드 동시 사용)"
+            },
+            {
+              "id": "2.5.7",
+              "name": "드래그 동작",
+              "nameEn": "Dragging Movements",
+              "level": "AA",
+              "isNew": true,
+              "desc": "드래그 동작으로 조작 가능한 기능은 드래그 없는 단일 포인터 대안도 제공해야 한다. 드래그가 필수적이거나 사용자 에이전트 결정인 경우 예외.",
+              "components": [
+                "드래그 앤 드롭 리스트: 위/아래 이동 버튼 대안 제공",
+                "슬라이더: 드래그 + 클릭으로 값 변경 가능",
+                "좌석 선택 등: 드래그 외 단일 클릭/탭 방식 제공"
+              ]
+            },
+            {
+              "id": "2.5.8",
+              "name": "터치 타겟 크기",
+              "nameEn": "최소) (Target Size - Minimum",
+              "level": "AA",
+              "isNew": true,
+              "desc": "포인터 입력의 타겟 크기 최소 24×24 CSS px. 또는 인접 타겟과 충분한 간격 확보.",
+              "exceptions": [
+                "간격 예외: 24px 지름 원을 타겟 중심에 그렸을 때 다른 타겟과 겹치지 않으면 OK",
+                "인라인: 문장이나 텍스트 줄 내의 타겟",
+                "사용자 에이전트: 작성자가 수정하지 않은 사용자 에이전트 기본 크기",
+                "필수적: 특정 표현이 필수적인 경우"
+              ],
+              "components": [
+                "모든 버튼, 링크, 입력: 최소 24×24px 또는 충분한 간격",
+                "작은 아이콘 버튼: 클릭 영역을 padding으로 확보",
+                "모바일에서 특히 중요"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "이해의 용이성",
+      "nameEn": "Understandable",
+      "desc": "정보와 UI의 조작이 이해 가능해야 한다.",
+      "guidelines": [
+        {
+          "id": "3.1",
+          "name": "읽기 가능",
+          "nameEn": "Readable",
+          "desc": "텍스트 콘텐츠를 읽기 쉽고 이해 가능하게 한다.",
+          "criteria": [
+            {
+              "id": "3.1.1",
+              "name": "페이지 언어",
+              "nameEn": "Language of Page",
+              "level": "A",
+              "isNew": false,
+              "desc": "각 웹 페이지의 기본 자연어를 프로그래밍 방식으로 결정할 수 있어야 함",
+              "components": [
+                "`<html lang=\"ko\">` 필수",
+                "스크린리더가 올바른 언어로 읽기 위해 필요"
+              ]
+            },
+            {
+              "id": "3.1.2",
+              "name": "부분 언어",
+              "nameEn": "Language of Parts",
+              "level": "AA",
+              "isNew": false,
+              "desc": "고유명사, 기술 용어 등을 제외하고, 콘텐츠 내 각 구절이나 문장의 자연어를 프로그래밍 방식으로 결정 가능",
+              "components": [
+                "영어 단어/문장에 `lang=\"en\"` 추가",
+                "`<span lang=\"en\">accessibility</span>`"
+              ]
+            },
+            {
+              "id": "3.1.3",
+              "name": "일반적이지 않은 단어",
+              "nameEn": "Unusual Words",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "관용어나 전문용어를 포함한 일반적이지 않은 방식의 단어나 구절의 의미를 식별하는 메커니즘 제공"
+            },
+            {
+              "id": "3.1.4",
+              "name": "약어",
+              "nameEn": "Abbreviations",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "약어의 확장 형태나 의미를 식별하는 메커니즘 제공"
+            },
+            {
+              "id": "3.1.5",
+              "name": "읽기 수준",
+              "nameEn": "Reading Level",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "고유명사와 제목을 제외하고, 텍스트가 중학교 수준 이상의 읽기 능력을 요구하는 경우 보충 콘텐츠 제공"
+            },
+            {
+              "id": "3.1.6",
+              "name": "발음",
+              "nameEn": "Pronunciation",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "발음을 알지 못하면 의미가 모호한 단어의 구체적인 발음을 식별하는 메커니즘 제공"
+            }
+          ]
+        },
+        {
+          "id": "3.2",
+          "name": "예측 가능",
+          "nameEn": "Predictable",
+          "desc": "웹 페이지가 예측 가능하게 나타나고 작동하게 한다.",
+          "criteria": [
+            {
+              "id": "3.2.1",
+              "name": "포커스 시",
+              "nameEn": "On Focus",
+              "level": "A",
+              "isNew": false,
+              "desc": "컴포넌트가 포커스를 받을 때 맥락의 변경이 일어나지 않아야 함",
+              "components": [
+                "포커스만으로 새 창 열기 ❌",
+                "포커스만으로 폼 제출 ❌",
+                "포커스만으로 콘텐츠 변경 ❌"
+              ]
+            },
+            {
+              "id": "3.2.2",
+              "name": "입력 시",
+              "nameEn": "On Input",
+              "level": "A",
+              "isNew": false,
+              "desc": "설정 변경이 맥락의 변경을 일으키는 경우, 사용자에게 사전 안내하거나 사용자가 그 변경을 끌 수 있어야 함",
+              "components": [
+                "Select 변경만으로 페이지 이동 ❌ → \"이동\" 버튼 추가 또는 사전 안내",
+                "체크박스 변경만으로 폼 제출 ❌"
+              ]
+            },
+            {
+              "id": "3.2.3",
+              "name": "일관된 네비게이션",
+              "nameEn": "Consistent Navigation",
+              "level": "AA",
+              "isNew": false,
+              "desc": "여러 페이지에 반복되는 네비게이션 메커니즘은 동일한 상대적 순서 유지"
+            },
+            {
+              "id": "3.2.4",
+              "name": "일관된 식별",
+              "nameEn": "Consistent Identification",
+              "level": "AA",
+              "isNew": false,
+              "desc": "동일한 기능의 컴포넌트는 일관되게 식별됨"
+            },
+            {
+              "id": "3.2.5",
+              "name": "요청에 의한 변경",
+              "nameEn": "Change on Request",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "맥락의 변경은 사용자 요청에 의해서만 발생하거나, 끌 수 있어야 함"
+            },
+            {
+              "id": "3.2.6",
+              "name": "일관된 도움말",
+              "nameEn": "Consistent Help",
+              "level": "A",
+              "isNew": true,
+              "desc": "여러 웹 페이지에 걸쳐 도움말 메커니즘(연락처, 자동 채팅, FAQ 등)이 반복되는 경우, 동일한 상대적 순서에 위치해야 한다.",
+              "components": [
+                "전화번호, 채팅 버튼 등 도움말이 헤더에 있으면 모든 페이지에서 같은 위치",
+                "소스 순서(DOM 순서) 기준"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "3.3",
+          "name": "입력 지원",
+          "nameEn": "Input Assistance",
+          "desc": "사용자가 실수를 피하고 교정할 수 있도록 돕는다.",
+          "criteria": [
+            {
+              "id": "3.3.1",
+              "name": "오류 식별",
+              "nameEn": "Error Identification",
+              "level": "A",
+              "isNew": false,
+              "desc": "입력 오류가 자동으로 감지되면, 오류 항목이 식별되고 사용자에게 텍스트로 설명됨",
+              "components": [
+                "`aria-invalid=\"true\"` 설정",
+                "`aria-errormessage` 또는 `aria-describedby`로 오류 메시지 연결",
+                "오류 요약 제공 시 포커스 이동"
+              ]
+            },
+            {
+              "id": "3.3.2",
+              "name": "레이블 또는 지시문",
+              "nameEn": "Labels or Instructions",
+              "level": "A",
+              "isNew": false,
+              "desc": "사용자 입력이 필요한 콘텐츠에 레이블이나 지시문 제공",
+              "components": [
+                "모든 입력 필드에 `<label>` 연결",
+                "형식 힌트: \"YYYY-MM-DD\" 등 `aria-describedby`로 연결",
+                "필수 필드 표시 + 상단에 필수 표시 설명"
+              ]
+            },
+            {
+              "id": "3.3.3",
+              "name": "오류 제안",
+              "nameEn": "Error Suggestion",
+              "level": "AA",
+              "isNew": false,
+              "desc": "입력 오류가 자동 감지되고 수정 제안이 가능하면, 사용자에게 제안 제공. 보안이나 목적에 위배되지 않는 한."
+            },
+            {
+              "id": "3.3.4",
+              "name": "오류 방지",
+              "nameEn": "법적, 재정적, 데이터) (Error Prevention",
+              "level": "AA",
+              "isNew": false,
+              "desc": "법적 의무/재정적 거래/데이터 변경/테스트 답변 제출 시:\n- 되돌리기 가능 또는\n- 확인 가능 또는\n- 검토 후 수정 기회 제공"
+            },
+            {
+              "id": "3.3.5",
+              "name": "도움말",
+              "nameEn": "Help",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "맥락에 맞는 도움말 제공"
+            },
+            {
+              "id": "3.3.6",
+              "name": "오류 방지",
+              "nameEn": "전체) (Error Prevention - All",
+              "level": "AAA",
+              "isNew": false,
+              "desc": "사용자가 정보를 제출하는 모든 경우: 되돌리기, 확인, 또는 검토 가능"
+            },
+            {
+              "id": "3.3.7",
+              "name": "중복 입력",
+              "nameEn": "Redundant Entry",
+              "level": "A",
+              "isNew": true,
+              "desc": "사용자가 이전에 입력하거나 제공한 정보가 같은 프로세스에서 다시 필요한 경우:\n- 자동 채움되거나\n- 사용자가 선택 가능하게 제공",
+              "components": [
+                "다단계 폼: 이전 단계 정보를 다음 단계에 자동 채움",
+                "배송 주소 = 청구 주소 체크박스",
+                "항공 예약: 탑승객 연락처 → 결제 연락처 자동 채움 옵션"
+              ]
+            },
+            {
+              "id": "3.3.8",
+              "name": "접근 가능한 인증",
+              "nameEn": "최소) (Accessible Authentication - Minimum",
+              "level": "AA",
+              "isNew": true,
+              "desc": "인증 프로세스에 인지 기능 테스트(퍼즐, 기억, 변환 등)가 있는 경우:\n- 대안 인증 방법 제공 또는\n- 인지 기능 테스트를 완료하도록 돕는 메커니즘 제공",
+              "components": [
+                "비밀번호: 비밀번호 관리자 사용 허용 (붙여넣기 차단 ❌)",
+                "CAPTCHA: 대안 방법 제공 (오디오, 이메일 인증 등)",
+                "2차 인증: SMS 코드 붙여넣기 허용"
+              ]
+            },
+            {
+              "id": "3.3.9",
+              "name": "접근 가능한 인증",
+              "nameEn": "향상) (Accessible Authentication - Enhanced",
+              "level": "AAA",
+              "isNew": true,
+              "desc": "3.3.8과 동일하되, 객체 인식과 사용자 제공 콘텐츠 인식 예외도 허용하지 않음"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "견고성",
+      "nameEn": "Robust",
+      "desc": "콘텐츠가 보조 기술을 포함한 다양한 사용자 에이전트에 의해 해석 가능할 만큼 견고해야 한다.",
+      "guidelines": [
+        {
+          "id": "4.1",
+          "name": "호환 가능",
+          "nameEn": "Compatible",
+          "desc": "보조 기술을 포함한 현재 및 미래의 사용자 에이전트와의 호환성을 최대화한다.",
+          "criteria": [
+            {
+              "id": "4.1.1",
+              "name": "구문 분석",
+              "nameEn": "Parsing",
+              "level": "폐기",
+              "isNew": false,
+              "deprecated": true,
+              "desc": "폐기 및 제거됨. 현대 브라우저가 자동으로 처리하므로 더 이상 필요하지 않다. WCAG 2.2에서 폐기됨. 현대 브라우저가 구문 분석 오류를 견고하게 처리하므로, 보조 기술이 직접 HTML을 파싱할 필요가 없어짐."
+            },
+            {
+              "id": "4.1.2",
+              "name": "이름, 역할, 값",
+              "nameEn": "Name, Role, Value",
+              "level": "A",
+              "isNew": false,
+              "desc": "모든 UI 컴포넌트에 대해 이름과 역할을 프로그래밍 방식으로 결정할 수 있고, 상태, 속성, 값을 프로그래밍 방식으로 설정할 수 있으며, 이러한 항목의 변경 알림을 사용자 에이전트(보조 기술 포함)가 받을 수 있어야 한다.",
+              "components": [
+                "**이름(Name):** `<label>`, `aria-label`, `aria-labelledby`",
+                "**역할(Role):** 시맨틱 HTML 요소 사용 또는 `role` 속성",
+                "**값(Value):** `aria-checked`, `aria-expanded`, `aria-selected`, `aria-valuenow` 등",
+                "**상태 변경:** JavaScript로 ARIA 속성 동적 업데이트",
+                "커스텀 컴포넌트는 반드시 위 정보를 모두 제공해야 함"
+              ]
+            },
+            {
+              "id": "4.1.3",
+              "name": "상태 메시지",
+              "nameEn": "Status Messages",
+              "level": "AA",
+              "isNew": false,
+              "desc": "마크업 언어로 구현된 상태 메시지는 역할이나 속성을 통해 프로그래밍 방식으로 결정 가능하여, 포커스를 받지 않아도 보조 기술에 의해 사용자에게 전달될 수 있어야 한다.",
+              "components": [
+                "검색 결과 수: `role=\"status\"` + `aria-live=\"polite\"`",
+                "장바구니 추가 알림: `role=\"status\"`",
+                "오류 알림: `role=\"alert\"` (assertive)",
+                "로딩 상태: `role=\"status\"` + `aria-busy=\"true\"`",
+                "Toast/Snackbar: `role=\"status\"` 또는 `role=\"alert\"`"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

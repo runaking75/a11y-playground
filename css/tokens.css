@@ -1,0 +1,56 @@
+/* ═══════════════════════════════════════
+   A11y Playground — Design Tokens
+   공통 토큰 (프레임 + 컴포넌트 공유)
+   ═══════════════════════════════════════ */
+
+:root {
+  /* ── Gray Scale ── */
+  --gray-50:  #FAFAFA;
+  --gray-100: #F5F5F5;
+  --gray-200: #EEEEEE;
+  --gray-300: #E0E0E0;
+  --gray-400: #BDBDBD;
+  --gray-500: #9E9E9E;
+  --gray-600: #757575;   /* 본문 최소 컬러 (AA 4.6:1) */
+  --gray-700: #616161;
+  --gray-800: #424242;
+  --gray-900: #1A1A1A;
+  --white:    #FFFFFF;
+
+  /* ── 상태 컬러 ── */
+  --success:  #22C55E;
+  --warning:  #EAB308;
+  --error:    #EF4444;
+
+  /* ── 폰트 서체 ── */
+  --font-display: 'Outfit', sans-serif;
+  --font-body:    'Noto Sans KR', sans-serif;
+  --font-mono:    'Fira Code', monospace;
+
+  /* ── 폰트 사이즈 ── */
+  --text-xs:   11px;
+  --text-sm:   12px;
+  --text-md:   13px;
+  --text-base: 14px;
+  --text-lg:   16px;
+  --text-xl:   20px;
+  --text-2xl:  28px;
+  --text-3xl:  36px;
+  --text-4xl:  40px;
+
+  /* ── 간격 ── */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  32px;
+  --space-2xl: 40px;
+  --space-3xl: 48px;
+  --space-4xl: 56px;
+
+  /* ── 라운드 ── */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+}

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A11y Playground</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/framework.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+<!-- ══ Header ══ -->
+<header class="ap-header">
+  <div class="ap-header__title">A11y Playground</div>
+  <div class="ap-header__search">
+    <span class="material-icons-outlined" style="font-size:18px">search</span>
+    Search documentation...
+    <kbd>Ctrl K</kbd>
+  </div>
+</header>
+
+<!-- ══ Sidebar (동적 렌더링) ══ -->
+<aside class="ap-sidebar"></aside>
+
+<!-- ══ Main ══ -->
+<main class="ap-main">
+
+  <!-- Page Header -->
+  <div class="ap-page-header">
+    <div class="ap-breadcrumb">
+      <a href="#">컴포넌트</a> &nbsp;›&nbsp; Button
+    </div>
+    <h1 class="ap-page-title">Button</h1>
+    <p class="ap-page-desc">
+      사용자 동작을 트리거하는 인터랙티브 요소. 클릭, 탭 또는 키보드로 활성화 가능해야 합니다.
+    </p>
+    <div class="ap-page-tags">
+      <span class="ap-tag ap-tag--wcag">SC 4.1.2</span>
+      <span class="ap-tag ap-tag--wcag">SC 2.1.1</span>
+      <span class="ap-tag ap-tag--wcag">SC 2.4.7</span>
+      <span class="ap-tag ap-tag--wcag">SC 2.5.8</span>
+      <span class="ap-tag ap-tag--kwcag">KWCAG 5.3.1</span>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="ap-tabs">
+    <button class="ap-tabs__btn is-active" data-tab="playground">Playground</button>
+    <button class="ap-tabs__btn" data-tab="guide">가이드</button>
+    <button class="ap-tabs__btn" data-tab="code">코드</button>
+  </div>
+
+  <!-- Content -->
+  <div class="ap-content">
+
+    <!-- ══ Playground Tab ══ -->
+    <div class="ap-playground is-active" data-content="playground">
+      <div class="ap-preview">
+
+        <!-- Preview Canvas -->
+        <div class="ap-preview__canvas">
+          <div class="ap-preview__mode">
+            <button class="ap-preview__mode-btn is-active">Light DOM</button>
+            <button class="ap-preview__mode-btn">Shadow DOM</button>
+          </div>
+
+          <div class="ap-preview__label">Filled</div>
+          <div class="ap-preview__row">
+            <button type="button" class="btn btn-filled" data-component="button">확인</button>
+            <button type="button" class="btn btn-filled" data-component="button">
+              <span class="material-icons-outlined" style="font-size:18px">send</span>
+              전송
+            </button>
+            <button type="button" class="btn btn-disabled" data-component="button" disabled>비활성화</button>
+          </div>
+
+          <div class="ap-preview__label">Outlined</div>
+          <div class="ap-preview__row">
+            <button type="button" class="btn btn-outlined" data-component="button">취소</button>
+            <button type="button" class="btn btn-outlined" data-component="button">
+              <span class="material-icons-outlined" style="font-size:18px">edit</span>
+              수정
+            </button>
+          </div>
+
+          <div class="ap-preview__label">Text</div>
+          <div class="ap-preview__row">
+            <button type="button" class="btn btn-text" data-component="button">더 보기</button>
+            <button type="button" class="btn btn-text" data-component="button">
+              <span class="material-icons-outlined" style="font-size:18px">delete_outline</span>
+              삭제
+            </button>
+          </div>
+        </div>
+
+        <!-- ARIA Viewer -->
+        <div class="ap-aria-viewer">
+          <span class="ap-aria-viewer__label">ARIA</span>
+          <div class="ap-aria-viewer__code">
+            <span class="ap-aria-tag">&lt;button</span> <span class="ap-aria-attr">type</span>=<span class="ap-aria-val">"button"</span><span class="ap-aria-tag">&gt;</span>확인<span class="ap-aria-tag">&lt;/button&gt;</span>
+          </div>
+        </div>
+
+        <!-- 스크린리더 발화 텍스트 -->
+        <div class="ap-section" data-section="speech">
+          <h2 class="ap-section__title">스크린리더 발화 텍스트</h2>
+        </div>
+      </div>
+
+      <!-- Control Panel (동적 렌더링) -->
+      <div class="ap-control"></div>
+    </div>
+
+    <!-- ══ 가이드 Tab ══ -->
+    <div class="ap-guide" data-content="guide">
+      <div class="ap-guide__body">
+        <div class="ap-guide__content">
+          <div class="ap-section" data-section="standards" id="guide-standards">
+            <h2 class="ap-section__title">적용 기준</h2>
+            <table class="ap-table">
+              <thead>
+                <tr><th>기준</th><th>항목</th><th>설명</th><th>레벨</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="ap-std ap-std--wcag">WCAG 2.2</span></td>
+                  <td>SC 4.1.2 이름, 역할, 값</td>
+                  <td class="ap-td-desc">모든 UI 컴포넌트의 이름과 역할은 프로그래밍 방식으로 결정 가능해야 함</td>
+                  <td><span class="ap-level ap-level--a">A</span></td>
+                </tr>
+                <tr>
+                  <td><span class="ap-std ap-std--wcag">WCAG 2.2</span></td>
+                  <td>SC 2.1.1 키보드</td>
+                  <td class="ap-td-desc">모든 기능은 키보드 인터페이스를 통해 조작 가능해야 함</td>
+                  <td><span class="ap-level ap-level--a">A</span></td>
+                </tr>
+                <tr>
+                  <td><span class="ap-std ap-std--wcag">WCAG 2.2</span></td>
+                  <td>SC 2.4.7 포커스 표시</td>
+                  <td class="ap-td-desc">키보드 포커스를 받은 요소는 시각적으로 명확히 표시되어야 함</td>
+                  <td><span class="ap-level ap-level--aa">AA</span></td>
+                </tr>
+                <tr>
+                  <td><span class="ap-std ap-std--wcag">WCAG 2.2</span></td>
+                  <td>SC 2.5.8 대상 크기 (최소)</td>
+                  <td class="ap-td-desc">터치 대상의 크기가 최소 24×24 CSS 픽셀 이상이어야 함</td>
+                  <td><span class="ap-level ap-level--aa">AA</span></td>
+                </tr>
+                <tr>
+                  <td><span class="ap-std ap-std--kwcag">KWCAG 2.2</span></td>
+                  <td>5.3.1 콘텐츠의 기능성</td>
+                  <td class="ap-td-desc">콘텐츠는 기능성을 가지며, 사용자가 접근 가능한 방식으로 제공되어야 함</td>
+                  <td><span class="ap-level ap-level--kwcag">—</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="ap-section" data-section="roles" id="guide-roles">
+            <h2 class="ap-section__title">Role, 속성, 상태</h2>
+            <table class="ap-table">
+              <thead>
+                <tr><th>Role</th><th>속성 / 상태</th><th>요소</th><th>설명</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>button</code></td>
+                  <td></td>
+                  <td><code>div</code>, <code>a</code></td>
+                  <td>
+                    <ul class="ap-td-list">
+                      <li>요소를 버튼 위젯으로 식별</li>
+                      <li>접근 가능한 이름은 요소의 텍스트 콘텐츠로 정의</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><code>tabindex="0"</code></td>
+                  <td><code>div</code>, <code>a</code></td>
+                  <td>
+                    <ul class="ap-td-list">
+                      <li>탭 순서에 요소를 포함</li>
+                      <li><code>href</code> 속성이 없는 <code>a</code> 요소에 필수</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><code>aria-pressed="false"</code></td>
+                  <td><code>a</code></td>
+                  <td>
+                    <ul class="ap-td-list">
+                      <li>토글 버튼으로 식별</li>
+                      <li>버튼이 눌리지 않은 상태임을 전달</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><code>aria-pressed="true"</code></td>
+                  <td><code>a</code></td>
+                  <td>
+                    <ul class="ap-td-list">
+                      <li>토글 버튼으로 식별</li>
+                      <li>버튼이 눌린 상태임을 전달</li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="ap-section" data-section="compare" id="guide-compare">
+            <h2 class="ap-section__title">네이티브 vs ARIA</h2>
+            <div class="ap-compare">
+              <div class="ap-compare__col">
+                <div class="ap-compare__label">네이티브</div>
+                <div class="ap-compare__code">
+                  &lt;button disabled&gt;확인&lt;/button&gt;
+                </div>
+                <div class="ap-compare__desc">
+                  <span class="material-icons-outlined ap-desc--warn">warning</span>
+                  포커스 불가, 폼 전송 제외
+                </div>
+              </div>
+              <div class="ap-compare__col">
+                <div class="ap-compare__label">ARIA</div>
+                <div class="ap-compare__code">
+                  &lt;button aria-disabled="true"&gt;확인&lt;/button&gt;
+                </div>
+                <div class="ap-compare__desc">
+                  <span class="material-icons-outlined ap-desc--good">check_circle</span>
+                  포커스 가능, 스크린리더에 비활성화 전달
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ap-section" data-section="keyboard" id="guide-keyboard">
+            <h2 class="ap-section__title">키보드 인터랙션</h2>
+            <table class="ap-table">
+              <thead>
+                <tr><th>Key</th><th>Action</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><kbd>Tab</kbd></td><td>버튼으로 포커스 이동</td></tr>
+                <tr><td><kbd>Shift</kbd> + <kbd>Tab</kbd></td><td>이전 요소로 포커스 이동</td></tr>
+                <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>버튼 활성화</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="ap-section" data-section="dodont" id="guide-dodont">
+            <h2 class="ap-section__title">Do / Don't</h2>
+            <div class="ap-dodont">
+              <div class="ap-dodont__do">
+                <div class="ap-dodont__label ap-dodont__label--do">
+                  <span class="material-icons-outlined">check_circle</span> Do
+                </div>
+                <div class="ap-dodont__code">&lt;button type="button"&gt;
+  확인
+&lt;/button&gt;</div>
+                <div class="ap-dodont__note">네이티브 button 요소 사용 권장</div>
+              </div>
+              <div class="ap-dodont__dont">
+                <div class="ap-dodont__label ap-dodont__label--dont">
+                  <span class="material-icons-outlined">cancel</span> Don't
+                </div>
+                <div class="ap-dodont__code">&lt;div class="btn" onclick="submit()"&gt;
+  확인
+&lt;/div&gt;
+&lt;!-- role, tabindex, 키보드 이벤트 누락 --&gt;</div>
+                <div class="ap-dodont__note">div 요소를 버튼으로 사용할 경우 role, tabindex, 키보드 이벤트를 반드시 추가해야 합니다.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ap-section" data-section="checklist" id="guide-checklist">
+            <h2 class="ap-section__title">접근성 체크리스트</h2>
+            <div class="ap-checklist__item">
+              <div class="ap-checklist__box"></div>
+              <span><code>&lt;button&gt;</code> 네이티브 요소 사용 또는 <code>role="button"</code> 적용</span>
+            </div>
+            <div class="ap-checklist__item">
+              <div class="ap-checklist__box"></div>
+              <span><kbd>Enter</kbd>와 <kbd>Space</kbd>로 활성화 가능</span>
+            </div>
+            <div class="ap-checklist__item">
+              <div class="ap-checklist__box"></div>
+              <span>포커스 표시가 시각적으로 명확 (SC 2.4.7)</span>
+            </div>
+            <div class="ap-checklist__item">
+              <div class="ap-checklist__box"></div>
+              <span>비활성화 시 <code>aria-disabled="true"</code> 또는 <code>disabled</code> 속성 적용</span>
+            </div>
+            <div class="ap-checklist__item">
+              <div class="ap-checklist__box"></div>
+              <span>접근 가능한 이름 제공 (텍스트 레이블 또는 <code>aria-label</code>)</span>
+            </div>
+            <div class="ap-checklist__item">
+              <div class="ap-checklist__box"></div>
+              <span>터치 대상 크기 최소 24×24px (SC 2.5.8)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 앵커 목차 -->
+        <nav class="ap-guide__toc">
+          <div class="ap-guide__toc-title">목차</div>
+          <a href="#guide-standards" class="ap-guide__toc-link is-active">적용 기준</a>
+          <a href="#guide-roles" class="ap-guide__toc-link">Role, 속성, 상태</a>
+          <a href="#guide-compare" class="ap-guide__toc-link">네이티브 vs ARIA</a>
+          <a href="#guide-keyboard" class="ap-guide__toc-link">키보드 인터랙션</a>
+          <a href="#guide-dodont" class="ap-guide__toc-link">Do / Don't</a>
+          <a href="#guide-checklist" class="ap-guide__toc-link">접근성 체크리스트</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ══ 코드 Tab ══ -->
+    <div class="ap-code" data-content="code">
+      <div class="ap-code-toolbar">
+        <span class="ap-code-toolbar__name">button.html</span>
+        <button class="ap-code-copy">
+          <span class="material-icons-outlined" style="font-size:14px">content_copy</span>
+          복사
+        </button>
+      </div>
+      <div class="ap-code-block">
+<pre><span class="ap-c-cmt">&lt;!-- 기본 버튼 --&gt;</span>
+<span class="ap-c-tag">&lt;button</span> <span class="ap-c-attr">type</span>=<span class="ap-c-str">"button"</span><span class="ap-c-tag">&gt;</span>확인<span class="ap-c-tag">&lt;/button&gt;</span>
+
+<span class="ap-c-cmt">&lt;!-- 아이콘 포함 버튼 --&gt;</span>
+<span class="ap-c-tag">&lt;button</span> <span class="ap-c-attr">type</span>=<span class="ap-c-str">"button"</span><span class="ap-c-tag">&gt;</span>
+  <span class="ap-c-tag">&lt;svg</span> <span class="ap-c-attr">aria-hidden</span>=<span class="ap-c-str">"true"</span><span class="ap-c-tag">&gt;</span>...<span class="ap-c-tag">&lt;/svg&gt;</span>
+  전송
+<span class="ap-c-tag">&lt;/button&gt;</span>
+
+<span class="ap-c-cmt">&lt;!-- 아이콘 전용 버튼 --&gt;</span>
+<span class="ap-c-tag">&lt;button</span> <span class="ap-c-attr">type</span>=<span class="ap-c-str">"button"</span> <span class="ap-c-attr">aria-label</span>=<span class="ap-c-str">"닫기"</span><span class="ap-c-tag">&gt;</span>
+  <span class="ap-c-tag">&lt;svg</span> <span class="ap-c-attr">aria-hidden</span>=<span class="ap-c-str">"true"</span><span class="ap-c-tag">&gt;</span>...<span class="ap-c-tag">&lt;/svg&gt;</span>
+<span class="ap-c-tag">&lt;/button&gt;</span>
+
+<span class="ap-c-cmt">&lt;!-- 비활성화 버튼 --&gt;</span>
+<span class="ap-c-tag">&lt;button</span> <span class="ap-c-attr">type</span>=<span class="ap-c-str">"button"</span> <span class="ap-c-attr">disabled</span><span class="ap-c-tag">&gt;</span>비활성화<span class="ap-c-tag">&lt;/button&gt;</span>
+
+<span class="ap-c-cmt">&lt;!-- div를 버튼으로 사용 (비권장) --&gt;</span>
+<span class="ap-c-tag">&lt;div</span> <span class="ap-c-attr">role</span>=<span class="ap-c-str">"button"</span> <span class="ap-c-attr">tabindex</span>=<span class="ap-c-str">"0"</span><span class="ap-c-tag">&gt;</span>확인<span class="ap-c-tag">&lt;/div&gt;</span></pre>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ Guide Page View (가이드 전용) ══ -->
+  <div class="ap-guide-page" style="display:none">
+    <div class="ap-guide-page__body">
+      <div class="ap-guide-page__content"></div>
+      <div class="ap-guide-page__toc">
+        <div class="ap-guide-page__toc-title">목차</div>
+        <div class="ap-guide-page__toc-list"></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══ JS ══ -->
+<script src="js/engine/renderer.js"></script>
+<script src="js/engine/controls.js"></script>
+<script src="js/engine/aria-viewer.js"></script>
+<script src="js/engine/speech.js"></script>
+<script src="js/engine/editable.js"></script>
+<script src="js/engine/shadow-dom.js"></script>
+<script src="js/engine/element-manager.js"></script>
+<script src="js/components/accordion.js"></script>
+<script src="js/components/tabs.js"></script>
+<script src="js/components/dialog.js"></script>
+<script src="js/guide-renderer.js"></script>
+<script src="js/card-grid.js"></script>
+<script src="js/search.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/router.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

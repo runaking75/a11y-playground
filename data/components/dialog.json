@@ -1,0 +1,200 @@
+{
+  "id": "dialog",
+  "name": "Dialog / Modal",
+  "description": "페이지 위에 오버레이로 표시되는 대화 상자. 포커스 트랩, 배경 비활성화, ESC 닫기가 필수입니다.",
+  "status": "pass",
+  "tags": [
+    {
+      "type": "wcag",
+      "text": "SC 4.1.2"
+    },
+    {
+      "type": "wcag",
+      "text": "SC 2.1.1"
+    },
+    {
+      "type": "wcag",
+      "text": "SC 2.1.2"
+    },
+    {
+      "type": "wcag",
+      "text": "SC 2.4.3"
+    },
+    {
+      "type": "kwcag",
+      "text": "KWCAG 6.1.1"
+    }
+  ],
+  "related": [
+    {
+      "id": "tooltip",
+      "name": "Tooltip"
+    },
+    {
+      "id": "button",
+      "name": "Button"
+    }
+  ],
+  "playground": {
+    "addable": false,
+    "previewHtml": "<div class=\"ap-preview__row\"><button type=\"button\" class=\"btn btn-filled\" data-component=\"button\" data-no-edit id=\"dialog-trigger\">다이얼로그 열기</button></div><div class=\"dialog-overlay\" id=\"dialog-overlay\" style=\"display:none\"><div class=\"dialog\" id=\"demo-dialog\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"dlg-title\" data-component=\"dialog\"><div class=\"dialog__header\"><h2 class=\"dialog__title\" id=\"dlg-title\">확인</h2><button type=\"button\" class=\"dialog__close\" aria-label=\"닫기\">&times;</button></div><div class=\"dialog__body\"><p>변경사항을 저장하시겠습니까?</p></div><div class=\"dialog__footer\"><button type=\"button\" class=\"btn btn-outlined dialog__cancel\">취소</button><button type=\"button\" class=\"btn btn-filled dialog__confirm\">저장</button></div></div></div>",
+    "controls": [],
+    "colorPresets": [
+      {
+        "name": "Default",
+        "bg": "#FFFFFF",
+        "text": "#1A1A1A",
+        "border": "#E0E0E0"
+      }
+    ],
+    "aria": [
+      {
+        "part": "다이얼로그",
+        "attrs": [
+          {
+            "type": "fixed",
+            "attr": "role",
+            "value": "dialog"
+          },
+          {
+            "type": "toggle",
+            "attr": "aria-modal",
+            "default": false
+          },
+          {
+            "type": "toggle",
+            "attr": "aria-labelledby",
+            "default": false
+          },
+          {
+            "type": "toggle",
+            "attr": "aria-describedby",
+            "default": false
+          }
+        ]
+      }
+    ],
+    "compare": {
+      "native": {
+        "label": "네이티브 <dialog>",
+        "code": "<dialog id=\"dlg\">\n  <p>내용</p>\n  <button>닫기</button>\n</dialog>\n<script>\n  dlg.showModal();\n</script>",
+        "desc": "네이티브 dialog, 포커스 트랩 내장",
+        "descType": "good"
+      },
+      "aria": {
+        "label": "ARIA dialog",
+        "code": "<div role=\"dialog\"\n  aria-modal=\"true\"\n  aria-labelledby=\"title\">\n  <h2 id=\"title\">제목</h2>\n  <p>내용</p>\n  <button>닫기</button>\n</div>",
+        "desc": "포커스 트랩 + ESC 닫기 + 배경 비활성화 직접 구현",
+        "descType": "warn"
+      }
+    },
+    "speech": {
+      "columns": [
+        "열림 시"
+      ],
+      "patterns": {
+        "jaws": {
+          "열림 시": "확인 대화상자, {label}"
+        },
+        "nvda": {
+          "열림 시": "확인 대화상자, {label}"
+        },
+        "voiceover": {
+          "열림 시": "확인, 대화상자"
+        },
+        "talkback": {
+          "열림 시": "확인, 대화상자"
+        }
+      }
+    },
+    "keyboard": [
+      {
+        "key": "Tab",
+        "action": "다이얼로그 내부에서 포커스 순환 (트랩)"
+      },
+      {
+        "key": "Escape",
+        "action": "다이얼로그 닫기"
+      },
+      {
+        "key": "Enter",
+        "action": "기본 버튼 활성화"
+      }
+    ]
+  },
+  "guide": {
+    "standards": [
+      {
+        "std": "wcag",
+        "stdLabel": "WCAG 2.2",
+        "item": "SC 2.1.2 키보드 트랩 없음",
+        "desc": "다이얼로그 내 포커스 트랩은 허용되나, ESC로 탈출 가능해야 함",
+        "level": "A"
+      },
+      {
+        "std": "wcag",
+        "stdLabel": "WCAG 2.2",
+        "item": "SC 2.4.3 포커스 순서",
+        "desc": "다이얼로그 열릴 때 포커스가 다이얼로그로 이동해야 함",
+        "level": "A"
+      }
+    ],
+    "roles": [
+      {
+        "role": "dialog",
+        "attr": "aria-modal=\"true\"",
+        "element": "div, dialog",
+        "desc": [
+          "모달 다이얼로그 식별",
+          "배경 콘텐츠 접근 차단"
+        ]
+      },
+      {
+        "role": "alertdialog",
+        "attr": "aria-modal=\"true\"",
+        "element": "div",
+        "desc": [
+          "긴급 확인 대화상자",
+          "사용자 응답 필수 시 사용"
+        ]
+      }
+    ],
+    "doDont": [
+      {
+        "do": {
+          "code": "<dialog id=\"dlg\">\n  <h2>확인</h2>\n  <p>저장하시겠습니까?</p>\n  <button>닫기</button>\n</dialog>",
+          "image": "",
+          "note": "네이티브 dialog + showModal() 사용"
+        },
+        "dont": {
+          "code": "<div class=\"modal\" style=\"display:block\">\n  <div class=\"content\">\n    <p>저장하시겠습니까?</p>\n  </div>\n</div>",
+          "image": "",
+          "comment": "role 없음, 포커스 트랩 없음, ESC 없음",
+          "note": "div 모달은 포커스 트랩, ESC 닫기, 배경 비활성화를 모두 직접 구현해야 합니다."
+        }
+      }
+    ],
+    "checklist": [
+      "<code>&lt;dialog&gt;</code> 네이티브 요소 또는 <code>role=\"dialog\"</code> 사용",
+      "<code>aria-modal=\"true\"</code>로 모달 명시",
+      "<code>aria-labelledby</code>로 제목 연결",
+      "열릴 때 포커스가 다이얼로그 내부로 이동",
+      "Tab 키로 포커스 순환 (트랩)",
+      "<kbd>Escape</kbd>로 닫기 가능",
+      "닫힐 때 트리거 요소로 포커스 복귀"
+    ]
+  },
+  "code": {
+    "filename": "dialog.html",
+    "snippets": [
+      {
+        "label": "네이티브 dialog",
+        "code": "<button onclick=\"dlg.showModal()\">\n  열기\n</button>\n<dialog id=\"dlg\">\n  <h2>확인</h2>\n  <p>저장하시겠습니까?</p>\n  <button onclick=\"dlg.close()\">\n    닫기\n  </button>\n</dialog>"
+      },
+      {
+        "label": "ARIA dialog",
+        "code": "<div role=\"dialog\"\n  aria-modal=\"true\"\n  aria-labelledby=\"dlg-title\">\n  <h2 id=\"dlg-title\">확인</h2>\n  <p>저장하시겠습니까?</p>\n  <button>닫기</button>\n</div>"
+      }
+    ]
+  }
+}
