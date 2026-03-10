@@ -2028,7 +2028,17 @@ kbd {
     box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
   }
 
-  .ap-main { margin-left: 0; }
+  .ap-main {
+    margin-left: 0;
+    margin-top: var(--ap-header-h);
+    height: calc(100dvh - var(--ap-header-h));
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ap-header {
+    padding-top: env(safe-area-inset-top);
+  }
+
   .ap-control { display: none; }
 
   .ap-compare {
