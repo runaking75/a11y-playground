@@ -550,10 +550,16 @@ a.ap-sidebar__item {
 /* ══════════════
    Table
    ══════════════ */
+.ap-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .ap-table {
   width: 100%;
   border-collapse: collapse;
   font-size: var(--text-base);
+  min-width: 480px;
 }
 
 .ap-table th {
