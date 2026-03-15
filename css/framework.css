@@ -2361,23 +2361,23 @@ kbd {
   }
 
   .ap-section {
-    padding: var(--space-2xl) var(--space-xl);
+    padding: var(--space-2xl) var(--space-lg);
   }
 
   .ap-page-header {
-    padding: var(--space-xl) var(--space-xl) 0;
+    padding: var(--space-lg) var(--space-lg) 0;
   }
 
   .ap-preview__canvas {
-    padding: var(--space-xl);
+    padding: var(--space-lg);
   }
 
   .ap-tabs {
-    padding: 0 var(--space-xl);
+    padding: 0 var(--space-lg);
   }
 
   .ap-preview__mode {
-    left: var(--space-xl);
+    left: var(--space-lg);
   }
 
   /* 가이드 페이지 모바일 */
