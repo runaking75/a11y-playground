@@ -42,8 +42,15 @@ const Router = {
   },
 
   handleHash() {
-    const hash = window.location.hash.slice(1); // # 제거
-    if (!hash || hash === this.currentPage) return;
+    const raw = window.location.hash.slice(1); // # 제거
+    if (!raw) return;
+
+    // 앵커 분리: wcag22-4:sc-4-1-2 → pageId=wcag22-4, anchor=sc-4-1-2
+    var parts = raw.split(':');
+    var hash = parts[0];
+    var anchor = parts[1] || '';
+
+    if (hash === this.currentPage && !anchor) return;
 
     // 사이드바에서 해당 항목 찾기
     const item = document.querySelector(`.ap-sidebar__item[data-page="${hash}"]`);
@@ -51,7 +58,7 @@ const Router = {
 
     const pageType = item.dataset.type;
     this.setActiveSidebar(item);
-    this.navigate(hash, pageType);
+    this.navigate(hash, pageType, anchor);
   },
 
   setActiveSidebar(activeItem) {
@@ -61,7 +68,7 @@ const Router = {
     activeItem.classList.add('is-active');
   },
 
-  async navigate(pageId, pageType) {
+  async navigate(pageId, pageType, anchor) {
     this.currentPage = pageId;
 
     try {
@@ -70,7 +77,7 @@ const Router = {
           await this.loadComponent(pageId);
           break;
         case 'guide':
-          await this.loadGuide(pageId);
+          await this.loadGuide(pageId, anchor);
           break;
         case 'tool':
           this.loadTool(pageId);
@@ -139,7 +146,7 @@ const Router = {
     if (code) code.classList.remove('is-active');
   },
 
-  async loadGuide(id) {
+  async loadGuide(id, anchor) {
     // 카드 그리드만 숨기기 (CardGrid.hide()는 컴포넌트 뷰를 복원하므로 직접 처리)
     var grid = document.querySelector('.ap-card-grid');
     if (grid) grid.style.display = 'none';
@@ -152,6 +159,25 @@ const Router = {
     }
     const data = await res.json();
     GuideRenderer.render(data);
+
+    // 앵커 스크롤
+    if (anchor) {
+      requestAnimationFrame(function() {
+        var target = document.getElementById(anchor);
+        if (target) {
+          // SC 아코디언이면 펼치기
+          var criterion = target.closest('.ap-gp-criterion');
+          if (criterion) {
+            var body = criterion.querySelector('.ap-gp-criterion__body');
+            var header = criterion.querySelector('.ap-gp-criterion__header');
+            if (body) body.style.display = '';
+            if (header) header.setAttribute('aria-expanded', 'true');
+            criterion.classList.add('is-open');
+          }
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    }
   },
 
   showPlannedGuide: function(id) {

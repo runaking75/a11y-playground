@@ -107,20 +107,50 @@
         }
       }
     },
-    "keyboard": [
-      {
-        "key": "Tab",
-        "action": "다이얼로그 내부에서 포커스 순환 (트랩)"
-      },
-      {
-        "key": "Escape",
-        "action": "다이얼로그 닫기"
-      },
-      {
-        "key": "Enter",
-        "action": "기본 버튼 활성화"
-      }
-    ]
+    "keyboard": {
+      "headers": [
+        "대상",
+        "Key",
+        "Action"
+      ],
+      "colWidths": [
+        "18%",
+        "28%",
+        "54%"
+      ],
+      "groups": [
+        {
+          "target": "트리거 버튼",
+          "keys": [
+            {
+              "key": "Enter / Space",
+              "action": "다이얼로그 열기"
+            }
+          ]
+        },
+        {
+          "target": "다이얼로그 내부",
+          "keys": [
+            {
+              "key": "Tab",
+              "action": "포커스 순환 (트랩)"
+            },
+            {
+              "key": "Shift + Tab",
+              "action": "역방향 포커스 순환"
+            },
+            {
+              "key": "Escape",
+              "action": "다이얼로그 닫기, 트리거로 포커스 복귀"
+            },
+            {
+              "key": "Enter",
+              "action": "기본 버튼 활성화"
+            }
+          ]
+        }
+      ]
+    }
   },
   "guide": {
     "standards": [
@@ -175,13 +205,89 @@
       }
     ],
     "checklist": [
-      "<code>&lt;dialog&gt;</code> 네이티브 요소 또는 <code>role=\"dialog\"</code> 사용",
-      "<code>aria-modal=\"true\"</code>로 모달 명시",
-      "<code>aria-labelledby</code>로 제목 연결",
-      "열릴 때 포커스가 다이얼로그 내부로 이동",
-      "Tab 키로 포커스 순환 (트랩)",
-      "<kbd>Escape</kbd>로 닫기 가능",
-      "닫힐 때 트리거 요소로 포커스 복귀"
+      {
+        "text": "네이티브 <code>&lt;dialog&gt;</code> 또는 <code>role=\"dialog\"</code> 사용",
+        "sc": "SC 4.1.2",
+        "solution": "<code>&lt;dialog&gt;</code> + <code>showModal()</code> 권장. div 사용 시 <code>role=\"dialog\"</code> + <code>aria-modal=\"true\"</code>"
+      },
+      {
+        "text": "<code>aria-labelledby</code>로 제목 연결",
+        "sc": "SC 4.1.2",
+        "solution": "다이얼로그 내 제목에 id 부여 → <code>aria-labelledby</code>로 참조"
+      },
+      {
+        "text": "열릴 때 포커스가 다이얼로그 내부로 이동",
+        "sc": "SC 2.4.3",
+        "solution": "<code>showModal()</code> 후 첫 번째 포커스 가능 요소에 <code>.focus()</code>"
+      },
+      {
+        "text": "Tab 키로 포커스 순환 (트랩)",
+        "sc": "SC 2.1.2",
+        "solution": "마지막 요소에서 Tab → 첫 요소, 첫 요소에서 Shift+Tab → 마지막 요소"
+      },
+      {
+        "text": "<kbd>Escape</kbd>로 닫기 가능",
+        "sc": "SC 2.1.2",
+        "solution": "keydown에서 Escape 감지 → <code>.close()</code> 호출"
+      },
+      {
+        "text": "닫힐 때 트리거 요소로 포커스 복귀",
+        "sc": "SC 2.4.3",
+        "solution": "열기 전 트리거 저장 → 닫기 시 <code>trigger.focus()</code>"
+      },
+      {
+        "text": "배경 콘텐츠 접근 차단",
+        "sc": "SC 4.1.2",
+        "solution": "<code>aria-modal=\"true\"</code> 또는 배경에 <code>aria-hidden=\"true\"</code> + <code>inert</code> 속성"
+      }
+    ],
+    "concepts": [
+      {
+        "title": "모달 (Modal) vs 논모달 (Non-modal)",
+        "headers": [
+          "구분",
+          "배경 접근",
+          "포커스 트랩",
+          "ESC 닫기",
+          "사용 예"
+        ],
+        "rows": [
+          [
+            "모달",
+            "차단",
+            "필수",
+            "필수",
+            "확인/삭제 대화, 로그인"
+          ],
+          [
+            "논모달",
+            "가능",
+            "없음",
+            "선택",
+            "알림, 토스트, 사이드 패널"
+          ]
+        ]
+      },
+      {
+        "title": "dialog vs alertdialog",
+        "headers": [
+          "Role",
+          "용도",
+          "스크린리더 동작"
+        ],
+        "rows": [
+          [
+            "role=\"dialog\"",
+            "일반 대화 상자. 정보 확인/입력",
+            "포커스 이동 시 제목 읽음"
+          ],
+          [
+            "role=\"alertdialog\"",
+            "긴급 확인. 삭제/오류 알림",
+            "열릴 때 즉시 내용 읽음"
+          ]
+        ]
+      }
     ]
   },
   "code": {

@@ -5,6 +5,28 @@
 
 const Renderer = {
 
+  /**
+   * 태그 텍스트 → 해시 링크 변환
+   * SC 4.1.2 → #wcag22-4:sc-4-1-2
+   * KWCAG 5.3.1 → #kwcag22-1:sc-1-3-1
+   */
+  tagToHash(tag) {
+    var num;
+    if (tag.type === 'wcag') {
+      num = tag.text.replace('SC ', '');
+      var p = num.split('.')[0];
+      return '#wcag22-' + p + ':sc-' + num.replace(/\./g, '-');
+    }
+    if (tag.type === 'kwcag') {
+      num = tag.text.replace('KWCAG ', '');
+      var parts = num.split('.');
+      var principle = parseInt(parts[0]) - 4; // 5→1, 6→2, 7→3, 8→4
+      var scId = principle + '.' + parts[1] + '.' + parts[2];
+      return '#kwcag22-' + principle + ':sc-' + scId.replace(/\./g, '-');
+    }
+    return '';
+  },
+
   renderComponent(data) {
     // 스크롤 위치 리셋
     var mainEl = document.querySelector('.ap-main');
@@ -32,13 +54,32 @@ const Renderer = {
       for (var i = 0; i < data.tags.length; i++) {
         var tag = data.tags[i];
         var cls = tag.type === 'kwcag' ? 'ap-tag--kwcag' : 'ap-tag--wcag';
-        tagsHtml += '<span class="ap-tag ' + cls + '">' + tag.text + '</span>';
+        var href = this.tagToHash(tag);
+        if (href) {
+          tagsHtml += '<a href="' + href + '" class="ap-tag ' + cls + ' ap-tag--lg">' + tag.text + '</a>';
+        } else {
+          tagsHtml += '<span class="ap-tag ' + cls + ' ap-tag--lg">' + tag.text + '</span>';
+        }
       }
     }
-    el.innerHTML = '<div class="ap-breadcrumb"><a href="#">컴포넌트</a> &nbsp;›&nbsp; ' + data.name + '</div>' +
+    el.innerHTML = '<div class="ap-breadcrumb"><a href="#" class="ap-breadcrumb__home">컴포넌트</a> &nbsp;›&nbsp; ' + data.name + '</div>' +
       '<h1 class="ap-page-title">' + data.name + '</h1>' +
       '<p class="ap-page-desc">' + data.description + '</p>' +
       '<div class="ap-page-tags">' + tagsHtml + '</div>';
+
+    // 브레드크럼 홈 링크
+    var homeLink = el.querySelector('.ap-breadcrumb__home');
+    if (homeLink) {
+      homeLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        history.replaceState(null, '', window.location.pathname);
+        if (typeof Router !== 'undefined') Router.currentPage = null;
+        if (typeof CardGrid !== 'undefined') CardGrid.render();
+        document.querySelectorAll('.ap-sidebar__item').forEach(function(item) {
+          item.classList.remove('is-active');
+        });
+      });
+    }
   },
 
   renderTabs() {
@@ -130,8 +171,18 @@ const Renderer = {
   },
 
   renderCompare: function(compare) {
-    var el = document.querySelector('.ap-compare');
-    if (!el || !compare) return;
+    var section = document.querySelector('[data-section="compare"]');
+    var el = section ? section.querySelector('.ap-compare') : null;
+    var tocLink = document.querySelector('.ap-guide__toc-link[href="#guide-compare"]');
+    if (!section) return;
+    if (!compare) {
+      section.style.display = 'none';
+      if (tocLink) tocLink.style.display = 'none';
+      return;
+    }
+    section.style.display = '';
+    if (tocLink) tocLink.style.display = '';
+    if (!el) return;
     var nIcon = compare.native.descType === 'warn' ? 'warning' : 'check_circle';
     var aIcon = compare.aria.descType === 'warn' ? 'warning' : 'check_circle';
     el.innerHTML =
@@ -149,45 +200,205 @@ const Renderer = {
 
   renderKeyboard: function(keyboard) {
     var el = document.querySelector('[data-section="keyboard"]');
-    if (!el || !keyboard) return;
-    var trHtml = '';
-    for (var i = 0; i < keyboard.length; i++) {
-      var k = keyboard[i];
-      var parts = k.key.split(' / ');
-      var keys = '';
+    var tocLink = document.querySelector('.ap-guide__toc-link[href="#guide-keyboard"]');
+    if (!el) return;
+    if (!keyboard) {
+      el.style.display = 'none';
+      if (tocLink) tocLink.style.display = 'none';
+      return;
+    }
+    el.style.display = '';
+    if (tocLink) tocLink.style.display = '';
+
+    var self = this;
+    var formatKey = function(key) {
+      var parts = key.split(' / ');
+      var result = '';
       for (var p = 0; p < parts.length; p++) {
-        if (p > 0) keys += ' / ';
+        if (p > 0) result += ' / ';
         var combo = parts[p].split(' + ');
         for (var j = 0; j < combo.length; j++) {
-          if (j > 0) keys += ' + ';
-          keys += '<kbd>' + combo[j].trim() + '</kbd>';
+          if (j > 0) result += ' + ';
+          result += '<kbd>' + combo[j].trim() + '</kbd>';
         }
       }
-      trHtml += '<tr><td>' + keys + '</td><td>' + k.action + '</td></tr>';
-    }
-    el.innerHTML =
-      '<h2 class="ap-section__title">키보드 인터랙션</h2>' +
-      '<div class="ap-table-wrap"><table class="ap-table">' +
+      return result;
+    };
+
+    var tableHtml = '';
+
+    // 복합 구조: { headers, colWidths?, groups: [{target, keys}] }
+    if (keyboard.groups) {
+      var headers = keyboard.headers || ['대상', 'Key', 'Action'];
+      tableHtml += '<div class="ap-table-wrap"><table class="ap-table">';
+      if (keyboard.colWidths) {
+        tableHtml += '<colgroup>';
+        for (var w = 0; w < keyboard.colWidths.length; w++) {
+          tableHtml += '<col style="width:' + keyboard.colWidths[w] + '">';
+        }
+        tableHtml += '</colgroup>';
+      }
+      tableHtml += '<thead><tr>';
+      for (var h = 0; h < headers.length; h++) {
+        tableHtml += '<th>' + headers[h] + '</th>';
+      }
+      tableHtml += '</tr></thead><tbody>';
+      for (var g = 0; g < keyboard.groups.length; g++) {
+        var group = keyboard.groups[g];
+        for (var i = 0; i < group.keys.length; i++) {
+          tableHtml += '<tr>';
+          if (i === 0) {
+            tableHtml += '<th scope="row" class="ap-concept__label-cell" rowspan="' + group.keys.length + '">' + group.target + '</th>';
+          }
+          tableHtml += '<td>' + formatKey(group.keys[i].key) + '</td>';
+          tableHtml += '<td>' + group.keys[i].action + '</td>';
+          tableHtml += '</tr>';
+        }
+      }
+      tableHtml += '</tbody></table></div>';
+
+    // 단순 구조: [{key, action}]
+    } else {
+      var trHtml = '';
+      for (var i = 0; i < keyboard.length; i++) {
+        trHtml += '<tr><td>' + formatKey(keyboard[i].key) + '</td><td>' + keyboard[i].action + '</td></tr>';
+      }
+      tableHtml = '<div class="ap-table-wrap"><table class="ap-table">' +
         '<thead><tr><th>Key</th><th>Action</th></tr></thead>' +
         '<tbody>' + trHtml + '</tbody>' +
       '</table></div>';
+    }
+
+    el.innerHTML = '<h2 class="ap-section__title">키보드 인터랙션</h2>' + tableHtml;
   },
 
   renderGuideTab: function(guide, playground) {
-    if (!guide) return;
-    this.renderStandards(guide.standards);
-    this.renderRoles(guide.roles);
-    if (playground) {
-      this.renderCompare(playground.compare);
-      this.renderKeyboard(playground.keyboard);
+    this.renderConcepts(guide ? guide.concepts : null);
+    this.renderStandards(guide ? guide.standards : null);
+    this.renderRoles(guide ? guide.roles : null);
+    this.renderCompare(playground ? playground.compare : null);
+    this.renderKeyboard(playground ? playground.keyboard : null);
+    this.renderDoDont(guide ? guide.doDont : null);
+    this.renderChecklist(guide ? guide.checklist : null);
+
+    // TOC 활성화 리셋 — 첫 번째 보이는 링크 활성화
+    var tocLinks = document.querySelectorAll('.ap-guide__toc-link');
+    tocLinks.forEach(function(l) { l.classList.remove('is-active'); });
+    for (var t = 0; t < tocLinks.length; t++) {
+      if (tocLinks[t].style.display !== 'none') {
+        tocLinks[t].classList.add('is-active');
+        break;
+      }
     }
-    this.renderDoDont(guide.doDont);
-    this.renderChecklist(guide.checklist);
+  },
+
+  renderConcepts: function(concepts) {
+    var el = document.querySelector('[data-section="concepts"]');
+    var tocLink = document.querySelector('.ap-guide__toc-link[href="#guide-concepts"]');
+    if (!el) return;
+    if (!concepts || concepts.length === 0) {
+      el.style.display = 'none';
+      if (tocLink) tocLink.style.display = 'none';
+      return;
+    }
+    el.style.display = '';
+    if (tocLink) tocLink.style.display = '';
+
+    var html = '<h2 class="ap-section__title">개요</h2>';
+    for (var i = 0; i < concepts.length; i++) {
+      var c = concepts[i];
+      html += '<h3 class="ap-concept__title">' + c.title + '</h3>';
+
+      // desc: 문자열 또는 배열
+      if (c.desc) {
+        if (Array.isArray(c.desc)) {
+          html += '<ul class="ap-concept__list">';
+          for (var d = 0; d < c.desc.length; d++) {
+            html += '<li>' + c.desc[d] + '</li>';
+          }
+          html += '</ul>';
+        } else {
+          html += '<p class="ap-concept__desc">' + c.desc + '</p>';
+        }
+      }
+
+      // 테이블: headers + rows
+      if (c.headers && c.rows) {
+        html += '<div class="ap-table-wrap"><table class="ap-table">';
+
+        // colgroup (colWidths 지정 시)
+        if (c.colWidths) {
+          html += '<colgroup>';
+          for (var w = 0; w < c.colWidths.length; w++) {
+            html += '<col style="width:' + c.colWidths[w] + '">';
+          }
+          html += '</colgroup>';
+        }
+
+        html += '<thead><tr>';
+        for (var h = 0; h < c.headers.length; h++) {
+          var hCell = c.headers[h];
+          if (typeof hCell === 'object') {
+            var hAttrs = '';
+            if (hCell.colspan) hAttrs += ' colspan="' + hCell.colspan + '"';
+            if (hCell.rowspan) hAttrs += ' rowspan="' + hCell.rowspan + '"';
+            html += '<th' + hAttrs + '>' + hCell.text + '</th>';
+          } else {
+            html += '<th>' + hCell + '</th>';
+          }
+        }
+        html += '</tr></thead><tbody>';
+        for (var r = 0; r < c.rows.length; r++) {
+          html += '<tr>';
+          for (var k = 0; k < c.rows[r].length; k++) {
+            var rCell = c.rows[r][k];
+            if (typeof rCell === 'object') {
+              var rAttrs = '';
+              if (rCell.colspan) rAttrs += ' colspan="' + rCell.colspan + '"';
+              if (rCell.rowspan) rAttrs += ' rowspan="' + rCell.rowspan + '"';
+              if (k === 0 || rCell.isHeader) {
+                html += '<th scope="row" class="ap-concept__label-cell"' + rAttrs + '>' + rCell.text + '</th>';
+              } else {
+                html += '<td' + rAttrs + '>' + rCell.text + '</td>';
+              }
+            } else {
+              if (k === 0) {
+                html += '<th scope="row" class="ap-concept__label-cell">' + rCell + '</th>';
+              } else {
+                html += '<td>' + rCell + '</td>';
+              }
+            }
+          }
+          html += '</tr>';
+        }
+        html += '</tbody></table></div>';
+      }
+
+      // 주의사항
+      if (c.notes && c.notes.length > 0) {
+        html += '<div class="ap-concept__notes">';
+        html += '<div class="ap-concept__notes-title">주의사항</div>';
+        html += '<ul class="ap-concept__list">';
+        for (var n = 0; n < c.notes.length; n++) {
+          html += '<li>' + c.notes[n] + '</li>';
+        }
+        html += '</ul></div>';
+      }
+    }
+    el.innerHTML = html;
   },
 
   renderStandards(standards) {
     var el = document.querySelector('[data-section="standards"]');
-    if (!el || !standards) return;
+    var tocLink = document.querySelector('.ap-guide__toc-link[href="#guide-standards"]');
+    if (!el) return;
+    if (!standards) {
+      el.style.display = 'none';
+      if (tocLink) tocLink.style.display = 'none';
+      return;
+    }
+    el.style.display = '';
+    if (tocLink) tocLink.style.display = '';
     var trHtml = '';
     for (var i = 0; i < standards.length; i++) {
       var s = standards[i];
@@ -210,7 +421,15 @@ const Renderer = {
 
   renderRoles(roles) {
     var el = document.querySelector('[data-section="roles"]');
-    if (!el || !roles) return;
+    var tocLink = document.querySelector('.ap-guide__toc-link[href="#guide-roles"]');
+    if (!el) return;
+    if (!roles) {
+      el.style.display = 'none';
+      if (tocLink) tocLink.style.display = 'none';
+      return;
+    }
+    el.style.display = '';
+    if (tocLink) tocLink.style.display = '';
     var trHtml = '';
     for (var i = 0; i < roles.length; i++) {
       var r = roles[i];
@@ -219,23 +438,31 @@ const Renderer = {
         descHtml += '<li>' + r.desc[d] + '</li>';
       }
       trHtml += '<tr>' +
+        '<td><code>' + r.element + '</code></td>' +
         '<td>' + (r.role ? '<code>' + r.role + '</code>' : '') + '</td>' +
         '<td>' + (r.attr ? '<code>' + r.attr + '</code>' : '') + '</td>' +
-        '<td><code>' + r.element + '</code></td>' +
         '<td><ul class="ap-td-list">' + descHtml + '</ul></td>' +
       '</tr>';
     }
     el.innerHTML =
       '<h2 class="ap-section__title">Role, 속성, 상태</h2>' +
       '<div class="ap-table-wrap"><table class="ap-table">' +
-        '<thead><tr><th>Role</th><th>속성 / 상태</th><th>요소</th><th>설명</th></tr></thead>' +
+        '<thead><tr><th>대상</th><th>Role</th><th>속성 / 상태</th><th>설명</th></tr></thead>' +
         '<tbody>' + trHtml + '</tbody>' +
       '</table></div>';
   },
 
   renderDoDont: function(doDont) {
     var el = document.querySelector('[data-section="dodont"]');
-    if (!el || !doDont) return;
+    var tocLink = document.querySelector('.ap-guide__toc-link[href="#guide-dodont"]');
+    if (!el) return;
+    if (!doDont) {
+      el.style.display = 'none';
+      if (tocLink) tocLink.style.display = 'none';
+      return;
+    }
+    el.style.display = '';
+    if (tocLink) tocLink.style.display = '';
     var html = '<h2 class="ap-section__title">Do / Don\'t</h2>';
     for (var i = 0; i < doDont.length; i++) {
       var pair = doDont[i];
@@ -276,10 +503,31 @@ const Renderer = {
 
   renderChecklist(checklist) {
     var el = document.querySelector('[data-section="checklist"]');
-    if (!el || !checklist) return;
+    var tocLink = document.querySelector('.ap-guide__toc-link[href="#guide-checklist"]');
+    if (!el) return;
+    if (!checklist) {
+      el.style.display = 'none';
+      if (tocLink) tocLink.style.display = 'none';
+      return;
+    }
+    el.style.display = '';
+    if (tocLink) tocLink.style.display = '';
     var html = '<h2 class="ap-section__title">접근성 체크리스트</h2>';
     for (var i = 0; i < checklist.length; i++) {
-      html += '<div class="ap-checklist__item"><div class="ap-checklist__box"></div><span>' + checklist[i] + '</span></div>';
+      var item = checklist[i];
+      // 문자열 (하위 호환) 또는 객체
+      if (typeof item === 'string') {
+        html += '<div class="ap-checklist__item"><div class="ap-checklist__box"></div><span>' + item + '</span></div>';
+      } else {
+        html += '<div class="ap-checklist__item">';
+        html += '<div class="ap-checklist__box"></div>';
+        html += '<div class="ap-checklist__content">';
+        html += '<div class="ap-checklist__text">';
+        if (item.sc) html += '<span class="ap-tag ap-tag--wcag">' + item.sc + '</span> ';
+        html += item.text + '</div>';
+        if (item.solution) html += '<div class="ap-checklist__solution"><span class="ap-checklist__solution-label">해결 방안</span> ' + item.solution + '</div>';
+        html += '</div></div>';
+      }
     }
     el.innerHTML = html;
   },

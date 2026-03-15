@@ -139,28 +139,58 @@
         }
       }
     },
-    "keyboard": [
-      {
-        "key": "Tab",
-        "action": "탭 목록으로 포커스 이동"
-      },
-      {
-        "key": "Arrow Left/Right",
-        "action": "자동: 이전/다음 탭 선택 / 수동: 이전/다음 탭으로 포커스만 이동"
-      },
-      {
-        "key": "Enter / Space",
-        "action": "수동 모드에서 포커스된 탭 활성화"
-      },
-      {
-        "key": "Home",
-        "action": "첫 번째 탭 선택/포커스"
-      },
-      {
-        "key": "End",
-        "action": "마지막 탭 선택/포커스"
-      }
-    ]
+    "keyboard": {
+      "headers": [
+        "대상",
+        "Key",
+        "Action"
+      ],
+      "colWidths": [
+        "18%",
+        "28%",
+        "54%"
+      ],
+      "groups": [
+        {
+          "target": "탭 목록",
+          "keys": [
+            {
+              "key": "Tab",
+              "action": "탭 목록으로 포커스 이동"
+            },
+            {
+              "key": "Arrow Left / Arrow Right",
+              "action": "자동: 이전/다음 탭 선택 · 수동: 포커스만 이동"
+            },
+            {
+              "key": "Enter / Space",
+              "action": "수동 모드에서 포커스된 탭 활성화"
+            },
+            {
+              "key": "Home",
+              "action": "첫 번째 탭 선택/포커스"
+            },
+            {
+              "key": "End",
+              "action": "마지막 탭 선택/포커스"
+            }
+          ]
+        },
+        {
+          "target": "탭 패널",
+          "keys": [
+            {
+              "key": "Tab",
+              "action": "패널 내부 콘텐츠로 포커스 이동"
+            },
+            {
+              "key": "Shift + Tab",
+              "action": "탭 목록으로 포커스 복귀"
+            }
+          ]
+        }
+      ]
+    }
   },
   "guide": {
     "standards": [
@@ -224,11 +254,56 @@
       }
     ],
     "checklist": [
-      "<code>role=\"tablist\"</code>, <code>role=\"tab\"</code>, <code>role=\"tabpanel\"</code> 적용",
-      "<code>aria-selected</code>로 선택 상태 전달",
-      "<code>aria-controls</code>/<code>aria-labelledby</code>로 탭-패널 연결",
-      "화살표 키로 탭 간 이동 (roving tabindex)",
-      "선택된 탭이 시각적으로 명확"
+      {
+        "text": "<code>role=\"tablist\"</code>, <code>role=\"tab\"</code>, <code>role=\"tabpanel\"</code> 적용",
+        "sc": "SC 4.1.2",
+        "solution": "탭 목록=tablist, 각 탭=tab, 패널=tabpanel. 세 역할 모두 필수"
+      },
+      {
+        "text": "<code>aria-selected</code>로 선택 상태 전달",
+        "sc": "SC 4.1.2",
+        "solution": "선택 탭=<code>aria-selected=\"true\"</code>, 나머지=<code>false</code>"
+      },
+      {
+        "text": "<code>aria-controls</code>/<code>aria-labelledby</code>로 탭-패널 연결",
+        "sc": "SC 1.3.1",
+        "solution": "탭에 <code>aria-controls=\"패널id\"</code>, 패널에 <code>aria-labelledby=\"탭id\"</code>"
+      },
+      {
+        "text": "화살표 키로 탭 간 이동 (roving tabindex)",
+        "sc": "SC 2.1.1",
+        "solution": "선택 탭만 <code>tabindex=\"0\"</code>, 나머지 <code>tabindex=\"-1\"</code>. Arrow로 전환"
+      },
+      {
+        "text": "선택된 탭이 시각적으로 명확",
+        "sc": "SC 1.4.11",
+        "solution": "선택 탭에 하단 보더 + 색상 변경. 비선택 탭과 3:1 이상 대비"
+      }
+    ],
+    "concepts": [
+      {
+        "title": "자동 활성화 vs 수동 활성화",
+        "headers": [
+          "구분",
+          "화살표 키",
+          "Enter/Space",
+          "권장 상황"
+        ],
+        "rows": [
+          [
+            "자동 (Automatic)",
+            "탭 이동 + 패널 전환",
+            "불필요",
+            "패널 로딩이 빠를 때 (대부분)"
+          ],
+          [
+            "수동 (Manual)",
+            "포커스만 이동",
+            "패널 전환",
+            "패널 로딩이 느리거나 네트워크 요청 시"
+          ]
+        ]
+      }
     ]
   },
   "code": {

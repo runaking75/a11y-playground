@@ -1,4 +1,107 @@
 /* ═══════════════════════════════════════
+   A11y Playground — ScrollSpy
+   TOC 스크롤 스파이 공용 유틸
+   ═══════════════════════════════════════ */
+
+var ScrollSpy = {
+  /**
+   * 스크롤 스파이 인스턴스 생성
+   * @param {Object} config
+   *   tocSelector     — TOC 링크 셀렉터
+   *   sectionSelector — 감시할 섹션 셀렉터
+   *   topSelector     — 최상단 기본 링크 셀렉터 (없으면 첫 번째 보이는 링크)
+   * @returns {{ update, destroy }}
+   */
+  create: function(config) {
+    var mainEl = document.querySelector('.ap-main');
+    if (!mainEl) return null;
+
+    var paused = false;
+
+    var update = function() {
+      if (paused) return;
+      var tocLinks = document.querySelectorAll(config.tocSelector);
+      var sections = document.querySelectorAll(config.sectionSelector);
+      if (sections.length === 0 || tocLinks.length === 0) return;
+
+      // 섹션이 숨겨져 있으면 (탭 비활성 등) 스킵
+      if (!sections[0].offsetParent) return;
+
+      var currentId = '';
+      var atBottom = mainEl.scrollTop > 0 &&
+                     mainEl.scrollTop + mainEl.clientHeight >= mainEl.scrollHeight - 10;
+
+      if (atBottom) {
+        currentId = sections[sections.length - 1].id;
+      } else {
+        for (var i = sections.length - 1; i >= 0; i--) {
+          if (sections[i].getBoundingClientRect().top <= 120) {
+            currentId = sections[i].id;
+            break;
+          }
+        }
+      }
+
+      tocLinks.forEach(function(l) { l.classList.remove('is-active'); });
+      if (currentId) {
+        tocLinks.forEach(function(l) {
+          if (l.getAttribute('href') === '#' + currentId) l.classList.add('is-active');
+        });
+      } else if (config.topSelector) {
+        var topLink = document.querySelector(config.topSelector);
+        if (topLink) topLink.classList.add('is-active');
+      } else {
+        // 기본: 첫 번째 보이는 링크
+        for (var t = 0; t < tocLinks.length; t++) {
+          if (tocLinks[t].style.display !== 'none') {
+            tocLinks[t].classList.add('is-active');
+            break;
+          }
+        }
+      }
+    };
+
+    // 스크롤 이벤트
+    var scrollHandler = function() { update(); };
+    mainEl.addEventListener('scroll', scrollHandler);
+
+    // TOC 클릭 이벤트
+    document.querySelectorAll(config.tocSelector).forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        var target = link.dataset.target;
+        if (target === 'top') {
+          mainEl.scrollTop = 0;
+        } else {
+          var href = link.getAttribute('href');
+          if (href && href !== '#') {
+            var el = document.querySelector(href);
+            if (el) {
+              paused = true;
+              el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              setTimeout(function() { paused = false; }, 800);
+            }
+          }
+        }
+        document.querySelectorAll(config.tocSelector).forEach(function(l) { l.classList.remove('is-active'); });
+        link.classList.add('is-active');
+      });
+    });
+
+    // 초기 1회 실행
+    requestAnimationFrame(update);
+
+    return {
+      update: update,
+      destroy: function() {
+        mainEl.removeEventListener('scroll', scrollHandler);
+      }
+    };
+  }
+};
+
+
+/* ═══════════════════════════════════════
    A11y Playground — App
    초기화 + 기본 인터랙션
    ═══════════════════════════════════════ */
@@ -39,60 +142,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // 가이드 앵커 목차
-  var spyPaused = false;
-
-  // 스무스 스크롤 + 즉시 활성화 + 스파이 일시 정지
-  document.querySelectorAll('.ap-guide__toc-link').forEach(function(link) {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      var id = link.getAttribute('href').slice(1);
-      var target = document.getElementById(id);
-      if (target) {
-        // 즉시 활성화
-        document.querySelectorAll('.ap-guide__toc-link').forEach(function(l) { l.classList.remove('is-active'); });
-        link.classList.add('is-active');
-        // 스파이 일시 정지
-        spyPaused = true;
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        setTimeout(function() { spyPaused = false; }, 800);
-      }
-    });
+  // 컴포넌트 가이드 탭 TOC — ScrollSpy 사용
+  ScrollSpy.create({
+    tocSelector: '.ap-guide__toc-link',
+    sectionSelector: '.ap-guide__content .ap-section[id]'
   });
-
-  // 스크롤 스파이
-  var mainEl = document.querySelector('.ap-main');
-  if (mainEl) {
-    mainEl.addEventListener('scroll', function() {
-      if (spyPaused) return;
-
-      var tocLinks = document.querySelectorAll('.ap-guide__toc-link');
-      var sections = document.querySelectorAll('.ap-guide__content .ap-section[id]');
-      if (sections.length === 0 || tocLinks.length === 0) return;
-
-      var currentId = sections[0].id;
-      var isBottom = mainEl.scrollTop + mainEl.clientHeight >= mainEl.scrollHeight - 10;
-
-      if (isBottom) {
-        currentId = sections[sections.length - 1].id;
-      } else {
-        for (var i = sections.length - 1; i >= 0; i--) {
-          var rect = sections[i].getBoundingClientRect();
-          if (rect.top <= 120) {
-            currentId = sections[i].id;
-            break;
-          }
-        }
-      }
-
-      tocLinks.forEach(function(link) {
-        link.classList.remove('is-active');
-        if (link.getAttribute('href') === '#' + currentId) {
-          link.classList.add('is-active');
-        }
-      });
-    });
-  }
 
   // 로고 클릭 → 카드 그리드
   var logoLink = document.getElementById('logo-link');

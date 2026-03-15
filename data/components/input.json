@@ -4,81 +4,244 @@
   "description": "사용자로부터 텍스트를 입력받는 폼 요소. 레이블, 유효성 검사 메시지, 도움말과 함께 사용됩니다.",
   "status": "pass",
   "tags": [
-    { "type": "wcag", "text": "SC 4.1.2" },
-    { "type": "wcag", "text": "SC 1.3.1" },
-    { "type": "wcag", "text": "SC 3.3.1" },
-    { "type": "wcag", "text": "SC 3.3.2" },
-    { "type": "kwcag", "text": "KWCAG 7.3.2" }
+    {
+      "type": "wcag",
+      "text": "SC 4.1.2"
+    },
+    {
+      "type": "wcag",
+      "text": "SC 1.3.1"
+    },
+    {
+      "type": "wcag",
+      "text": "SC 3.3.1"
+    },
+    {
+      "type": "wcag",
+      "text": "SC 3.3.2"
+    },
+    {
+      "type": "kwcag",
+      "text": "KWCAG 7.3.2"
+    }
   ],
   "related": [
-    { "id": "select", "name": "Select / Dropdown" },
-    { "id": "checkbox", "name": "Checkbox" }
+    {
+      "id": "select",
+      "name": "Select / Dropdown"
+    },
+    {
+      "id": "checkbox",
+      "name": "Checkbox"
+    }
   ],
   "playground": {
     "addable": true,
     "defaultVariant": "default",
     "previewHtml": "<div class=\"ap-preview__label\">DEFAULT</div><div class=\"ap-preview__row\" style=\"flex-direction:column;align-items:stretch;max-width:320px;width:100%\"><div class=\"input-field\" data-component=\"input\"><label class=\"input-label\" for=\"demo-name\">이름</label><input type=\"text\" class=\"input\" id=\"demo-name\" placeholder=\"이름을 입력하세요\"></div><div class=\"input-field\" data-component=\"input\"><label class=\"input-label\" for=\"demo-email\">이메일 <span class=\"input-required\">*</span></label><input type=\"email\" class=\"input\" id=\"demo-email\" placeholder=\"email@example.com\" aria-required=\"true\"></div></div><div class=\"ap-preview__label\">STATES</div><div class=\"ap-preview__row\" style=\"flex-direction:column;align-items:stretch;max-width:320px;width:100%\"><div class=\"input-field\" data-component=\"input\"><label class=\"input-label\" for=\"demo-err\">전화번호</label><input type=\"tel\" class=\"input input--error\" id=\"demo-err\" value=\"abc\" aria-invalid=\"true\" aria-errormessage=\"err-msg\"><span class=\"input-error\" id=\"err-msg\">올바른 전화번호를 입력하세요</span></div><div class=\"input-field\" data-component=\"input\"><label class=\"input-label\" for=\"demo-dis\">비활성화</label><input type=\"text\" class=\"input\" id=\"demo-dis\" disabled value=\"수정 불가\"></div></div>",
     "controls": [
-      { "type": "toggle", "attr": "disabled", "label": "disabled", "default": false },
-      { "type": "toggle", "attr": "readonly", "label": "readonly", "default": false }
+      {
+        "type": "toggle",
+        "attr": "disabled",
+        "label": "disabled",
+        "default": false
+      },
+      {
+        "type": "toggle",
+        "attr": "readonly",
+        "label": "readonly",
+        "default": false
+      }
     ],
     "colorPresets": [
-      { "name": "Default", "bg": "#FFFFFF", "text": "#1A1A1A", "border": "#BDBDBD" },
-      { "name": "Error", "bg": "#FEF2F2", "text": "#1A1A1A", "border": "#EF4444" }
+      {
+        "name": "Default",
+        "bg": "#FFFFFF",
+        "text": "#1A1A1A",
+        "border": "#BDBDBD"
+      },
+      {
+        "name": "Error",
+        "bg": "#FEF2F2",
+        "text": "#1A1A1A",
+        "border": "#EF4444"
+      }
     ],
     "aria": [
-      { "type": "toggle", "attr": "aria-required", "default": false, "speechState": "필수 상태" },
-      { "type": "toggle", "attr": "aria-invalid", "default": false, "speechState": "오류 상태" },
-      { "type": "toggle", "attr": "aria-describedby", "default": false, "linkedElement": { "tag": "span", "text": "입력 필드 도움말", "position": "after" } }
+      {
+        "type": "toggle",
+        "attr": "aria-required",
+        "default": false,
+        "speechState": "필수 상태"
+      },
+      {
+        "type": "toggle",
+        "attr": "aria-invalid",
+        "default": false,
+        "speechState": "오류 상태"
+      },
+      {
+        "type": "toggle",
+        "attr": "aria-describedby",
+        "default": false,
+        "linkedElement": {
+          "tag": "span",
+          "text": "입력 필드 도움말",
+          "position": "after"
+        }
+      }
     ],
     "compare": {
-      "native": { "label": "네이티브", "code": "<label for=\"name\">이름</label>\n<input type=\"text\" id=\"name\">", "desc": "label + input 연결, 접근성 내장", "descType": "good" },
-      "aria": { "label": "ARIA", "code": "<div role=\"textbox\"\n  aria-label=\"이름\"\n  contenteditable=\"true\"\n  tabindex=\"0\"></div>", "desc": "role=\"textbox\" 사용 시 폼 제출/유효성 검사 직접 구현", "descType": "warn" }
+      "native": {
+        "label": "네이티브",
+        "code": "<label for=\"name\">이름</label>\n<input type=\"text\" id=\"name\">",
+        "desc": "label + input 연결, 접근성 내장",
+        "descType": "good"
+      },
+      "aria": {
+        "label": "ARIA",
+        "code": "<div role=\"textbox\"\n  aria-label=\"이름\"\n  contenteditable=\"true\"\n  tabindex=\"0\"></div>",
+        "desc": "role=\"textbox\" 사용 시 폼 제출/유효성 검사 직접 구현",
+        "descType": "warn"
+      }
     },
     "speech": {
-      "columns": ["기본 상태", "오류 상태"],
+      "columns": [
+        "기본 상태",
+        "오류 상태"
+      ],
       "patterns": {
-        "jaws": { "기본 상태": "{label} 편집, 입력", "오류 상태": "{label} 편집, 유효하지 않은 입력" },
-        "nvda": { "기본 상태": "{label} 편집, 빈 줄", "오류 상태": "{label} 편집, 유효하지 않은 입력" },
-        "voiceover": { "기본 상태": "{label}, 텍스트 필드", "오류 상태": "{label}, 유효하지 않은 데이터, 텍스트 필드" },
-        "talkback": { "기본 상태": "{label}, 수정 상자", "오류 상태": "{label}, 오류, 수정 상자" }
+        "jaws": {
+          "기본 상태": "{label} 편집, 입력",
+          "오류 상태": "{label} 편집, 유효하지 않은 입력"
+        },
+        "nvda": {
+          "기본 상태": "{label} 편집, 빈 줄",
+          "오류 상태": "{label} 편집, 유효하지 않은 입력"
+        },
+        "voiceover": {
+          "기본 상태": "{label}, 텍스트 필드",
+          "오류 상태": "{label}, 유효하지 않은 데이터, 텍스트 필드"
+        },
+        "talkback": {
+          "기본 상태": "{label}, 수정 상자",
+          "오류 상태": "{label}, 오류, 수정 상자"
+        }
       }
     },
     "keyboard": [
-      { "key": "Tab", "action": "입력 필드로 포커스 이동" },
-      { "key": "문자 입력", "action": "텍스트 입력" }
+      {
+        "key": "Tab",
+        "action": "입력 필드로 포커스 이동"
+      },
+      {
+        "key": "문자 입력",
+        "action": "텍스트 입력"
+      }
     ]
   },
   "guide": {
     "standards": [
-      { "std": "wcag", "stdLabel": "WCAG 2.2", "item": "SC 3.3.2 레이블 또는 지시문", "desc": "입력 필드에 명확한 레이블 제공", "level": "A" },
-      { "std": "wcag", "stdLabel": "WCAG 2.2", "item": "SC 3.3.1 오류 식별", "desc": "오류 발생 시 텍스트로 설명 제공", "level": "A" },
-      { "std": "wcag", "stdLabel": "WCAG 2.2", "item": "SC 1.3.5 입력 목적 식별", "desc": "autocomplete 속성으로 입력 목적 제공", "level": "AA" }
+      {
+        "std": "wcag",
+        "stdLabel": "WCAG 2.2",
+        "item": "SC 3.3.2 레이블 또는 지시문",
+        "desc": "입력 필드에 명확한 레이블 제공",
+        "level": "A"
+      },
+      {
+        "std": "wcag",
+        "stdLabel": "WCAG 2.2",
+        "item": "SC 3.3.1 오류 식별",
+        "desc": "오류 발생 시 텍스트로 설명 제공",
+        "level": "A"
+      },
+      {
+        "std": "wcag",
+        "stdLabel": "WCAG 2.2",
+        "item": "SC 1.3.5 입력 목적 식별",
+        "desc": "autocomplete 속성으로 입력 목적 제공",
+        "level": "AA"
+      }
     ],
     "roles": [
-      { "role": "textbox", "attr": "", "element": "div", "desc": ["요소를 텍스트 입력 필드로 식별", "contenteditable과 함께 사용"] },
-      { "role": "", "attr": "aria-errormessage=\"ID\"", "element": "input", "desc": ["오류 메시지 요소와 연결", "aria-invalid=\"true\"와 함께 사용"] }
+      {
+        "role": "textbox",
+        "attr": "",
+        "element": "div",
+        "desc": [
+          "요소를 텍스트 입력 필드로 식별",
+          "contenteditable과 함께 사용"
+        ]
+      },
+      {
+        "role": "",
+        "attr": "aria-errormessage=\"ID\"",
+        "element": "input",
+        "desc": [
+          "오류 메시지 요소와 연결",
+          "aria-invalid=\"true\"와 함께 사용"
+        ]
+      }
     ],
     "doDont": [
       {
-        "do": { "code": "<label for=\"email\">이메일</label>\n<input type=\"email\" id=\"email\"\n  autocomplete=\"email\">", "image": "", "note": "label 연결 + autocomplete로 입력 목적 명시" },
-        "dont": { "code": "<input type=\"text\" placeholder=\"이메일\">", "image": "", "comment": "label 없음, placeholder만 사용", "note": "placeholder는 레이블을 대체할 수 없습니다. 입력 시 사라져 사용자가 목적을 잊을 수 있습니다." }
+        "do": {
+          "code": "<label for=\"email\">이메일</label>\n<input type=\"email\" id=\"email\"\n  autocomplete=\"email\">",
+          "image": "",
+          "note": "label 연결 + autocomplete로 입력 목적 명시"
+        },
+        "dont": {
+          "code": "<input type=\"text\" placeholder=\"이메일\">",
+          "image": "",
+          "comment": "label 없음, placeholder만 사용",
+          "note": "placeholder는 레이블을 대체할 수 없습니다. 입력 시 사라져 사용자가 목적을 잊을 수 있습니다."
+        }
       }
     ],
     "checklist": [
-      "모든 입력 필드에 <code>&lt;label&gt;</code> 연결",
-      "필수 필드에 <code>aria-required=\"true\"</code> 적용",
-      "오류 시 <code>aria-invalid</code> + <code>aria-errormessage</code> 사용",
-      "입력 형식 힌트를 <code>aria-describedby</code>로 제공",
-      "<code>autocomplete</code> 속성으로 입력 목적 식별 (SC 1.3.5)"
+      {
+        "text": "모든 입력 필드에 <code>&lt;label&gt;</code> 연결",
+        "sc": "SC 3.3.2",
+        "solution": "<code>&lt;label for=\"id\"&gt;</code>로 연결. placeholder는 레이블 대체 불가"
+      },
+      {
+        "text": "필수 필드에 <code>aria-required=\"true\"</code> 적용",
+        "sc": "SC 3.3.2",
+        "solution": "시각적 필수 표시(*)와 함께 <code>aria-required=\"true\"</code> 또는 <code>required</code> 속성"
+      },
+      {
+        "text": "오류 시 <code>aria-invalid</code> + <code>aria-errormessage</code> 사용",
+        "sc": "SC 3.3.1",
+        "solution": "<code>aria-invalid=\"true\"</code> 설정 + <code>aria-errormessage=\"에러ID\"</code>로 오류 메시지 연결"
+      },
+      {
+        "text": "입력 형식 힌트를 <code>aria-describedby</code>로 제공",
+        "sc": "SC 3.3.2",
+        "solution": "입력 아래 도움말 텍스트에 id 부여 후 <code>aria-describedby</code>로 연결"
+      },
+      {
+        "text": "<code>autocomplete</code> 속성으로 입력 목적 식별",
+        "sc": "SC 1.3.5",
+        "solution": "이름=<code>name</code>, 이메일=<code>email</code>, 전화=<code>tel</code> 등 표준 값 사용"
+      }
     ]
   },
   "code": {
     "filename": "input.html",
     "snippets": [
-      { "label": "기본 텍스트 입력", "code": "<label for=\"name\">이름</label>\n<input type=\"text\" id=\"name\">" },
-      { "label": "필수 + 힌트", "code": "<label for=\"pwd\">비밀번호</label>\n<input type=\"password\" id=\"pwd\"\n  aria-required=\"true\"\n  aria-describedby=\"pwd-hint\">\n<span id=\"pwd-hint\">8자 이상, 특수문자 포함</span>" },
-      { "label": "오류 상태", "code": "<label for=\"tel\">전화번호</label>\n<input type=\"tel\" id=\"tel\"\n  aria-invalid=\"true\"\n  aria-errormessage=\"tel-err\">\n<span id=\"tel-err\" role=\"alert\">\n  올바른 전화번호를 입력하세요\n</span>" }
+      {
+        "label": "기본 텍스트 입력",
+        "code": "<label for=\"name\">이름</label>\n<input type=\"text\" id=\"name\">"
+      },
+      {
+        "label": "필수 + 힌트",
+        "code": "<label for=\"pwd\">비밀번호</label>\n<input type=\"password\" id=\"pwd\"\n  aria-required=\"true\"\n  aria-describedby=\"pwd-hint\">\n<span id=\"pwd-hint\">8자 이상, 특수문자 포함</span>"
+      },
+      {
+        "label": "오류 상태",
+        "code": "<label for=\"tel\">전화번호</label>\n<input type=\"tel\" id=\"tel\"\n  aria-invalid=\"true\"\n  aria-errormessage=\"tel-err\">\n<span id=\"tel-err\" role=\"alert\">\n  올바른 전화번호를 입력하세요\n</span>"
+      }
     ]
   }
 }

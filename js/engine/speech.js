@@ -71,7 +71,7 @@ var Speech = {
     stateHtml += '</div>';
 
     // 테이블
-    var tableHtml = '<div class="ap-table-wrap"><table class="ap-table ap-table--speech">' +
+    var tableHtml = '<div class="ap-table-wrap"><table class="ap-table">' +
       '<thead><tr><th>스크린리더</th><th>발화 텍스트</th></tr></thead><tbody>';
     for (var r = 0; r < readers.length; r++) {
       var reader = readers[r];

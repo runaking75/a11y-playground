@@ -4,77 +4,244 @@
   "description": "옵션 목록에서 하나를 선택하는 드롭다운 요소. 네이티브 select 또는 커스텀 리스트박스로 구현됩니다.",
   "status": "pass",
   "tags": [
-    { "type": "wcag", "text": "SC 4.1.2" },
-    { "type": "wcag", "text": "SC 2.1.1" },
-    { "type": "wcag", "text": "SC 3.3.2" },
-    { "type": "kwcag", "text": "KWCAG 7.3.2" }
+    {
+      "type": "wcag",
+      "text": "SC 4.1.2"
+    },
+    {
+      "type": "wcag",
+      "text": "SC 2.1.1"
+    },
+    {
+      "type": "wcag",
+      "text": "SC 3.3.2"
+    },
+    {
+      "type": "kwcag",
+      "text": "KWCAG 7.3.2"
+    }
   ],
   "related": [
-    { "id": "radio", "name": "Radio Button" },
-    { "id": "input", "name": "Input (Text)" }
+    {
+      "id": "radio",
+      "name": "Radio Button"
+    },
+    {
+      "id": "input",
+      "name": "Input (Text)"
+    }
   ],
   "playground": {
     "addable": false,
     "previewHtml": "<div class=\"ap-preview__label\">NATIVE SELECT</div><div class=\"ap-preview__row\" style=\"flex-direction:column;align-items:stretch;max-width:320px;width:100%\"><div class=\"select-field\" data-component=\"select\"><label class=\"input-label\" for=\"demo-sel\">국가 선택</label><select class=\"select\" id=\"demo-sel\"><option value=\"\">선택하세요</option><option value=\"kr\">대한민국</option><option value=\"us\">미국</option><option value=\"jp\">일본</option></select></div></div><div class=\"ap-preview__label\">DISABLED</div><div class=\"ap-preview__row\" style=\"flex-direction:column;align-items:stretch;max-width:320px;width:100%\"><div class=\"select-field\" data-component=\"select\"><label class=\"input-label\" for=\"demo-sel-d\">비활성화</label><select class=\"select\" id=\"demo-sel-d\" disabled><option>선택 불가</option></select></div></div>",
     "controls": [
-      { "type": "toggle", "attr": "disabled", "label": "disabled", "default": false },
-      { "type": "toggle", "attr": "multiple", "label": "multiple", "default": false }
+      {
+        "type": "toggle",
+        "attr": "disabled",
+        "label": "disabled",
+        "default": false
+      },
+      {
+        "type": "toggle",
+        "attr": "multiple",
+        "label": "multiple",
+        "default": false
+      }
     ],
     "colorPresets": [
-      { "name": "Default", "bg": "#FFFFFF", "text": "#1A1A1A", "border": "#BDBDBD" }
+      {
+        "name": "Default",
+        "bg": "#FFFFFF",
+        "text": "#1A1A1A",
+        "border": "#BDBDBD"
+      }
     ],
     "aria": [
-      { "type": "toggle", "attr": "aria-required", "default": false, "speechState": "필수 상태" },
-      { "type": "toggle", "attr": "aria-invalid", "default": false, "speechState": "오류 상태" }
+      {
+        "type": "toggle",
+        "attr": "aria-required",
+        "default": false,
+        "speechState": "필수 상태"
+      },
+      {
+        "type": "toggle",
+        "attr": "aria-invalid",
+        "default": false,
+        "speechState": "오류 상태"
+      }
     ],
     "compare": {
-      "native": { "label": "네이티브", "code": "<label for=\"sel\">국가</label>\n<select id=\"sel\">\n  <option>한국</option>\n  <option>미국</option>\n</select>", "desc": "네이티브 select, 접근성 내장", "descType": "good" },
-      "aria": { "label": "ARIA 리스트박스", "code": "<button aria-haspopup=\"listbox\"\n  aria-expanded=\"false\">\n  선택하세요\n</button>\n<ul role=\"listbox\">\n  <li role=\"option\">한국</li>\n  <li role=\"option\">미국</li>\n</ul>", "desc": "커스텀 드롭다운은 키보드/ARIA 직접 구현 필요", "descType": "warn" }
+      "native": {
+        "label": "네이티브",
+        "code": "<label for=\"sel\">국가</label>\n<select id=\"sel\">\n  <option>한국</option>\n  <option>미국</option>\n</select>",
+        "desc": "네이티브 select, 접근성 내장",
+        "descType": "good"
+      },
+      "aria": {
+        "label": "ARIA 리스트박스",
+        "code": "<button aria-haspopup=\"listbox\"\n  aria-expanded=\"false\">\n  선택하세요\n</button>\n<ul role=\"listbox\">\n  <li role=\"option\">한국</li>\n  <li role=\"option\">미국</li>\n</ul>",
+        "desc": "커스텀 드롭다운은 키보드/ARIA 직접 구현 필요",
+        "descType": "warn"
+      }
     },
     "speech": {
-      "columns": ["기본 상태"],
+      "columns": [
+        "기본 상태"
+      ],
       "patterns": {
-        "jaws": { "기본 상태": "{label} 콤보 박스, 대한민국" },
-        "nvda": { "기본 상태": "{label} 콤보 박스, 대한민국" },
-        "voiceover": { "기본 상태": "대한민국, {label}, 팝업 버튼" },
-        "talkback": { "기본 상태": "{label}, 대한민국, 드롭다운 목록" }
+        "jaws": {
+          "기본 상태": "{label} 콤보 박스, 대한민국"
+        },
+        "nvda": {
+          "기본 상태": "{label} 콤보 박스, 대한민국"
+        },
+        "voiceover": {
+          "기본 상태": "대한민국, {label}, 팝업 버튼"
+        },
+        "talkback": {
+          "기본 상태": "{label}, 대한민국, 드롭다운 목록"
+        }
       }
     },
     "keyboard": [
-      { "key": "Tab", "action": "셀렉트로 포커스 이동" },
-      { "key": "Space / Enter", "action": "드롭다운 열기" },
-      { "key": "Arrow Up/Down", "action": "옵션 이동" },
-      { "key": "Escape", "action": "드롭다운 닫기" }
+      {
+        "key": "Tab",
+        "action": "셀렉트로 포커스 이동"
+      },
+      {
+        "key": "Space / Enter",
+        "action": "드롭다운 열기"
+      },
+      {
+        "key": "Arrow Up/Down",
+        "action": "옵션 이동"
+      },
+      {
+        "key": "Escape",
+        "action": "드롭다운 닫기"
+      }
     ]
   },
   "guide": {
     "standards": [
-      { "std": "wcag", "stdLabel": "WCAG 2.2", "item": "SC 3.2.2 입력 시", "desc": "셀렉트 값 변경만으로 맥락 변경(페이지 이동 등) 금지", "level": "A" },
-      { "std": "wcag", "stdLabel": "WCAG 2.2", "item": "SC 3.3.2 레이블 또는 지시문", "desc": "셀렉트에 명확한 레이블 제공", "level": "A" }
+      {
+        "std": "wcag",
+        "stdLabel": "WCAG 2.2",
+        "item": "SC 3.2.2 입력 시",
+        "desc": "셀렉트 값 변경만으로 맥락 변경(페이지 이동 등) 금지",
+        "level": "A"
+      },
+      {
+        "std": "wcag",
+        "stdLabel": "WCAG 2.2",
+        "item": "SC 3.3.2 레이블 또는 지시문",
+        "desc": "셀렉트에 명확한 레이블 제공",
+        "level": "A"
+      }
     ],
     "roles": [
-      { "role": "combobox", "attr": "aria-expanded, aria-haspopup", "element": "div", "desc": ["커스텀 셀렉트의 트리거 역할", "aria-expanded로 열림/닫힘 전달"] },
-      { "role": "listbox", "attr": "", "element": "ul", "desc": ["옵션 목록 컨테이너"] },
-      { "role": "option", "attr": "aria-selected", "element": "li", "desc": ["개별 옵션 항목", "aria-selected로 선택 상태 전달"] }
+      {
+        "role": "combobox",
+        "attr": "aria-expanded, aria-haspopup",
+        "element": "div",
+        "desc": [
+          "커스텀 셀렉트의 트리거 역할",
+          "aria-expanded로 열림/닫힘 전달"
+        ]
+      },
+      {
+        "role": "listbox",
+        "attr": "",
+        "element": "ul",
+        "desc": [
+          "옵션 목록 컨테이너"
+        ]
+      },
+      {
+        "role": "option",
+        "attr": "aria-selected",
+        "element": "li",
+        "desc": [
+          "개별 옵션 항목",
+          "aria-selected로 선택 상태 전달"
+        ]
+      }
     ],
     "doDont": [
       {
-        "do": { "code": "<label for=\"sel\">국가</label>\n<select id=\"sel\">\n  <option>한국</option>\n</select>", "image": "", "note": "네이티브 select 사용 권장" },
-        "dont": { "code": "<div class=\"dropdown\">\n  <span>한국 ▼</span>\n  <ul style=\"display:none\">\n    <li>한국</li>\n  </ul>\n</div>", "image": "", "comment": "role, 키보드, 상태 관리 누락", "note": "커스텀 드롭다운은 키보드 접근과 ARIA를 완벽히 구현해야 합니다." }
+        "do": {
+          "code": "<label for=\"sel\">국가</label>\n<select id=\"sel\">\n  <option>한국</option>\n</select>",
+          "image": "",
+          "note": "네이티브 select 사용 권장"
+        },
+        "dont": {
+          "code": "<div class=\"dropdown\">\n  <span>한국 ▼</span>\n  <ul style=\"display:none\">\n    <li>한국</li>\n  </ul>\n</div>",
+          "image": "",
+          "comment": "role, 키보드, 상태 관리 누락",
+          "note": "커스텀 드롭다운은 키보드 접근과 ARIA를 완벽히 구현해야 합니다."
+        }
       }
     ],
     "checklist": [
-      "가능하면 네이티브 <code>&lt;select&gt;</code> 사용",
-      "커스텀 시 <code>role=\"combobox\"</code> + <code>role=\"listbox\"</code> + <code>role=\"option\"</code>",
-      "값 변경만으로 맥락 변경 금지 (SC 3.2.2)",
-      "화살표 키로 옵션 이동",
-      "<kbd>Escape</kbd>로 닫기"
+      {
+        "text": "가능하면 네이티브 <code>&lt;select&gt;</code> 사용",
+        "sc": "SC 4.1.2",
+        "solution": "스타일링이 필요하면 커스텀 + <code>role=\"combobox\"</code> + <code>role=\"listbox\"</code> + <code>role=\"option\"</code>"
+      },
+      {
+        "text": "값 변경만으로 맥락 변경 금지",
+        "sc": "SC 3.2.2",
+        "solution": "select onChange로 페이지 이동 금지. 별도 '확인' 버튼 제공"
+      },
+      {
+        "text": "화살표 키로 옵션 이동",
+        "sc": "SC 2.1.1",
+        "solution": "네이티브는 자동 지원. 커스텀은 Arrow Up/Down + Home/End 구현"
+      },
+      {
+        "text": "<kbd>Escape</kbd>로 닫기",
+        "sc": "SC 2.1.1",
+        "solution": "드롭다운 열린 상태에서 Escape → 닫기 + 이전 값 복원"
+      },
+      {
+        "text": "명확한 레이블 제공",
+        "sc": "SC 3.3.2",
+        "solution": "<code>&lt;label for=\"id\"&gt;</code>로 연결. placeholder로 대체 불가"
+      }
+    ],
+    "concepts": [
+      {
+        "title": "네이티브 select vs 커스텀 리스트박스",
+        "headers": [
+          "구분",
+          "접근성",
+          "스타일링",
+          "권장도"
+        ],
+        "rows": [
+          [
+            "네이티브 &lt;select&gt;",
+            "키보드/스크린리더 완벽 지원",
+            "제한적",
+            "우선 사용 권장"
+          ],
+          [
+            "커스텀 리스트박스",
+            "ARIA + 키보드 직접 구현 필수",
+            "자유로움",
+            "접근성 오류 위험 높음"
+          ]
+        ]
+      }
     ]
   },
   "code": {
     "filename": "select.html",
     "snippets": [
-      { "label": "기본 셀렉트", "code": "<label for=\"country\">국가</label>\n<select id=\"country\">\n  <option value=\"\">선택하세요</option>\n  <option value=\"kr\">대한민국</option>\n  <option value=\"us\">미국</option>\n</select>" }
+      {
+        "label": "기본 셀렉트",
+        "code": "<label for=\"country\">국가</label>\n<select id=\"country\">\n  <option value=\"\">선택하세요</option>\n  <option value=\"kr\">대한민국</option>\n  <option value=\"us\">미국</option>\n</select>"
+      }
     ]
   }
 }

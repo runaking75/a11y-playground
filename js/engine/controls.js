@@ -125,11 +125,14 @@ var Controls = {
   buildSelect: function(ctrl) {
     var opts = '';
     for (var i = 0; i < ctrl.options.length; i++) {
-      var sel = ctrl.options[i] === ctrl.default ? ' selected' : '';
-      opts += '<option' + sel + '>' + ctrl.options[i] + '</option>';
+      var opt = ctrl.options[i];
+      var label = typeof opt === 'object' ? opt.label : opt;
+      var value = typeof opt === 'object' ? opt.value : opt;
+      var sel = value === ctrl.default ? ' selected' : '';
+      opts += '<option value="' + value + '"' + sel + '>' + label + '</option>';
     }
     return '<div class="ap-control__row">' +
-      '<div class="ap-control__label">' + ctrl.label + '</div>' +
+      '<div class="ap-control__label"><span>' + ctrl.label + '</span></div>' +
       '<select class="ap-control__select" data-attr="' + ctrl.attr + '" data-type="select">' + opts + '</select>' +
     '</div>';
   },
@@ -270,6 +273,15 @@ var Controls = {
         var valEl = self.panelEl.querySelector('[data-value-for="' + attr + '"]');
         if (valEl) valEl.textContent = value + unit;
         self.applyStyle(attr, value + unit);
+      });
+    });
+
+    // Select
+    this.panelEl.querySelectorAll('.ap-control__select').forEach(function(select) {
+      select.addEventListener('change', function() {
+        var attr = select.dataset.attr;
+        var value = select.value;
+        self.applyStyle(attr, value);
       });
     });
 

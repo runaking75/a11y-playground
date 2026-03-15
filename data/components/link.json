@@ -4,32 +4,95 @@
   "description": "다른 페이지나 같은 페이지의 특정 위치로 이동하는 인터랙티브 요소. 클릭, 탭 또는 키보드로 활성화 가능해야 합니다.",
   "status": "pass",
   "tags": [
-    { "type": "wcag", "text": "SC 4.1.2" },
-    { "type": "wcag", "text": "SC 2.1.1" },
-    { "type": "wcag", "text": "SC 2.4.4" },
-    { "type": "wcag", "text": "SC 2.4.7" },
-    { "type": "kwcag", "text": "KWCAG 6.4.3" }
+    {
+      "type": "wcag",
+      "text": "SC 4.1.2"
+    },
+    {
+      "type": "wcag",
+      "text": "SC 2.1.1"
+    },
+    {
+      "type": "wcag",
+      "text": "SC 2.4.4"
+    },
+    {
+      "type": "wcag",
+      "text": "SC 2.4.7"
+    },
+    {
+      "type": "kwcag",
+      "text": "KWCAG 6.4.3"
+    }
   ],
   "related": [
-    { "id": "button", "name": "Button" }
+    {
+      "id": "button",
+      "name": "Button"
+    }
   ],
   "playground": {
     "addable": true,
     "defaultVariant": "default",
     "previewHtml": "<div class=\"ap-preview__label\">DEFAULT</div><div class=\"ap-preview__row\"><a href=\"#\" class=\"link\" data-component=\"link\">기본 링크</a><a href=\"#\" class=\"link\" data-component=\"link\"><span class=\"material-icons-outlined\" style=\"font-size:16px\">open_in_new</span> 새 창 열기</a></div><div class=\"ap-preview__label\">VISITED</div><div class=\"ap-preview__row\"><a href=\"#\" class=\"link link-visited\" data-component=\"link\">방문한 링크</a></div><div class=\"ap-preview__label\">UNDERLINE VARIATIONS</div><div class=\"ap-preview__row\"><a href=\"#\" class=\"link link-underline\" data-component=\"link\">밑줄 링크</a><a href=\"#\" class=\"link link-no-underline\" data-component=\"link\">밑줄 없는 링크</a></div>",
     "controls": [
-      { "type": "toggle", "attr": "disabled", "label": "비활성화 (aria-disabled)", "default": false },
-      { "type": "toggle", "attr": "new-window", "label": "새 창 열기 (target=_blank)", "default": false }
+      {
+        "type": "toggle",
+        "attr": "disabled",
+        "label": "비활성화 (aria-disabled)",
+        "default": false
+      },
+      {
+        "type": "toggle",
+        "attr": "new-window",
+        "label": "새 창 열기 (target=_blank)",
+        "default": false
+      }
     ],
     "colorPresets": [
-      { "name": "Default", "bg": "transparent", "text": "#2563EB", "border": "none" },
-      { "name": "Visited", "bg": "transparent", "text": "#7C3AED", "border": "none" },
-      { "name": "Dark", "bg": "transparent", "text": "#1A1A1A", "border": "none" }
+      {
+        "name": "Default",
+        "bg": "transparent",
+        "text": "#2563EB",
+        "border": "none"
+      },
+      {
+        "name": "Visited",
+        "bg": "transparent",
+        "text": "#7C3AED",
+        "border": "none"
+      },
+      {
+        "name": "Dark",
+        "bg": "transparent",
+        "text": "#1A1A1A",
+        "border": "none"
+      }
     ],
     "aria": [
-      { "type": "toggle", "attr": "aria-disabled", "default": false, "speechState": "비활성화 상태" },
-      { "type": "toggle", "attr": "aria-label", "default": false, "inputOnEnable": true, "placeholder": "접근 가능한 이름" },
-      { "type": "toggle", "attr": "aria-describedby", "default": false, "linkedElement": { "tag": "span", "text": "링크에 대한 추가 설명", "position": "after" } }
+      {
+        "type": "toggle",
+        "attr": "aria-disabled",
+        "default": false,
+        "speechState": "비활성화 상태"
+      },
+      {
+        "type": "toggle",
+        "attr": "aria-label",
+        "default": false,
+        "inputOnEnable": true,
+        "placeholder": "접근 가능한 이름"
+      },
+      {
+        "type": "toggle",
+        "attr": "aria-describedby",
+        "default": false,
+        "linkedElement": {
+          "tag": "span",
+          "text": "링크에 대한 추가 설명",
+          "position": "after"
+        }
+      }
     ],
     "compare": {
       "native": {
@@ -46,49 +109,161 @@
       }
     },
     "speech": {
-      "columns": ["기본 상태"],
+      "columns": [
+        "기본 상태"
+      ],
       "patterns": {
-        "jaws": { "기본 상태": "{label} 링크" },
-        "nvda": { "기본 상태": "{label} 링크" },
-        "voiceover": { "기본 상태": "{label}, 링크" },
-        "talkback": { "기본 상태": "{label}, 링크" }
+        "jaws": {
+          "기본 상태": "{label} 링크"
+        },
+        "nvda": {
+          "기본 상태": "{label} 링크"
+        },
+        "voiceover": {
+          "기본 상태": "{label}, 링크"
+        },
+        "talkback": {
+          "기본 상태": "{label}, 링크"
+        }
       }
     },
     "keyboard": [
-      { "key": "Tab", "action": "링크로 포커스 이동" },
-      { "key": "Enter", "action": "링크 활성화" }
+      {
+        "key": "Tab",
+        "action": "링크로 포커스 이동"
+      },
+      {
+        "key": "Enter",
+        "action": "링크 활성화"
+      }
     ]
   },
   "guide": {
     "standards": [
-      { "std": "wcag", "stdLabel": "WCAG 2.2", "item": "SC 2.4.4 링크 목적 (맥락 내)", "desc": "링크의 목적이 링크 텍스트만으로 또는 맥락과 함께 결정 가능해야 함", "level": "A" },
-      { "std": "wcag", "stdLabel": "WCAG 2.2", "item": "SC 4.1.2 이름, 역할, 값", "desc": "링크의 이름과 역할은 프로그래밍 방식으로 결정 가능해야 함", "level": "A" },
-      { "std": "kwcag", "stdLabel": "KWCAG 2.2", "item": "6.4.3 적절한 링크 텍스트", "desc": "링크 텍스트는 용도나 목적을 이해할 수 있도록 제공해야 함", "level": "—" }
+      {
+        "std": "wcag",
+        "stdLabel": "WCAG 2.2",
+        "item": "SC 2.4.4 링크 목적 (맥락 내)",
+        "desc": "링크의 목적이 링크 텍스트만으로 또는 맥락과 함께 결정 가능해야 함",
+        "level": "A"
+      },
+      {
+        "std": "wcag",
+        "stdLabel": "WCAG 2.2",
+        "item": "SC 4.1.2 이름, 역할, 값",
+        "desc": "링크의 이름과 역할은 프로그래밍 방식으로 결정 가능해야 함",
+        "level": "A"
+      },
+      {
+        "std": "kwcag",
+        "stdLabel": "KWCAG 2.2",
+        "item": "6.4.3 적절한 링크 텍스트",
+        "desc": "링크 텍스트는 용도나 목적을 이해할 수 있도록 제공해야 함",
+        "level": "—"
+      }
     ],
     "roles": [
-      { "role": "link", "attr": "", "element": "span, div", "desc": ["요소를 링크로 식별", "tabindex=\"0\"과 키보드 이벤트 필수"] },
-      { "role": "", "attr": "aria-label=\"설명\"", "element": "a", "desc": ["아이콘만 있는 링크에 접근 가능한 이름 제공"] }
+      {
+        "role": "link",
+        "attr": "",
+        "element": "span, div",
+        "desc": [
+          "요소를 링크로 식별",
+          "tabindex=\"0\"과 키보드 이벤트 필수"
+        ]
+      },
+      {
+        "role": "",
+        "attr": "aria-label=\"설명\"",
+        "element": "a",
+        "desc": [
+          "아이콘만 있는 링크에 접근 가능한 이름 제공"
+        ]
+      }
     ],
     "doDont": [
       {
-        "do": { "code": "<a href=\"/products\">제품 목록 보기</a>", "image": "", "note": "링크 텍스트만으로 목적을 알 수 있음" },
-        "dont": { "code": "<a href=\"/products\">여기를 클릭</a>", "image": "", "comment": "목적 불분명", "note": "'여기를 클릭'은 링크의 목적을 전달하지 못합니다." }
+        "do": {
+          "code": "<a href=\"/products\">제품 목록 보기</a>",
+          "image": "",
+          "note": "링크 텍스트만으로 목적을 알 수 있음"
+        },
+        "dont": {
+          "code": "<a href=\"/products\">여기를 클릭</a>",
+          "image": "",
+          "comment": "목적 불분명",
+          "note": "'여기를 클릭'은 링크의 목적을 전달하지 못합니다."
+        }
       }
     ],
     "checklist": [
-      "<code>&lt;a href&gt;</code> 네이티브 요소 사용",
-      "링크 텍스트만으로 목적 파악 가능",
-      "새 창 열기 시 사용자에게 사전 고지",
-      "포커스 표시가 시각적으로 명확 (SC 2.4.7)",
-      "방문 링크와 미방문 링크 시각적 구분"
+      {
+        "text": "네이티브 <code>&lt;a href&gt;</code> 요소 사용",
+        "sc": "SC 4.1.2",
+        "solution": "span/div 사용 시 <code>role=\"link\"</code> + <code>tabindex=\"0\"</code> + Enter 키 이벤트 필수"
+      },
+      {
+        "text": "링크 텍스트만으로 목적 파악 가능",
+        "sc": "SC 2.4.4",
+        "solution": "'여기를 클릭' 대신 '제품 목록 보기' 등 구체적 텍스트. 부족하면 <code>aria-label</code> 보충"
+      },
+      {
+        "text": "새 창 열기 시 사용자에게 사전 고지",
+        "sc": "SC 3.2.5",
+        "solution": "링크 텍스트에 '(새 창)' 추가 또는 <code>aria-label</code>에 명시. 아이콘으로도 시각적 표시"
+      },
+      {
+        "text": "포커스 표시가 시각적으로 명확",
+        "sc": "SC 2.4.7",
+        "solution": "<code>:focus-visible</code>에 outline 적용. 밑줄 제거한 링크는 hover/focus 시 밑줄 복원"
+      },
+      {
+        "text": "방문 링크와 미방문 링크 시각적 구분",
+        "sc": "SC 1.4.1",
+        "solution": "<code>:visited</code> 색상 지정. 색상만으로 구분 시 밑줄 등 추가 시각 단서 제공"
+      }
+    ],
+    "concepts": [
+      {
+        "title": "링크 vs 버튼",
+        "headers": [
+          "구분",
+          "용도",
+          "활성화 키",
+          "URL 변경"
+        ],
+        "rows": [
+          [
+            "링크 (&lt;a href&gt;)",
+            "페이지/위치 이동",
+            "Enter",
+            "변경됨"
+          ],
+          [
+            "버튼 (&lt;button&gt;)",
+            "동작 실행 (저장, 삭제, 토글)",
+            "Enter + Space",
+            "변경 안 됨"
+          ]
+        ]
+      }
     ]
   },
   "code": {
     "filename": "link.html",
     "snippets": [
-      { "label": "기본 링크", "code": "<a href=\"/page\">페이지 이동</a>" },
-      { "label": "새 창 링크", "code": "<a href=\"/page\" target=\"_blank\">\n  새 창 열기\n  <span class=\"sr-only\">(새 창)</span>\n</a>" },
-      { "label": "아이콘 링크", "code": "<a href=\"/page\" aria-label=\"홈으로 이동\">\n  <svg aria-hidden=\"true\">...</svg>\n</a>" }
+      {
+        "label": "기본 링크",
+        "code": "<a href=\"/page\">페이지 이동</a>"
+      },
+      {
+        "label": "새 창 링크",
+        "code": "<a href=\"/page\" target=\"_blank\">\n  새 창 열기\n  <span class=\"sr-only\">(새 창)</span>\n</a>"
+      },
+      {
+        "label": "아이콘 링크",
+        "code": "<a href=\"/page\" aria-label=\"홈으로 이동\">\n  <svg aria-hidden=\"true\">...</svg>\n</a>"
+      }
     ]
   }
 }

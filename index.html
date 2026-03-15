@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>A11y Playground</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;500;700&family=Fira+Code:wght@400;500&family=Outfit:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/framework.css">
@@ -121,6 +122,7 @@
     <div class="ap-guide" data-content="guide">
       <div class="ap-guide__body">
         <div class="ap-guide__content">
+          <div class="ap-section" data-section="concepts" id="guide-concepts" style="display:none"></div>
           <div class="ap-section" data-section="standards" id="guide-standards">
             <h2 class="ap-section__title">적용 기준</h2>
             <table class="ap-table">
@@ -314,6 +316,7 @@
         <!-- 앵커 목차 -->
         <nav class="ap-guide__toc">
           <div class="ap-guide__toc-title">목차</div>
+          <a href="#guide-concepts" class="ap-guide__toc-link" style="display:none">개요</a>
           <a href="#guide-standards" class="ap-guide__toc-link is-active">적용 기준</a>
           <a href="#guide-roles" class="ap-guide__toc-link">Role, 속성, 상태</a>
           <a href="#guide-compare" class="ap-guide__toc-link">네이티브 vs ARIA</a>

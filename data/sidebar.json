@@ -5,27 +5,117 @@
       "items": [
         {
           "id": "wcag22",
-          "name": "WCAG 2.2 개요",
+          "name": "WCAG 2.2",
           "icon": "public",
-          "type": "guide",
-          "status": "planned",
-          "disabled": true
+          "type": "group",
+          "children": [
+            {
+              "id": "wcag22-1",
+              "name": "1. 인식의 용이성",
+              "type": "guide",
+              "status": "pass",
+              "parent": "wcag22"
+            },
+            {
+              "id": "wcag22-2",
+              "name": "2. 운용의 용이성",
+              "type": "guide",
+              "status": "pass",
+              "parent": "wcag22"
+            },
+            {
+              "id": "wcag22-3",
+              "name": "3. 이해의 용이성",
+              "type": "guide",
+              "status": "pass",
+              "parent": "wcag22"
+            },
+            {
+              "id": "wcag22-4",
+              "name": "4. 견고성",
+              "type": "guide",
+              "status": "pass",
+              "parent": "wcag22"
+            }
+          ]
         },
         {
           "id": "kwcag22",
-          "name": "KWCAG 2.2 개요",
-          "icon": "KR",
-          "type": "guide",
-          "status": "planned",
-          "disabled": true
+          "name": "KWCAG 2.2",
+          "icon": "flag",
+          "type": "group",
+          "children": [
+            {
+              "id": "kwcag22-1",
+              "name": "1. 인식의 용이성",
+              "type": "guide",
+              "status": "pass"
+            },
+            {
+              "id": "kwcag22-2",
+              "name": "2. 운용의 용이성",
+              "type": "guide",
+              "status": "pass"
+            },
+            {
+              "id": "kwcag22-3",
+              "name": "3. 이해의 용이성",
+              "type": "guide",
+              "status": "pass"
+            },
+            {
+              "id": "kwcag22-4",
+              "name": "4. 견고성",
+              "type": "guide",
+              "status": "pass"
+            }
+          ]
         },
         {
           "id": "mobile",
           "name": "모바일 앱 접근성",
           "icon": "phone_iphone",
+          "type": "group",
+          "children": [
+            {
+              "id": "mobile-1",
+              "name": "1. 인식의 용이성",
+              "type": "guide",
+              "status": "pass"
+            },
+            {
+              "id": "mobile-2",
+              "name": "2. 운용의 용이성",
+              "type": "guide",
+              "status": "pass"
+            },
+            {
+              "id": "mobile-3",
+              "name": "3. 이해의 용이성",
+              "type": "guide",
+              "status": "pass"
+            },
+            {
+              "id": "mobile-4",
+              "name": "4. 견고성",
+              "type": "guide",
+              "status": "pass"
+            }
+          ]
+        },
+        {
+          "id": "wcag-kwcag-mapping",
+          "name": "WCAG ↔ KWCAG<span class=\"sr-only\"> 매핑</span>",
+          "icon": "compare_arrows",
           "type": "guide",
-          "status": "planned",
-          "disabled": true
+          "status": "pass"
+        },
+        {
+          "id": "kwcag-mobile-mapping",
+          "name": "KWCAG ↔ 모바일<span class=\"sr-only\"> 매핑</span>",
+          "icon": "compare_arrows",
+          "type": "guide",
+          "status": "pass"
         },
         {
           "id": "glossary",
@@ -133,11 +223,6 @@
     {
       "label": "도구",
       "items": [
-        {
-          "id": "contrast-checker",
-          "name": "명도대비 체커",
-          "type": "tool"
-        },
         {
           "id": "focus-simulator",
           "name": "포커스 순서 시뮬레이터",

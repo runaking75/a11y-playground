@@ -6,10 +6,17 @@
 var GuideRenderer = {
   data: null,
   activeLevel: 'all',
+  _scrollSpy: null,
 
   render: function(data) {
     this.data = data;
     this.activeLevel = 'all';
+
+    // 매핑 타입이면 별도 렌더
+    if (data.type === 'mapping') {
+      this.renderMapping(data);
+      return;
+    }
 
     // 컴포넌트 뷰 숨기기
     this.showGuideView();
@@ -39,23 +46,46 @@ var GuideRenderer = {
       if (data.overview.structure) html += '<span><strong>구조:</strong> ' + data.overview.structure + '</span>';
       if (data.overview.levels) html += '<span><strong>적합 수준:</strong> ' + data.overview.levels + '</span>';
       if (data.overview.changes) html += '<span><strong>변경사항:</strong> ' + data.overview.changes + '</span>';
-      html += '</div></div>';
+      html += '</div>';
+      // 범례
+      if (data.overview.legend) {
+        html += '<div class="ap-guide-page__legend"><strong>기법 코드 범례:</strong> ';
+        for (var lg = 0; lg < data.overview.legend.length; lg++) {
+          var l = data.overview.legend[lg];
+          if (lg > 0) html += '<span class="ap-guide-page__legend-sep">·</span>';
+          html += '<span class="ap-guide-page__legend-item"><code>' + l.code + '</code> ' + l.desc + '</span>';
+        }
+        html += '</div>';
+      }
+      html += '</div>';
     }
 
-    // 레벨 필터 (WCAG만)
-    if (data.id === 'wcag22') {
+    // 레벨 필터 (WCAG 원칙별 페이지)
+    if (data.id && data.id.indexOf('wcag22') === 0) {
+      // SC 개수 동적 계산
+      var countAll = 0, countA = 0, countAA = 0, countAAA = 0;
+      for (var cp = 0; cp < data.principles.length; cp++) {
+        for (var cg = 0; cg < data.principles[cp].guidelines.length; cg++) {
+          var crits = data.principles[cp].guidelines[cg].criteria;
+          for (var cc = 0; cc < crits.length; cc++) {
+            countAll++;
+            if (crits[cc].level === 'A') countA++;
+            else if (crits[cc].level === 'AA') countAA++;
+            else if (crits[cc].level === 'AAA') countAAA++;
+          }
+        }
+      }
       html += '<div class="ap-guide-page__filter" id="guide-filter">';
-      html += '<button class="ap-guide-page__filter-btn is-active" data-level="all">전체 (87)</button>';
-      html += '<button class="ap-guide-page__filter-btn" data-level="A">A (32)</button>';
-      html += '<button class="ap-guide-page__filter-btn" data-level="AA">AA (24)</button>';
-      html += '<button class="ap-guide-page__filter-btn" data-level="AAA">AAA (31)</button>';
+      html += '<button class="ap-guide-page__filter-btn is-active" data-level="all">전체 (' + countAll + ')</button>';
+      if (countA > 0) html += '<button class="ap-guide-page__filter-btn" data-level="A">A (' + countA + ')</button>';
+      if (countAA > 0) html += '<button class="ap-guide-page__filter-btn" data-level="AA">AA (' + countAA + ')</button>';
+      if (countAAA > 0) html += '<button class="ap-guide-page__filter-btn" data-level="AAA">AAA (' + countAAA + ')</button>';
       html += '</div>';
     }
 
     // 전체 펼치기/접기 툴바
     html += '<div class="ap-guide-page__toolbar">';
-    html += '<button class="ap-guide-page__toolbar-btn" data-action="expand-all"><span class="material-icons-outlined" style="font-size:16px">unfold_more</span> 전체 펼치기</button>';
-    html += '<button class="ap-guide-page__toolbar-btn" data-action="collapse-all"><span class="material-icons-outlined" style="font-size:16px">unfold_less</span> 전체 접기</button>';
+    html += '<button class="ap-guide-page__toolbar-btn" id="guide-toggle-all" data-expanded="false"><span class="material-icons-outlined" style="font-size:16px">unfold_more</span> 전체 펼치기</button>';
     html += '</div>';
 
     // 원칙 → 지침 → 항목
@@ -120,19 +150,19 @@ var GuideRenderer = {
     var html = '<div class="ap-gp-criterion' + deprecatedCls + '" id="' + scid + '"' + levelCls + '>';
 
     // 헤더 (클릭 가능)
-    html += '<div class="ap-gp-criterion__header" data-toggle="sc">';
+    html += '<button type="button" class="ap-gp-criterion__header" data-toggle="sc" aria-expanded="false">';
     html += '<span class="ap-gp-criterion__id">' + sc.id + '</span>';
     html += '<span class="ap-gp-criterion__name">' + sc.name;
     if (sc.nameEn) html += ' <span class="ap-gp-en">(' + sc.nameEn + ')</span>';
     html += '</span>';
+    html += newBadge + statusBadge;
     if (sc.level && sc.level !== '폐기') {
       var lvlCls = 'ap-gp-level--' + sc.level.toLowerCase();
       html += '<span class="ap-gp-level ' + lvlCls + '">' + sc.level + '</span>';
     }
     if (sc.deprecated) html += '<span class="ap-gp-badge--deprecated">폐기</span>';
-    html += newBadge + statusBadge;
     html += '<span class="ap-gp-criterion__arrow"></span>';
-    html += '</div>';
+    html += '</button>';
 
     // 본문 (접히는 영역)
     html += '<div class="ap-gp-criterion__body" style="display:none">';
@@ -140,9 +170,23 @@ var GuideRenderer = {
     // 설명
     if (sc.desc) html += '<p class="ap-gp-criterion__desc">' + this.escapeAndFormat(sc.desc) + '</p>';
 
-    // WCAG 매핑
-    if (sc.wcagMapping) {
-      html += '<div class="ap-gp-criterion__mapping">WCAG: ' + sc.wcagMapping + '</div>';
+    // 의도
+    if (sc.intent) {
+      html += '<div class="ap-gp-criterion__intent"><strong>의도:</strong> ' + this.escapeAndFormat(sc.intent) + '</div>';
+    }
+
+    // 기대효과 (benefits 배열)
+    if (sc.benefits && sc.benefits.length > 0) {
+      html += '<div class="ap-gp-criterion__section"><strong>기대효과:</strong><ul>';
+      for (var b = 0; b < sc.benefits.length; b++) {
+        html += '<li>' + this.escapeAndFormat(sc.benefits[b]) + '</li>';
+      }
+      html += '</ul></div>';
+    }
+
+    // 기대효과 (단일 문자열 — 하위 호환)
+    if (sc.benefit && !sc.benefits) {
+      html += '<div class="ap-gp-criterion__intent"><strong>기대효과:</strong> ' + this.escapeAndFormat(sc.benefit) + '</div>';
     }
 
     // 예외
@@ -154,6 +198,28 @@ var GuideRenderer = {
       html += '</ul></div>';
     }
 
+    // 충족 기법 + 실패 사례 (2단)
+    var hasTech = sc.techniques && sc.techniques.length > 0;
+    var hasFail = sc.failures && sc.failures.length > 0;
+    if (hasTech || hasFail) {
+      html += '<div class="ap-gp-criterion__two-col">';
+      if (hasTech) {
+        html += '<div class="ap-gp-criterion__section ap-gp-criterion__techniques"><strong>충족 기법:</strong><ul>';
+        for (var t = 0; t < sc.techniques.length; t++) {
+          html += '<li>' + this.escapeAndFormat(sc.techniques[t]) + '</li>';
+        }
+        html += '</ul></div>';
+      }
+      if (hasFail) {
+        html += '<div class="ap-gp-criterion__section ap-gp-criterion__failures"><strong>실패 사례:</strong><ul>';
+        for (var f = 0; f < sc.failures.length; f++) {
+          html += '<li>' + this.escapeAndFormat(sc.failures[f]) + '</li>';
+        }
+        html += '</ul></div>';
+      }
+      html += '</div>';
+    }
+
     // 컴포넌트 적용
     if (sc.components && sc.components.length > 0) {
       html += '<div class="ap-gp-criterion__section"><strong>컴포넌트 적용:</strong><ul>';
@@ -163,9 +229,9 @@ var GuideRenderer = {
       html += '</ul></div>';
     }
 
-    // 기대효과
-    if (sc.benefit) {
-      html += '<div class="ap-gp-criterion__benefit">기대효과: ' + sc.benefit + '</div>';
+    // KWCAG 매핑
+    if (sc.wcagMapping) {
+      html += '<div class="ap-gp-criterion__mapping"><strong>WCAG 매핑:</strong> ' + sc.wcagMapping + '</div>';
     }
 
     // 참고
@@ -244,25 +310,34 @@ var GuideRenderer = {
           var isOpen = body.style.display !== 'none';
           body.style.display = isOpen ? 'none' : '';
           criterion.classList.toggle('is-open', !isOpen);
+          header.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
         }
       });
     });
 
-    // 전체 펼치기/접기
-    document.querySelectorAll('.ap-guide-page__toolbar-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var action = btn.dataset.action;
+    // 전체 펼치기/접기 토글
+    var toggleBtn = document.getElementById('guide-toggle-all');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function() {
+        var isExpanded = toggleBtn.dataset.expanded === 'true';
         var bodies = document.querySelectorAll('.ap-gp-criterion__body');
         var criteria = document.querySelectorAll('.ap-gp-criterion');
-        if (action === 'expand-all') {
-          bodies.forEach(function(b) { b.style.display = ''; });
-          criteria.forEach(function(c) { c.classList.add('is-open'); });
-        } else {
+        var headers = document.querySelectorAll('.ap-gp-criterion__header');
+        if (isExpanded) {
           bodies.forEach(function(b) { b.style.display = 'none'; });
           criteria.forEach(function(c) { c.classList.remove('is-open'); });
+          headers.forEach(function(h) { h.setAttribute('aria-expanded', 'false'); });
+          toggleBtn.dataset.expanded = 'false';
+          toggleBtn.innerHTML = '<span class="material-icons-outlined" style="font-size:16px">unfold_more</span> 전체 펼치기';
+        } else {
+          bodies.forEach(function(b) { b.style.display = ''; });
+          criteria.forEach(function(c) { c.classList.add('is-open'); });
+          headers.forEach(function(h) { h.setAttribute('aria-expanded', 'true'); });
+          toggleBtn.dataset.expanded = 'true';
+          toggleBtn.innerHTML = '<span class="material-icons-outlined" style="font-size:16px">unfold_less</span> 전체 접기';
         }
       });
-    });
+    }
 
     // 레벨 필터
     var filterBtns = document.querySelectorAll('.ap-guide-page__filter-btn');
@@ -274,54 +349,13 @@ var GuideRenderer = {
       });
     });
 
-    // 목차 클릭
-    document.querySelectorAll('.ap-guide-page__toc-link').forEach(function(link) {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        var target = link.dataset.target;
-        if (target === 'top') {
-          var mainEl = document.querySelector('.ap-main');
-          if (mainEl) mainEl.scrollTop = 0;
-        } else {
-          var href = link.getAttribute('href');
-          if (href && href !== '#') {
-            var el = document.querySelector(href);
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }
-        // 활성화
-        document.querySelectorAll('.ap-guide-page__toc-link').forEach(function(l) { l.classList.remove('is-active'); });
-        link.classList.add('is-active');
-      });
+    // 목차 + 스크롤 스파이 — ScrollSpy 공용 유틸 사용
+    if (this._scrollSpy) this._scrollSpy.destroy();
+    this._scrollSpy = ScrollSpy.create({
+      tocSelector: '.ap-guide-page__toc-link',
+      sectionSelector: '.ap-gp-principle, .ap-gp-guideline',
+      topSelector: '.ap-guide-page__toc-link[data-target="top"]'
     });
-
-    // 스크롤 스파이
-    var mainEl = document.querySelector('.ap-main');
-    if (mainEl) {
-      mainEl.addEventListener('scroll', function() {
-        var tocLinks = document.querySelectorAll('.ap-guide-page__toc-link');
-        var sections = document.querySelectorAll('.ap-gp-principle, .ap-gp-guideline');
-        if (sections.length === 0 || tocLinks.length === 0) return;
-
-        var currentId = '';
-        for (var i = sections.length - 1; i >= 0; i--) {
-          var rect = sections[i].getBoundingClientRect();
-          if (rect.top <= 120) {
-            currentId = sections[i].id;
-            break;
-          }
-        }
-
-        if (currentId) {
-          tocLinks.forEach(function(link) {
-            link.classList.remove('is-active');
-            if (link.getAttribute('href') === '#' + currentId) {
-              link.classList.add('is-active');
-            }
-          });
-        }
-      });
-    }
   },
 
   filterByLevel: function(level) {
@@ -346,5 +380,315 @@ var GuideRenderer = {
     // 볼드: **text** → <strong>text</strong>
     text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
     return text;
+  },
+
+  /* ═══════════════════════════════════════
+     Mapping Renderer (WCAG ↔ KWCAG)
+     ═══════════════════════════════════════ */
+
+  mappingFilters: { status: 'all', level: 'all' },
+
+  renderMapping: function(data) {
+    this.data = data;
+    this.mappingFilters = { status: 'all', level: 'all' };
+    this.showGuideView();
+
+    var contentEl = document.querySelector('.ap-guide-page__content');
+    var tocListEl = document.querySelector('.ap-guide-page__toc-list');
+    if (!contentEl) return;
+
+    // 카운트 계산
+    var counts = { total: 0, A: 0, AA: 0, AAA: 0 };
+    var statusLabels = {};
+    for (var st = 0; st < data.statusTypes.length; st++) {
+      var key = data.statusTypes[st].key;
+      statusLabels[key] = data.statusTypes[st].label;
+      counts[key] = 0;
+    }
+    for (var p = 0; p < data.principles.length; p++) {
+      var items = data.principles[p].items;
+      for (var i = 0; i < items.length; i++) {
+        counts[items[i].status]++;
+        counts.total++;
+        if (items[i].level === 'A') counts.A++;
+        else if (items[i].level === 'AA') counts.AA++;
+        else if (items[i].level === 'AAA') counts.AAA++;
+      }
+    }
+
+    var html = '';
+
+    // 헤더
+    html += '<div class="ap-guide-page__header">';
+    html += '<h1 class="ap-guide-page__title">' + data.title + '</h1>';
+    if (data.source) html += '<a href="' + data.source + '" target="_blank" class="ap-guide-page__source">' + data.source + '</a>';
+    if (data.updated) html += '<span class="ap-guide-page__updated">최종 업데이트: ' + data.updated + '</span>';
+    html += '</div>';
+
+    // 개요
+    if (data.overview) {
+      html += '<div class="ap-guide-page__overview">';
+      html += '<p>' + data.overview.desc + '</p>';
+      if (data.overview.meta) {
+        html += '<div class="ap-guide-page__meta">';
+        for (var m = 0; m < data.overview.meta.length; m++) {
+          var meta = data.overview.meta[m];
+          html += '<span><strong>' + meta.label + ':</strong> ' + meta.value + '</span>';
+        }
+        html += '</div>';
+      }
+      html += '</div>';
+    }
+
+    html += '<div class="ap-mapping">';
+
+    // 필터 바 (stats + 상태필터 통합)
+    html += '<div class="ap-mapping__filters" role="search" aria-label="필터">';
+    html += '<div class="ap-mapping__filter-group" role="group" aria-label="매핑 상태">';
+    html += '<span class="ap-mapping__filter-label">상태</span>';
+    html += '<button class="ap-guide-page__filter-btn is-active" data-mf="status" data-mv="all" type="button">전체 (' + counts.total + ')</button>';
+    for (var s = 0; s < data.statusTypes.length; s++) {
+      var st = data.statusTypes[s];
+      var count = counts[st.key] || 0;
+      html += '<button class="ap-guide-page__filter-btn" data-mf="status" data-mv="' + st.key + '" type="button">';
+      html += '<span class="ap-mapping__dot ap-mapping__dot--' + st.key + '" aria-hidden="true"></span>';
+      html += st.label + ' (' + count + ')';
+      html += '</button>';
+    }
+    html += '</div>';
+    // 레벨 필터 (레벨이 있는 경우만)
+    var hasLevels = counts.A > 0 || counts.AA > 0 || counts.AAA > 0;
+    this.hasLevels = hasLevels;
+    if (hasLevels) {
+      html += '<div class="ap-mapping__filter-sep" aria-hidden="true"></div>';
+      html += '<div class="ap-mapping__filter-group" role="group" aria-label="적합성 레벨">';
+      html += '<span class="ap-mapping__filter-label">레벨</span>';
+      html += '<button class="ap-guide-page__filter-btn is-active" data-mf="level" data-mv="all" type="button">전체 (' + counts.total + ')</button>';
+      html += '<button class="ap-guide-page__filter-btn" data-mf="level" data-mv="A" type="button">A (' + counts.A + ')</button>';
+      html += '<button class="ap-guide-page__filter-btn" data-mf="level" data-mv="AA" type="button">AA (' + counts.AA + ')</button>';
+      html += '<button class="ap-guide-page__filter-btn" data-mf="level" data-mv="AAA" type="button">AAA (' + counts.AAA + ')</button>';
+      html += '</div>';
+    }
+    html += '<div class="ap-mapping__filter-sep" aria-hidden="true"></div>';
+    html += '<input type="search" class="ap-mapping__search" id="mapping-search" placeholder="SC 번호 또는 이름 검색…" aria-label="성공 기준 검색">';
+    html += '</div>';
+
+    // 결과 카운트
+    html += '<div class="ap-mapping__count" aria-live="polite"><strong id="mapping-visible-count">' + counts.total + '</strong>개 항목 표시 중</div>';
+
+    // 원칙별 테이블
+    for (var p = 0; p < data.principles.length; p++) {
+      html += this.renderMappingPrinciple(data.principles[p], statusLabels);
+    }
+
+    // 인사이트
+    if (data.insights && data.insights.length > 0) {
+      html += '<div class="ap-mapping__insights" id="mapping-insights">';
+      html += '<h2 class="ap-gp-guideline__title">핵심 차이점 분석</h2>';
+      html += '<div class="ap-mapping__insights-grid">';
+      for (var n = 0; n < data.insights.length; n++) {
+        html += this.renderMappingInsight(data.insights[n]);
+      }
+      html += '</div></div>';
+    }
+
+    html += '</div>'; // .ap-mapping
+
+    contentEl.innerHTML = html;
+
+    // 목차
+    if (tocListEl) {
+      var tocHtml = '<a href="#" class="ap-guide-page__toc-link" data-target="top">개요</a>';
+      for (var p = 0; p < data.principles.length; p++) {
+        var pr = data.principles[p];
+        tocHtml += '<a href="#mapping-principle-' + pr.id + '" class="ap-guide-page__toc-link ap-guide-page__toc-link--principle">' + pr.id + '. ' + pr.name + '</a>';
+      }
+      tocHtml += '<a href="#mapping-insights" class="ap-guide-page__toc-link ap-guide-page__toc-link--principle">핵심 차이점 분석</a>';
+      tocListEl.innerHTML = tocHtml;
+    }
+
+    this.bindMappingEvents();
+  },
+
+  renderMappingPrinciple: function(principle, statusLabels) {
+    var data = this.data;
+    var html = '<div class="ap-mapping__principle" id="mapping-principle-' + principle.id + '">';
+    html += '<div class="ap-mapping__principle-header">';
+    html += '<span class="ap-mapping__principle-num">' + principle.id + '</span>';
+    html += '<h2 class="ap-mapping__principle-title">' + principle.name;
+    if (principle.nameEn) html += '<span class="ap-mapping__principle-en">' + principle.nameEn + '</span>';
+    html += '</h2></div>';
+
+    html += '<div class="ap-table-wrap"><table class="ap-table" aria-label="' + principle.name + ' 매핑 테이블">';
+
+    // colgroup
+    if (data.colWidths) {
+      html += '<colgroup>';
+      for (var c = 0; c < data.colWidths.length; c++) {
+        var w = data.colWidths[c];
+        html += w ? '<col style="width:' + w + '">' : '<col>';
+      }
+      html += '</colgroup>';
+    }
+
+    // thead (기존 renderer.js와 동일한 colspan 패턴)
+    var headers = data.colHeaders || ['WCAG 2.2', '', '레벨', 'KWCAG 2.2', '상태', '비고'];
+    var aligns = data.colAlign || [];
+    html += '<thead><tr>';
+    for (var h = 0; h < headers.length; h++) {
+      var hCell = headers[h];
+      if (typeof hCell === 'object') {
+        var hAttrs = '';
+        if (hCell.colspan) hAttrs += ' colspan="' + hCell.colspan + '"';
+        if (hCell.rowspan) hAttrs += ' rowspan="' + hCell.rowspan + '"';
+        html += '<th' + hAttrs + '>' + hCell.text + '</th>';
+      } else {
+        var thStyle = aligns[h] ? ' style="text-align:' + aligns[h] + '"' : '';
+        html += '<th' + thStyle + '>' + hCell + '</th>';
+      }
+    }
+    html += '</tr></thead><tbody>';
+
+    for (var i = 0; i < principle.items.length; i++) {
+      html += this.renderMappingRow(principle.items[i], statusLabels);
+    }
+
+    html += '</tbody></table></div></div>';
+    return html;
+  },
+
+  renderMappingRow: function(item, statusLabels) {
+    var data = this.data;
+    var aligns = data.colAlign || [];
+    var searchText = (item.wcag + ' ' + item.wcagName + ' ' + (item.wcagKo || '') + ' ' + item.kwcag + ' ' + item.kwcagName).toLowerCase();
+
+    // WCAG 셀
+    var wcagHtml = '';
+    if (item.wcag === '—') {
+      wcagHtml = '<span style="color:var(--gray-400)">—</span>';
+    } else {
+      var depCls = item.deprecated ? ' ap-mapping__sc-id--deprecated' : '';
+      wcagHtml = '<span class="ap-mapping__sc-id' + depCls + '">' + item.wcag + '</span> ' + item.wcagName;
+      if (item.isNew) wcagHtml += '<span class="ap-mapping__ver">' + item.isNew + '</span>';
+      if (item.wcagKo) wcagHtml += '<br><span class="ap-mapping__sub">' + item.wcagKo + '</span>';
+    }
+
+    // KWCAG 셀
+    var kwcagHtml = '';
+    if (item.kwcag === '—') {
+      kwcagHtml = '<span style="color:var(--gray-400)">—</span>';
+    } else {
+      kwcagHtml = '<span class="ap-mapping__kwcag-id">' + item.kwcag + '</span> ' + item.kwcagName;
+    }
+
+    // 레벨 배지
+    var levelHtml = '';
+    if (item.level && item.level !== '—') {
+      var lvlCls = 'ap-gp-level--' + item.level.toLowerCase();
+      levelHtml = '<span class="ap-gp-level ' + lvlCls + '">' + item.level + '</span>';
+    }
+
+    // 셀 데이터 배열
+    var cells = [
+      '<span class="ap-mapping__dot ap-mapping__dot--' + item.status + '" aria-hidden="true"></span>',
+      wcagHtml
+    ];
+    if (this.hasLevels) {
+      cells.push(levelHtml);
+    }
+    cells.push(
+      kwcagHtml,
+      '<span class="ap-mapping__tag ap-mapping__tag--' + item.status + '">' + (statusLabels[item.status] || item.status) + '</span>',
+      '<span class="ap-mapping__note">' + this.escapeAndFormat(item.note || '') + '</span>'
+    );
+
+    var html = '<tr data-status="' + item.status + '" data-level="' + item.level + '" data-search="' + searchText + '">';
+    for (var i = 0; i < cells.length; i++) {
+      var tdStyle = aligns[i] ? ' style="text-align:' + aligns[i] + '"' : '';
+      html += '<td' + tdStyle + '>' + cells[i] + '</td>';
+    }
+    html += '</tr>';
+    return html;
+  },
+
+  renderMappingInsight: function(insight) {
+    var dotHtml = '';
+    if (insight.status !== 'note') {
+      dotHtml = '<span class="ap-mapping__dot ap-mapping__dot--' + insight.status + '" aria-hidden="true"></span>';
+    }
+    var html = '<div class="ap-mapping__insight">';
+    html += '<h4>' + dotHtml + insight.title + '</h4>';
+    html += '<p>' + insight.desc + '</p>';
+    if (insight.items && insight.items.length > 0) {
+      html += '<ul>';
+      for (var i = 0; i < insight.items.length; i++) {
+        html += '<li>' + this.escapeAndFormat(insight.items[i]) + '</li>';
+      }
+      html += '</ul>';
+    }
+    html += '</div>';
+    return html;
+  },
+
+  bindMappingEvents: function() {
+    var self = this;
+
+    // 필터 버튼
+    document.querySelectorAll('.ap-mapping__filters .ap-guide-page__filter-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var group = btn.dataset.mf;
+        var value = btn.dataset.mv;
+        self.mappingFilters[group] = value;
+
+        // 같은 그룹 내 active 토글
+        btn.closest('.ap-mapping__filter-group').querySelectorAll('.ap-guide-page__filter-btn').forEach(function(b) {
+          b.classList.remove('is-active');
+        });
+        btn.classList.add('is-active');
+        self.applyMappingFilters();
+      });
+    });
+
+    // 검색
+    var searchInput = document.getElementById('mapping-search');
+    if (searchInput) {
+      searchInput.addEventListener('input', function() {
+        self.applyMappingFilters();
+      });
+    }
+
+    // 목차 + 스크롤 스파이 — ScrollSpy 공용 유틸 사용
+    if (this._scrollSpy) this._scrollSpy.destroy();
+    this._scrollSpy = ScrollSpy.create({
+      tocSelector: '.ap-guide-page__toc-link',
+      sectionSelector: '.ap-mapping__principle, .ap-mapping__insights',
+      topSelector: '.ap-guide-page__toc-link[data-target="top"]'
+    });
+  },
+
+  applyMappingFilters: function() {
+    var search = '';
+    var searchInput = document.getElementById('mapping-search');
+    if (searchInput) search = searchInput.value.toLowerCase().trim();
+
+    var rows = document.querySelectorAll('.ap-mapping .ap-table tbody tr');
+    var visible = 0;
+
+    var self = this;
+    rows.forEach(function(row) {
+      var matchStatus = self.mappingFilters.status === 'all' || row.dataset.status === self.mappingFilters.status;
+      var matchLevel = self.mappingFilters.level === 'all' || row.dataset.level === self.mappingFilters.level || row.dataset.level === '—';
+      var matchSearch = !search || (row.dataset.search && row.dataset.search.indexOf(search) !== -1);
+
+      if (matchStatus && matchLevel && matchSearch) {
+        row.classList.remove('is-hidden');
+        visible++;
+      } else {
+        row.classList.add('is-hidden');
+      }
+    });
+
+    var countEl = document.getElementById('mapping-visible-count');
+    if (countEl) countEl.textContent = visible;
   }
 };
