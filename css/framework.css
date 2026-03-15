@@ -2390,6 +2390,9 @@ kbd {
   .ap-guide-page__body {
     gap: 0;
   }
+  .ap-card-grid {
+    padding: var(--space-lg);
+  }
 }
 
 
