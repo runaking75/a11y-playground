@@ -1,0 +1,224 @@
+{
+  "sections": [
+    {
+      "label": "레퍼런스",
+      "items": [
+        {
+          "id": "wcag22",
+          "name": "WCAG 2.2",
+          "icon": "public",
+          "type": "group",
+          "children": [
+            {
+              "id": "wcag22-1",
+              "name": "1. 인식의 용이성",
+              "type": "guide",
+              "status": "pass",
+              "parent": "wcag22"
+            },
+            {
+              "id": "wcag22-2",
+              "name": "2. 운용의 용이성",
+              "type": "guide",
+              "status": "pass",
+              "parent": "wcag22"
+            },
+            {
+              "id": "wcag22-3",
+              "name": "3. 이해의 용이성",
+              "type": "guide",
+              "status": "pass",
+              "parent": "wcag22"
+            },
+            {
+              "id": "wcag22-4",
+              "name": "4. 견고성",
+              "type": "guide",
+              "status": "pass",
+              "parent": "wcag22"
+            }
+          ]
+        },
+        {
+          "id": "kwcag22",
+          "name": "KWCAG 2.2",
+          "icon": "flag",
+          "type": "group",
+          "children": [
+            {
+              "id": "kwcag22-1",
+              "name": "1. 인식의 용이성",
+              "type": "guide",
+              "status": "pass"
+            },
+            {
+              "id": "kwcag22-2",
+              "name": "2. 운용의 용이성",
+              "type": "guide",
+              "status": "pass"
+            },
+            {
+              "id": "kwcag22-3",
+              "name": "3. 이해의 용이성",
+              "type": "guide",
+              "status": "pass"
+            },
+            {
+              "id": "kwcag22-4",
+              "name": "4. 견고성",
+              "type": "guide",
+              "status": "pass"
+            }
+          ]
+        },
+        {
+          "id": "mobile",
+          "name": "모바일 앱 접근성",
+          "icon": "phone_iphone",
+          "type": "group",
+          "children": [
+            {
+              "id": "mobile-1",
+              "name": "1. 인식의 용이성",
+              "type": "guide",
+              "status": "pass"
+            },
+            {
+              "id": "mobile-2",
+              "name": "2. 운용의 용이성",
+              "type": "guide",
+              "status": "pass"
+            },
+            {
+              "id": "mobile-3",
+              "name": "3. 이해의 용이성",
+              "type": "guide",
+              "status": "pass"
+            },
+            {
+              "id": "mobile-4",
+              "name": "4. 견고성",
+              "type": "guide",
+              "status": "pass"
+            }
+          ]
+        },
+        {
+          "id": "wcag-kwcag-mapping",
+          "name": "WCAG ↔ KWCAG<span class=\"sr-only\"> 매핑</span>",
+          "icon": "compare_arrows",
+          "type": "guide",
+          "status": "pass"
+        },
+        {
+          "id": "kwcag-mobile-mapping",
+          "name": "KWCAG ↔ 모바일<span class=\"sr-only\"> 매핑</span>",
+          "icon": "compare_arrows",
+          "type": "guide",
+          "status": "pass"
+        },
+        {
+          "id": "faq",
+          "name": "FAQ",
+          "icon": "help_outline",
+          "type": "guide",
+          "status": "pass"
+        },
+        {
+          "id": "usability",
+          "name": "사용성 권장사항",
+          "icon": "thumb_up",
+          "type": "guide",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "label": "컴포넌트",
+      "items": [
+        {
+          "id": "accordion",
+          "name": "Accordion",
+          "type": "component",
+          "status": "pass"
+        },
+        {
+          "id": "button",
+          "name": "Button",
+          "type": "component",
+          "status": "pass"
+        },
+        {
+          "id": "checkbox",
+          "name": "Checkbox",
+          "type": "component",
+          "status": "pass"
+        },
+        {
+          "id": "dialog",
+          "name": "Dialog / Modal",
+          "type": "component",
+          "status": "pass"
+        },
+        {
+          "id": "input",
+          "name": "Input (Text)",
+          "type": "component",
+          "status": "pass"
+        },
+        {
+          "id": "link",
+          "name": "Link",
+          "type": "component",
+          "status": "pass"
+        },
+        {
+          "id": "radio",
+          "name": "Radio Button",
+          "type": "component",
+          "status": "pass"
+        },
+        {
+          "id": "select",
+          "name": "Select / Dropdown",
+          "type": "component",
+          "status": "pass"
+        },
+        {
+          "id": "switch",
+          "name": "Switch / Toggle",
+          "type": "component",
+          "status": "pass"
+        },
+        {
+          "id": "tabs",
+          "name": "Tabs",
+          "type": "component",
+          "status": "pass"
+        },
+        {
+          "id": "tooltip",
+          "name": "Tooltip",
+          "type": "component",
+          "status": "pass"
+        },
+        {
+          "id": "datepicker",
+          "name": "Date Picker",
+          "type": "component",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "label": "도구",
+      "items": [
+        {
+          "id": "focus-simulator",
+          "name": "포커스 순서 시뮬레이터",
+          "type": "tool"
+        }
+      ]
+    }
+  ]
+}
