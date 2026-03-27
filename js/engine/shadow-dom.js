@@ -142,95 +142,98 @@ var ShadowDom = {
       this.canvas.appendChild(host);
       this.shadowHosts.push({ host: host, originals: Array.from(rows).concat([dialogOverlay]) });
     } else if (this.canvas.querySelector('.menu-button-wrap')) {
-      var menuWrap = this.canvas.querySelector('.menu-button-wrap');
-      var origTrigger = menuWrap.querySelector('[aria-haspopup="true"]');
-      var origMenu = menuWrap.querySelector('[role="menu"]');
-      if (!origTrigger || !origMenu) return;
+      var self = this;
+      var menuWraps = this.canvas.querySelectorAll('.menu-button-wrap');
 
-      // 원본 menuitem 수집
-      var origItems = Array.from(origMenu.querySelectorAll('[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]'));
-      var firstLabel = origItems.length ? origItems[0].textContent.trim() : '선택';
-
-      // 1) 외부 Shadow DOM: 트리거 + role="menu"
-      var host = document.createElement('custom-menu-button');
-      host.style.display = 'inline-block';
-      host.style.position = 'relative';
-      var shadow = host.attachShadow({ mode: 'open', delegatesFocus: true });
-
-      var style = document.createElement('style');
-      style.textContent =
-        ':host { display: inline-block; position: relative; }\n' +
-        'button { padding: 10px 24px; background: #2563EB; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-family: inherit; cursor: pointer; }\n' +
-        'button:focus-visible { outline: 2px solid #2563EB; outline-offset: 2px; }\n' +
-        '.btn-text { pointer-events: none; }\n' +
-        'ul { list-style: none; margin: 4px 0 0; padding: 4px 0; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,.12); min-width: 140px; position: absolute; top: 100%; left: 0; z-index: 10; }\n' +
-        '[role="separator"] { height: 1px; margin: 4px 0; background: #e5e7eb; }\n' +
-        '::slotted(custom-menu-item) { display: block; }';
-      shadow.appendChild(style);
-
-      var btn = document.createElement('button');
-      btn.setAttribute('aria-haspopup', 'true');
-      btn.setAttribute('aria-expanded', 'false');
-      btn.setAttribute('aria-label', '메뉴선택 ' + firstLabel);
-      var btnText = document.createElement('span');
-      btnText.className = 'btn-text';
-      btnText.textContent = firstLabel;
-      btn.appendChild(btnText);
-      btn.appendChild(document.createTextNode(' ▾'));
-      shadow.appendChild(btn);
-
-      var ul = document.createElement('ul');
-      ul.setAttribute('role', 'menu');
-      ul.hidden = true;
-      // slot으로 light DOM의 custom-menu-item을 받음
-      var slot = document.createElement('slot');
-      ul.appendChild(slot);
-      shadow.appendChild(ul);
-
-      // 2) 각 menuitem → custom-menu-item (하위 Shadow DOM)
-      origItems.forEach(function(li) {
-        var itemHost = document.createElement('custom-menu-item');
-        itemHost.textContent = li.textContent.trim();
-        if (li.style.color) itemHost.style.color = li.style.color;
-        if (li.getAttribute('aria-disabled') === 'true') itemHost.setAttribute('data-disabled', 'true');
-
-        // custom-menu-item 정의가 없으면 등록
-        if (!customElements.get('custom-menu-item')) {
-          customElements.define('custom-menu-item', class extends HTMLElement {
-            constructor() {
-              super();
-              var s = this.attachShadow({ mode: 'open', delegatesFocus: true });
-              s.innerHTML =
-                '<style>' +
-                ':host { display: block; }' +
-                'li { padding: 8px 16px; cursor: pointer; font-size: 14px; outline: none; color: inherit; }' +
-                'li:focus { background: #EFF6FF; }' +
-                ':host([data-disabled]) li { color: #9CA3AF; cursor: not-allowed; }' +
-                ':host([data-disabled]) li:focus { background: none; }' +
-                '</style>' +
-                '<li role="menuitem" tabindex="-1"><slot></slot></li>';
-            }
-            get menuitem() { return this.shadowRoot.querySelector('[role="menuitem"]'); }
-            focus() { this.menuitem.focus(); }
-          });
-        }
-        host.appendChild(itemHost);
-      });
-
-      // separator 처리 (원본에 있었다면)
-      var origSeps = origMenu.querySelectorAll('[role="separator"]');
-      if (origSeps.length) {
-        // 아이템 순서에 맞춰 separator 위치 재현은 복잡하므로 생략 — 기능 테스트가 핵심
+      // custom-menu-item 한 번만 등록
+      if (!customElements.get('custom-menu-item')) {
+        customElements.define('custom-menu-item', class extends HTMLElement {
+          constructor() {
+            super();
+            var s = this.attachShadow({ mode: 'open', delegatesFocus: true });
+            s.innerHTML =
+              '<style>' +
+              ':host { display: block; }' +
+              'li { padding: 8px 16px; cursor: pointer; font-size: 14px; outline: none; color: inherit; }' +
+              'li:focus { background: #EFF6FF; }' +
+              ':host([data-disabled]) li { color: #9CA3AF; cursor: not-allowed; }' +
+              ':host([data-disabled]) li:focus { background: none; }' +
+              '</style>' +
+              '<li role="menuitem" tabindex="-1"><slot></slot></li>';
+          }
+          get menuitem() { return this.shadowRoot.querySelector('[role="menuitem"]'); }
+          focus() { this.menuitem.focus(); }
+        });
       }
 
-      // 3) rebind
-      this.rebindMenuButton(shadow, host);
+      menuWraps.forEach(function(menuWrap) {
+        var origTrigger = menuWrap.querySelector('[aria-haspopup="true"]');
+        var origMenu = menuWrap.querySelector('[role="menu"]');
+        if (!origTrigger || !origMenu) return;
 
-      // 원본 숨기기 + host 삽입
-      menuWrap.style.display = 'none';
-      menuWrap.dataset.shadowWrapped = 'true';
-      menuWrap.parentNode.insertBefore(host, menuWrap);
-      this.shadowHosts.push({ host: host, originals: [menuWrap] });
+        // 원본 속성 보존
+        var hasControls = origTrigger.hasAttribute('aria-controls');
+        var origAriaLabel = origTrigger.getAttribute('aria-label');
+        var origBtnClass = origTrigger.className;
+
+        var origItems = Array.from(origMenu.querySelectorAll('[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]'));
+        var firstLabel = origItems.length ? origItems[0].textContent.trim() : '선택';
+
+        // 외부 Shadow DOM
+        var host = document.createElement('custom-menu-button');
+        host.style.display = 'inline-block';
+        host.style.position = 'relative';
+        var shadow = host.attachShadow({ mode: 'open', delegatesFocus: true });
+
+        var style = document.createElement('style');
+        style.textContent =
+          ':host { display: inline-block; position: relative; }\n' +
+          'button { padding: 10px 24px; border-radius: 8px; font-size: 14px; font-family: inherit; cursor: pointer; }\n' +
+          'button:focus-visible { outline: 2px solid #2563EB; outline-offset: 2px; }\n' +
+          '.btn-filled { background: #2563EB; color: #fff; border: none; }\n' +
+          '.btn-outlined { background: none; color: #2563EB; border: 1px solid #93C5FD; }\n' +
+          '.btn-text-span { pointer-events: none; }\n' +
+          'ul { list-style: none; margin: 4px 0 0; padding: 4px 0; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,.12); min-width: 140px; position: absolute; top: 100%; left: 0; z-index: 10; }\n' +
+          '[role="separator"] { height: 1px; margin: 4px 0; background: #e5e7eb; }\n' +
+          '::slotted(custom-menu-item) { display: block; }';
+        shadow.appendChild(style);
+
+        var btn = document.createElement('button');
+        btn.className = origBtnClass.indexOf('outlined') > -1 ? 'btn-outlined' : 'btn-filled';
+        btn.setAttribute('aria-haspopup', 'true');
+        btn.setAttribute('aria-expanded', 'false');
+        if (hasControls) btn.setAttribute('aria-controls', origTrigger.getAttribute('aria-controls'));
+        btn.setAttribute('aria-label', origAriaLabel || '메뉴선택 ' + firstLabel);
+        var btnText = document.createElement('span');
+        btnText.className = 'btn-text-span';
+        btnText.textContent = firstLabel;
+        btn.appendChild(btnText);
+        btn.appendChild(document.createTextNode(' ▾'));
+        shadow.appendChild(btn);
+
+        var ul = document.createElement('ul');
+        ul.setAttribute('role', 'menu');
+        ul.hidden = true;
+        var slot = document.createElement('slot');
+        ul.appendChild(slot);
+        shadow.appendChild(ul);
+
+        // 각 menuitem → custom-menu-item (하위 Shadow DOM)
+        origItems.forEach(function(li) {
+          var itemHost = document.createElement('custom-menu-item');
+          itemHost.textContent = li.textContent.trim();
+          if (li.style.color) itemHost.style.color = li.style.color;
+          if (li.getAttribute('aria-disabled') === 'true') itemHost.setAttribute('data-disabled', 'true');
+          host.appendChild(itemHost);
+        });
+
+        self.rebindMenuButton(shadow, host);
+
+        menuWrap.style.display = 'none';
+        menuWrap.dataset.shadowWrapped = 'true';
+        menuWrap.parentNode.insertBefore(host, menuWrap);
+        self.shadowHosts.push({ host: host, originals: [menuWrap] });
+      });
     } else {
       // 버튼 등은 각각 개별 Shadow DOM
       var items = this.canvas.querySelectorAll('.ap-preview__item');
@@ -325,7 +328,7 @@ var ShadowDom = {
   rebindMenuButton: function(shadow, host) {
     var trigger = shadow.querySelector('button');
     var menu = shadow.querySelector('[role="menu"]');
-    var btnText = shadow.querySelector('.btn-text');
+    var btnText = shadow.querySelector('.btn-text-span');
     if (!trigger || !menu) return;
 
     // custom-menu-item의 내부 shadow에서 실제 li[role=menuitem] 수집
