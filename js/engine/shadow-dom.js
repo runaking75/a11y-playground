@@ -213,6 +213,7 @@ var ShadowDom = {
 
         var ul = document.createElement('ul');
         ul.setAttribute('role', 'menu');
+        if (hasControls) ul.id = origTrigger.getAttribute('aria-controls');
         ul.hidden = true;
         var slot = document.createElement('slot');
         ul.appendChild(slot);
