@@ -77,10 +77,10 @@
       "status": "merged",
       "desc": "KWCAG은 여러 WCAG SC를 하나의 검사항목으로 통합하는 경향이 있습니다.",
       "items": [
-        "**KWCAG 5.2.1 자막 제공** ← WCAG 1.2.1~1.2.5 (5개 SC 통합)",
-        "**KWCAG 6.1.2 초점 이동과 표시** ← WCAG 2.1.2 + 2.4.3 + 2.4.7 (3개 SC 통합)",
-        "**KWCAG 7.2.1 사용자 요구에 따른 실행** ← WCAG 3.2.1 + 3.2.2 (2개 SC 통합)",
-        "**KWCAG 7.3.1 오류 정정** ← WCAG 3.3.1 + 3.3.3 (2개 SC 통합)"
+        "**KWCAG 1.2.1 자막 제공** ← WCAG 1.2.1~1.2.5 (5개 SC 통합)",
+        "**KWCAG 2.1.2 초점 이동과 표시** ← WCAG 2.1.2 + 2.4.3 + 2.4.7 (3개 SC 통합)",
+        "**KWCAG 3.2.1 사용자 요구에 따른 실행** ← WCAG 3.2.1 + 3.2.2 (2개 SC 통합)",
+        "**KWCAG 3.3.1 오류 정정** ← WCAG 3.3.1 + 3.3.3 (2개 SC 통합)"
       ]
     },
     {
@@ -113,7 +113,7 @@
       "desc": "WA 인증은 KWCAG 33개 검사항목 기준이지만, 글로벌 서비스는 WCAG 2.2 AA를 함께 준수해야 합니다.",
       "items": [
         "KWCAG만 준수하면 WCAG AA 중 **약 15개 SC가 누락**됩니다",
-        "WCAG 4.1.1 Parsing은 2.2에서 **폐기(deprecated)**되었으나 KWCAG 8.1에는 유지",
+        "WCAG 4.1.1 Parsing은 2.2에서 **폐기(deprecated)**되었으나 KWCAG 4.1에는 유지",
         "KWCAG은 AAA 기준을 포함하지 않으므로 AAA 대응 시 WCAG 원문 참고 필수",
         "WCAG 2.2에서 새로 추가된 9개 SC 중 KWCAG에 반영된 것은 **5개**뿐"
       ]
@@ -128,7 +128,7 @@
         {
           "wcag": "1.1.1",
           "wcagName": "Non-text Content",
-          "wcagKo": "비텍스트 콘텐츠",
+          "wcagKo": "텍스트가 아닌 콘텐츠",
           "level": "A",
           "kwcag": "1.1.1",
           "kwcagName": "적절한 대체 텍스트 제공",
@@ -138,17 +138,17 @@
         {
           "wcag": "1.2.1",
           "wcagName": "Audio-only and Video-only (Prerecorded)",
-          "wcagKo": "오디오 전용, 비디오 전용",
+          "wcagKo": "오디오 전용 및 비디오 전용(사전 녹음/녹화된)",
           "level": "A",
           "kwcag": "1.2.1",
           "kwcagName": "자막 제공",
           "status": "merged",
-          "note": "WCAG 1.2.1~1.2.5가 KWCAG 5.2.1 하나로 통합"
+          "note": "WCAG 1.2.1~1.2.5가 KWCAG 1.2.1 하나로 통합"
         },
         {
           "wcag": "1.2.2",
           "wcagName": "Captions (Prerecorded)",
-          "wcagKo": "자막 (사전 녹화)",
+          "wcagKo": "자막 (사전 녹음된)",
           "level": "A",
           "kwcag": "1.2.1",
           "kwcagName": "자막 제공",
@@ -158,7 +158,7 @@
         {
           "wcag": "1.2.3",
           "wcagName": "Audio Description or Media Alternative",
-          "wcagKo": "오디오 설명 또는 미디어 대안",
+          "wcagKo": "오디오 해설 또는 미디어 대체 수단 (사전 녹음/녹화된)",
           "level": "A",
           "kwcag": "1.2.1",
           "kwcagName": "자막 제공",
@@ -178,7 +178,7 @@
         {
           "wcag": "1.2.5",
           "wcagName": "Audio Description (Prerecorded)",
-          "wcagKo": "오디오 설명 (사전 녹화)",
+          "wcagKo": "오디오 해설 (사전 녹화된)",
           "level": "AA",
           "kwcag": "1.2.1",
           "kwcagName": "자막 제공",
@@ -188,17 +188,17 @@
         {
           "wcag": "1.2.6",
           "wcagName": "Sign Language (Prerecorded)",
-          "wcagKo": "수어 (사전 녹화)",
+          "wcagKo": "수어 (사전 녹화된)",
           "level": "AAA",
           "kwcag": "—",
           "kwcagName": "",
           "status": "wcag-only",
-          "note": "KWCAG 5.2.1에서 수어 언급은 있으나 AAA 기준 미포함"
+          "note": "KWCAG 1.2.1에서 수어 언급은 있으나 AAA 기준 미포함"
         },
         {
           "wcag": "1.2.7",
           "wcagName": "Extended Audio Description",
-          "wcagKo": "확장된 오디오 설명",
+          "wcagKo": "확장형 오디오 설명 (사전 녹화된)",
           "level": "AAA",
           "kwcag": "—",
           "kwcagName": "",
@@ -208,7 +208,7 @@
         {
           "wcag": "1.2.8",
           "wcagName": "Media Alternative (Prerecorded)",
-          "wcagKo": "미디어 대안",
+          "wcagKo": "미디어 대체 수단 (사전 녹음/녹화된)",
           "level": "AAA",
           "kwcag": "—",
           "kwcagName": "",
@@ -238,7 +238,7 @@
         {
           "wcag": "1.3.2",
           "wcagName": "Meaningful Sequence",
-          "wcagKo": "의미 있는 순서",
+          "wcagKo": "의미있는 순서",
           "level": "A",
           "kwcag": "1.3.2",
           "kwcagName": "콘텐츠의 선형구조",
@@ -248,7 +248,7 @@
         {
           "wcag": "1.3.3",
           "wcagName": "Sensory Characteristics",
-          "wcagKo": "감각적 특성",
+          "wcagKo": "감각 특성",
           "level": "A",
           "kwcag": "1.3.3",
           "kwcagName": "명확한 지시사항 제공",
@@ -290,7 +290,7 @@
         {
           "wcag": "1.4.1",
           "wcagName": "Use of Color",
-          "wcagKo": "색의 사용",
+          "wcagKo": "색상 사용",
           "level": "A",
           "kwcag": "1.4.1",
           "kwcagName": "색에 무관한 콘텐츠 인식",
@@ -310,7 +310,7 @@
         {
           "wcag": "1.4.3",
           "wcagName": "Contrast (Minimum)",
-          "wcagKo": "대비 (최소)",
+          "wcagKo": "명도 대비 (최소)",
           "level": "AA",
           "kwcag": "1.4.3",
           "kwcagName": "텍스트 콘텐츠의 명도 대비",
@@ -320,7 +320,7 @@
         {
           "wcag": "1.4.4",
           "wcagName": "Resize Text",
-          "wcagKo": "텍스트 크기 조절",
+          "wcagKo": "텍스트 크기 조정",
           "level": "AA",
           "kwcag": "—",
           "kwcagName": "",
@@ -340,7 +340,7 @@
         {
           "wcag": "1.4.6",
           "wcagName": "Contrast (Enhanced)",
-          "wcagKo": "대비 (향상)",
+          "wcagKo": "명도 대비 (향상된)",
           "level": "AAA",
           "kwcag": "—",
           "kwcagName": "",
@@ -350,7 +350,7 @@
         {
           "wcag": "1.4.7",
           "wcagName": "Low or No Background Audio",
-          "wcagKo": "낮거나 없는 배경 오디오",
+          "wcagKo": "낮은 배경음 또는 배경음 없음",
           "level": "AAA",
           "kwcag": "—",
           "kwcagName": "",
@@ -380,7 +380,7 @@
         {
           "wcag": "1.4.10",
           "wcagName": "Reflow",
-          "wcagKo": "리플로우",
+          "wcagKo": "재정렬",
           "level": "AA",
           "kwcag": "—",
           "kwcagName": "",
@@ -391,7 +391,7 @@
         {
           "wcag": "1.4.11",
           "wcagName": "Non-text Contrast",
-          "wcagKo": "비텍스트 대비",
+          "wcagKo": "텍스트 아닌 콘텐츠의 명도대비",
           "level": "AA",
           "kwcag": "—",
           "kwcagName": "",
@@ -413,7 +413,7 @@
         {
           "wcag": "1.4.13",
           "wcagName": "Content on Hover or Focus",
-          "wcagKo": "호버 또는 포커스 시 콘텐츠",
+          "wcagKo": "마우스오버 혹은 키보드 초점을 받은 콘텐츠",
           "level": "AA",
           "kwcag": "—",
           "kwcagName": "",
@@ -451,12 +451,12 @@
         {
           "wcag": "2.1.2",
           "wcagName": "No Keyboard Trap",
-          "wcagKo": "키보드 트랩 없음",
+          "wcagKo": "키보드 함정 방지",
           "level": "A",
           "kwcag": "2.1.2",
           "kwcagName": "초점 이동과 표시",
           "status": "merged",
-          "note": "WCAG 2.1.2 + 2.4.3 + 2.4.7이 KWCAG 6.1.2로 통합"
+          "note": "WCAG 2.1.2 + 2.4.3 + 2.4.7이 KWCAG 2.1.2로 통합"
         },
         {
           "wcag": "2.1.3",
@@ -482,7 +482,7 @@
         {
           "wcag": "2.2.1",
           "wcagName": "Timing Adjustable",
-          "wcagKo": "타이밍 조절 가능",
+          "wcagKo": "시간 제한 조정",
           "level": "A",
           "kwcag": "2.2.1",
           "kwcagName": "응답시간 조절",
@@ -492,7 +492,7 @@
         {
           "wcag": "2.2.2",
           "wcagName": "Pause, Stop, Hide",
-          "wcagKo": "일시 정지, 중지, 숨김",
+          "wcagKo": "일시정지, 중지, 숨김",
           "level": "A",
           "kwcag": "2.2.2",
           "kwcagName": "정지 기능 제공",
@@ -502,7 +502,7 @@
         {
           "wcag": "2.2.3",
           "wcagName": "No Timing",
-          "wcagKo": "타이밍 없음",
+          "wcagKo": "시간 제한 없음",
           "level": "AAA",
           "kwcag": "—",
           "kwcagName": "",
@@ -512,7 +512,7 @@
         {
           "wcag": "2.2.4",
           "wcagName": "Interruptions",
-          "wcagKo": "중단",
+          "wcagKo": "방해 금지",
           "level": "AAA",
           "kwcag": "—",
           "kwcagName": "",
@@ -532,7 +532,7 @@
         {
           "wcag": "2.2.6",
           "wcagName": "Timeouts",
-          "wcagKo": "타임아웃",
+          "wcagKo": "시간 초과(Timeouts)",
           "level": "AAA",
           "kwcag": "—",
           "kwcagName": "",
@@ -542,7 +542,7 @@
         {
           "wcag": "2.3.1",
           "wcagName": "Three Flashes or Below Threshold",
-          "wcagKo": "3회 깜빡임 또는 임계값 이하",
+          "wcagKo": "3회 또는 임계값 이하의 번쩍임",
           "level": "A",
           "kwcag": "2.3.1",
           "kwcagName": "깜빡임과 번쩍임 사용 제한",
@@ -552,7 +552,7 @@
         {
           "wcag": "2.3.2",
           "wcagName": "Three Flashes",
-          "wcagKo": "3회 깜빡임",
+          "wcagKo": "3회 번쩍임",
           "level": "AAA",
           "kwcag": "—",
           "kwcagName": "",
@@ -572,17 +572,17 @@
         {
           "wcag": "2.4.2",
           "wcagName": "Page Titled",
-          "wcagKo": "페이지 제목",
+          "wcagKo": "페이지 제목 제공",
           "level": "A",
           "kwcag": "2.4.2",
           "kwcagName": "제목 제공",
           "status": "partial",
-          "note": "KWCAG 6.4.2는 페이지·프레임·콘텐츠 블록 제목을 모두 포함"
+          "note": "KWCAG 2.4.2는 페이지·프레임·콘텐츠 블록 제목을 모두 포함"
         },
         {
           "wcag": "2.4.3",
           "wcagName": "Focus Order",
-          "wcagKo": "포커스 순서",
+          "wcagKo": "초점 순서",
           "level": "A",
           "kwcag": "2.1.2",
           "kwcagName": "초점 이동과 표시",
@@ -592,7 +592,7 @@
         {
           "wcag": "2.4.4",
           "wcagName": "Link Purpose (In Context)",
-          "wcagKo": "링크 목적 (맥락 내)",
+          "wcagKo": "링크 목적(맥락 상의)",
           "level": "A",
           "kwcag": "2.4.3",
           "kwcagName": "적절한 링크 텍스트",
@@ -602,7 +602,7 @@
         {
           "wcag": "2.4.5",
           "wcagName": "Multiple Ways",
-          "wcagKo": "다양한 방법",
+          "wcagKo": "다양한 방법 제공",
           "level": "AA",
           "kwcag": "—",
           "kwcagName": "",
@@ -617,22 +617,22 @@
           "kwcag": "2.4.2",
           "kwcagName": "제목 제공",
           "status": "partial",
-          "note": "KWCAG 6.4.2에 부분 포함"
+          "note": "KWCAG 2.4.2에 부분 포함"
         },
         {
           "wcag": "2.4.7",
           "wcagName": "Focus Visible",
-          "wcagKo": "포커스 표시",
+          "wcagKo": "초점 시각화",
           "level": "AA",
           "kwcag": "2.1.2",
           "kwcagName": "초점 이동과 표시",
           "status": "merged",
-          "note": "KWCAG 6.1.2에 통합 (초점의 시각화)"
+          "note": "KWCAG 2.1.2에 통합 (초점의 시각화)"
         },
         {
           "wcag": "2.4.8",
           "wcagName": "Location",
-          "wcagKo": "위치",
+          "wcagKo": "위치 제공",
           "level": "AAA",
           "kwcag": "—",
           "kwcagName": "",
@@ -642,7 +642,7 @@
         {
           "wcag": "2.4.9",
           "wcagName": "Link Purpose (Link Only)",
-          "wcagKo": "링크 목적 (링크만)",
+          "wcagKo": "링크 목적 (링크 단독)",
           "level": "AAA",
           "kwcag": "—",
           "kwcagName": "",
@@ -662,7 +662,7 @@
         {
           "wcag": "2.4.11",
           "wcagName": "Focus Not Obscured (Minimum)",
-          "wcagKo": "포커스 가리지 않음 (최소)",
+          "wcagKo": "초점 표시 (최소)",
           "level": "AA",
           "kwcag": "—",
           "kwcagName": "",
@@ -673,7 +673,7 @@
         {
           "wcag": "2.4.12",
           "wcagName": "Focus Not Obscured (Enhanced)",
-          "wcagKo": "포커스 가리지 않음 (향상)",
+          "wcagKo": "초점 표시 (향상된)",
           "level": "AAA",
           "kwcag": "—",
           "kwcagName": "",
@@ -684,7 +684,7 @@
         {
           "wcag": "2.4.13",
           "wcagName": "Focus Appearance",
-          "wcagKo": "포커스 모양",
+          "wcagKo": "초점 형태",
           "level": "AAA",
           "kwcag": "—",
           "kwcagName": "",
@@ -706,7 +706,7 @@
         {
           "wcag": "2.5.2",
           "wcagName": "Pointer Cancellation",
-          "wcagKo": "포인터 취소",
+          "wcagKo": "포인터 입력 취소",
           "level": "A",
           "kwcag": "2.5.2",
           "kwcagName": "포인터 입력 취소",
@@ -717,7 +717,7 @@
         {
           "wcag": "2.5.3",
           "wcagName": "Label in Name",
-          "wcagKo": "네임 안의 레이블",
+          "wcagKo": "이름 안의 레이블",
           "level": "A",
           "kwcag": "2.5.3",
           "kwcagName": "레이블과 네임",
@@ -728,10 +728,10 @@
         {
           "wcag": "2.5.4",
           "wcagName": "Motion Actuation",
-          "wcagKo": "동작에 의한 작동",
+          "wcagKo": "움직임 기반 실행",
           "level": "A",
           "kwcag": "2.5.4",
-          "kwcagName": "동작기반 작동",
+          "kwcagName": "동작 기반 작동",
           "status": "mapped",
           "note": "",
           "isNew": "2.1"
@@ -739,7 +739,7 @@
         {
           "wcag": "2.5.5",
           "wcagName": "Target Size (Enhanced)",
-          "wcagKo": "타겟 크기 (향상)",
+          "wcagKo": "타겟 크기 (향상된)",
           "level": "AAA",
           "kwcag": "—",
           "kwcagName": "",
@@ -749,7 +749,7 @@
         {
           "wcag": "2.5.6",
           "wcagName": "Concurrent Input Mechanisms",
-          "wcagKo": "동시 입력 메커니즘",
+          "wcagKo": "동시 입력 매커니즘",
           "level": "AAA",
           "kwcag": "—",
           "kwcagName": "",
@@ -759,7 +759,7 @@
         {
           "wcag": "2.5.7",
           "wcagName": "Dragging Movements",
-          "wcagKo": "끌기 동작",
+          "wcagKo": "끌기(Dragging) 동작",
           "level": "AA",
           "kwcag": "—",
           "kwcagName": "",
@@ -798,7 +798,7 @@
         {
           "wcag": "3.1.1",
           "wcagName": "Language of Page",
-          "wcagKo": "페이지 언어",
+          "wcagKo": "페이지 언어 표시",
           "level": "A",
           "kwcag": "3.1.1",
           "kwcagName": "기본 언어 표시",
@@ -808,7 +808,7 @@
         {
           "wcag": "3.1.2",
           "wcagName": "Language of Parts",
-          "wcagKo": "부분 언어",
+          "wcagKo": "부분적인 언어 표시",
           "level": "AA",
           "kwcag": "—",
           "kwcagName": "",
@@ -818,7 +818,7 @@
         {
           "wcag": "3.1.3",
           "wcagName": "Unusual Words",
-          "wcagKo": "특이한 단어",
+          "wcagKo": "생소한 단어",
           "level": "AAA",
           "kwcag": "—",
           "kwcagName": "",
@@ -858,17 +858,17 @@
         {
           "wcag": "3.2.1",
           "wcagName": "On Focus",
-          "wcagKo": "포커스 시",
+          "wcagKo": "초점을 받은 경우",
           "level": "A",
           "kwcag": "3.2.1",
           "kwcagName": "사용자 요구에 따른 실행",
           "status": "merged",
-          "note": "WCAG 3.2.1 + 3.2.2가 KWCAG 7.2.1로 통합"
+          "note": "WCAG 3.2.1 + 3.2.2가 KWCAG 3.2.1로 통합"
         },
         {
           "wcag": "3.2.2",
           "wcagName": "On Input",
-          "wcagKo": "입력 시",
+          "wcagKo": "입력 중인 경우",
           "level": "A",
           "kwcag": "3.2.1",
           "kwcagName": "사용자 요구에 따른 실행",
@@ -878,7 +878,7 @@
         {
           "wcag": "3.2.3",
           "wcagName": "Consistent Navigation",
-          "wcagKo": "일관된 내비게이션",
+          "wcagKo": "일관된 탐색",
           "level": "AA",
           "kwcag": "—",
           "kwcagName": "",
@@ -898,7 +898,7 @@
         {
           "wcag": "3.2.5",
           "wcagName": "Change on Request",
-          "wcagKo": "요청에 의한 변화",
+          "wcagKo": "요구에 의한 변화",
           "level": "AAA",
           "kwcag": "—",
           "kwcagName": "",
@@ -908,7 +908,7 @@
         {
           "wcag": "3.2.6",
           "wcagName": "Consistent Help",
-          "wcagKo": "일관된 도움",
+          "wcagKo": "일관된 도움말",
           "level": "A",
           "kwcag": "3.2.2",
           "kwcagName": "찾기 쉬운 도움 정보",
@@ -924,12 +924,12 @@
           "kwcag": "3.3.1",
           "kwcagName": "오류 정정",
           "status": "merged",
-          "note": "WCAG 3.3.1 + 3.3.3이 KWCAG 7.3.1로 통합"
+          "note": "WCAG 3.3.1 + 3.3.3이 KWCAG 3.3.1로 통합"
         },
         {
           "wcag": "3.3.2",
           "wcagName": "Labels or Instructions",
-          "wcagKo": "레이블 또는 지시",
+          "wcagKo": "레이블 또는 지시문",
           "level": "A",
           "kwcag": "3.3.2",
           "kwcagName": "레이블 제공",
@@ -939,7 +939,7 @@
         {
           "wcag": "3.3.3",
           "wcagName": "Error Suggestion",
-          "wcagKo": "오류 제안",
+          "wcagKo": "오류 수정 제안",
           "level": "AA",
           "kwcag": "3.3.1",
           "kwcagName": "오류 정정",
@@ -949,7 +949,7 @@
         {
           "wcag": "3.3.4",
           "wcagName": "Error Prevention (Legal, Financial, Data)",
-          "wcagKo": "오류 방지 (법률, 금융, 데이터)",
+          "wcagKo": "오류 예방 (법률, 금융, 데이터)",
           "level": "AA",
           "kwcag": "—",
           "kwcagName": "",
@@ -959,7 +959,7 @@
         {
           "wcag": "3.3.5",
           "wcagName": "Help",
-          "wcagKo": "도움",
+          "wcagKo": "도움말",
           "level": "AAA",
           "kwcag": "—",
           "kwcagName": "",
@@ -969,7 +969,7 @@
         {
           "wcag": "3.3.6",
           "wcagName": "Error Prevention (All)",
-          "wcagKo": "오류 방지 (모두)",
+          "wcagKo": "오류 예방 (전체)",
           "level": "AAA",
           "kwcag": "—",
           "kwcagName": "",
@@ -979,7 +979,7 @@
         {
           "wcag": "3.3.7",
           "wcagName": "Redundant Entry",
-          "wcagKo": "중복 입력",
+          "wcagKo": "반복 입력",
           "level": "A",
           "kwcag": "3.3.4",
           "kwcagName": "반복 입력 정보",
@@ -1001,7 +1001,7 @@
         {
           "wcag": "3.3.9",
           "wcagName": "Accessible Authentication (Enhanced)",
-          "wcagKo": "접근 가능한 인증 (향상)",
+          "wcagKo": "접근 가능한 인증 (향상된)",
           "level": "AAA",
           "kwcag": "—",
           "kwcagName": "",
@@ -1019,12 +1019,12 @@
         {
           "wcag": "4.1.1",
           "wcagName": "Parsing",
-          "wcagKo": "구문 분석",
+          "wcagKo": "파싱 (무효화 및 삭제)",
           "level": "A",
           "kwcag": "4.1",
           "kwcagName": "마크업 오류 방지",
           "status": "partial",
-          "note": "WCAG 2.2에서 폐기(deprecated)되었으나 KWCAG 8.1에는 유지",
+          "note": "WCAG 2.2에서 폐기(deprecated)되었으나 KWCAG 4.1에는 유지",
           "deprecated": true
         },
         {

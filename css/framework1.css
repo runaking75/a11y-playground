@@ -2073,39 +2073,6 @@ kbd {
   margin-bottom: var(--space-sm);
 }
 
-.ap-gp-criterion__summary {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-sm);
-  margin-bottom: var(--space-sm);
-}
-
-@media (max-width: 768px) {
-  .ap-gp-criterion__summary {
-    grid-template-columns: 1fr;
-  }
-}
-
-.ap-gp-summary__item {
-  font-size: var(--text-sm);
-  color: var(--gray-600);
-  line-height: 1.6;
-  padding: var(--space-sm) var(--space-md);
-  background: var(--blue-50, #EFF6FF);
-  border-radius: var(--radius-md);
-}
-
-.ap-gp-summary__label {
-  display: inline-block;
-  font-weight: 600;
-  color: var(--blue-700, #1D4ED8);
-  margin-right: var(--space-xs);
-  font-size: var(--text-xs);
-  background: var(--blue-100, #DBEAFE);
-  padding: 1px 6px;
-  border-radius: var(--radius-sm);
-}
-
 .ap-gp-criterion__intent {
   font-size: var(--text-sm);
   color: var(--gray-600);

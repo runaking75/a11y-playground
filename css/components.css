@@ -294,3 +294,59 @@
 /* ══════════════
    Tooltip (추후)
    ══════════════ */
+
+
+/* ══════════════
+   Menu Button
+   ══════════════ */
+.menu-button-wrap { position: relative; display: inline-block; }
+
+.menu-button-wrap [role="menu"] {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 4px 0;
+  background: var(--white, #fff);
+  border: 1px solid var(--gray-200, #e5e7eb);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  min-width: 140px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+}
+
+.menu-button-wrap [role="menuitem"],
+.menu-button-wrap [role="menuitemcheckbox"],
+.menu-button-wrap [role="menuitemradio"] {
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: var(--text-sm, 14px);
+  white-space: nowrap;
+  outline: none;
+  color: var(--gray-700, #374151);
+}
+
+.menu-button-wrap [role="menuitem"]:hover,
+.menu-button-wrap [role="menuitem"]:focus-visible,
+.menu-button-wrap [role="menuitemcheckbox"]:hover,
+.menu-button-wrap [role="menuitemcheckbox"]:focus-visible,
+.menu-button-wrap [role="menuitemradio"]:hover,
+.menu-button-wrap [role="menuitemradio"]:focus-visible {
+  background: var(--blue-50, #EFF6FF);
+}
+
+.menu-button-wrap [role="menuitem"][aria-disabled="true"] {
+  color: var(--gray-400, #9CA3AF);
+  cursor: not-allowed;
+}
+
+.menu-button-wrap [role="menuitem"][aria-disabled="true"]:hover {
+  background: none;
+}
+
+.menu-button-wrap [role="separator"] {
+  height: 1px;
+  margin: 4px 0;
+  background: var(--gray-200, #e5e7eb);
+}

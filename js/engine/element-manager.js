@@ -63,6 +63,9 @@ var ElementManager = {
       case 'tooltip':
         this.addGenericItem('<div class="tooltip-wrap" data-component="tooltip"><button type="button" class="btn btn-outlined tooltip-trigger" aria-describedby="new-tip-' + this.counter + '">버튼 ' + this.counter + '</button><div class="tooltip" id="new-tip-' + this.counter + '" role="tooltip">툴팁 내용</div></div>');
         break;
+      case 'menu-button':
+        this.addGenericItem('<div class="menu-button-wrap" data-component="menu-button"><button type="button" class="btn btn-filled" aria-haspopup="true" aria-expanded="false" aria-controls="menu-' + this.counter + '" aria-label="메뉴선택 편집"><span class="menu-button-text">편집</span> ▾</button><ul role="menu" id="menu-' + this.counter + '" hidden><li role="menuitem" tabindex="-1">편집</li><li role="menuitem" tabindex="-1">복사</li><li role="menuitem" tabindex="-1">삭제</li></ul></div>');
+        break;
       case 'tabs':
         this.addTabItem();
         break;

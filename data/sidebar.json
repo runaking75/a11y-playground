@@ -173,6 +173,12 @@
           "status": "pass"
         },
         {
+          "id": "menu-button",
+          "name": "Menu Button",
+          "type": "component",
+          "status": "pass"
+        },
+        {
           "id": "radio",
           "name": "Radio Button",
           "type": "component",

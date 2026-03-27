@@ -182,23 +182,32 @@ var GuideRenderer = {
     // 설명
     if (sc.desc) html += '<p class="ap-gp-criterion__desc">' + this.escapeAndFormat(sc.desc) + '</p>';
 
+    // 요약 (목표/할 일/중요성)
+    if (sc.summary) {
+      html += '<div class="ap-gp-criterion__summary">';
+      if (sc.summary.goal) html += '<div class="ap-gp-summary__item"><span class="ap-gp-summary__label">목표</span> ' + this.escapeAndFormat(sc.summary.goal) + '</div>';
+      if (sc.summary.todo) html += '<div class="ap-gp-summary__item"><span class="ap-gp-summary__label">할 일</span> ' + this.escapeAndFormat(sc.summary.todo) + '</div>';
+      if (sc.summary.importance) html += '<div class="ap-gp-summary__item"><span class="ap-gp-summary__label">중요성</span> ' + this.escapeAndFormat(sc.summary.importance) + '</div>';
+      html += '</div>';
+    }
+
     // 의도
     if (sc.intent) {
       html += '<div class="ap-gp-criterion__intent"><strong>의도:</strong> ' + this.escapeAndFormat(sc.intent) + '</div>';
     }
 
-    // 기대효과 (benefits 배열)
+    // 이점 (benefits 배열)
     if (sc.benefits && sc.benefits.length > 0) {
-      html += '<div class="ap-gp-criterion__section"><strong>기대효과:</strong><ul>';
+      html += '<div class="ap-gp-criterion__section"><strong>이점:</strong><ul>';
       for (var b = 0; b < sc.benefits.length; b++) {
         html += '<li>' + this.escapeAndFormat(sc.benefits[b]) + '</li>';
       }
       html += '</ul></div>';
     }
 
-    // 기대효과 (단일 문자열 — 하위 호환)
+    // 이점 (단일 문자열 — 하위 호환)
     if (sc.benefit && !sc.benefits) {
-      html += '<div class="ap-gp-criterion__intent"><strong>기대효과:</strong> ' + this.escapeAndFormat(sc.benefit) + '</div>';
+      html += '<div class="ap-gp-criterion__intent"><strong>이점:</strong> ' + this.escapeAndFormat(sc.benefit) + '</div>';
     }
 
     // 예외
@@ -210,13 +219,27 @@ var GuideRenderer = {
       html += '</ul></div>';
     }
 
-    // 충족 기법 + 실패 사례 (2단)
+    // 예제
+    if (sc.examples && sc.examples.length > 0) {
+      html += '<div class="ap-gp-criterion__section"><strong>예제:</strong><ul>';
+      for (var ex = 0; ex < sc.examples.length; ex++) {
+        var example = sc.examples[ex];
+        if (typeof example === 'object' && example.title) {
+          html += '<li><strong>' + this.escapeAndFormat(example.title) + '</strong> — ' + this.escapeAndFormat(example.desc) + '</li>';
+        } else {
+          html += '<li>' + this.escapeAndFormat(String(example)) + '</li>';
+        }
+      }
+      html += '</ul></div>';
+    }
+
+    // 충분 기법 + 실패 사례 (2단)
     var hasTech = sc.techniques && sc.techniques.length > 0;
     var hasFail = sc.failures && sc.failures.length > 0;
     if (hasTech || hasFail) {
       html += '<div class="ap-gp-criterion__two-col">';
       if (hasTech) {
-        html += '<div class="ap-gp-criterion__section ap-gp-criterion__techniques"><strong>충족 기법:</strong><ul>';
+        html += '<div class="ap-gp-criterion__section ap-gp-criterion__techniques"><strong>충분 기법:</strong><ul>';
         for (var t = 0; t < sc.techniques.length; t++) {
           html += '<li>' + this.escapeAndFormat(sc.techniques[t]) + '</li>';
         }
@@ -230,6 +253,21 @@ var GuideRenderer = {
         html += '</ul></div>';
       }
       html += '</div>';
+    }
+
+    // 점검 규칙 (ACT Rules)
+    if (sc.actRules && sc.actRules.length > 0) {
+      html += '<div class="ap-gp-criterion__section"><strong>점검 규칙:</strong><ul>';
+      for (var ar = 0; ar < sc.actRules.length; ar++) {
+        var rule = sc.actRules[ar];
+        if (typeof rule === 'object' && rule.name) {
+          var ruleUrl = 'https://www.w3.org/WAI/standards-guidelines/act/rules/' + rule.id + '/';
+          html += '<li><a href="' + ruleUrl + '" target="_blank" rel="noopener">' + this.escapeAndFormat(rule.name) + '</a></li>';
+        } else {
+          html += '<li>' + this.escapeAndFormat(String(rule)) + '</li>';
+        }
+      }
+      html += '</ul></div>';
     }
 
     // 컴포넌트 적용

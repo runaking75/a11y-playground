@@ -160,6 +160,9 @@ const Renderer = {
     if (typeof DialogAction !== 'undefined' && canvas.querySelector('#demo-dialog')) {
       DialogAction.init(canvas);
     }
+    if (typeof MenuButtonAction !== 'undefined' && canvas.querySelector('[aria-haspopup="true"]')) {
+      MenuButtonAction.init(canvas);
+    }
   },
 
   // HTML 이스케이프
