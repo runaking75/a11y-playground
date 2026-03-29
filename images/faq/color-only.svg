@@ -15,7 +15,7 @@
 
   <!-- GOOD 상태 -->
   <path d="M273,38 L276,42 L283,34" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <text x="290" y="42" font-family="Noto Sans KR, sans-serif" font-size="12" font-weight="600" fill="#16A34A">색 + 아이콘 + 텍스트 범례</text>
+  <text x="290" y="42" font-family="Noto Sans KR, sans-serif" font-size="12" font-weight="600" fill="#16A34A">색 + 아이콘 범례</text>
 
   <rect x="268" y="50" width="248" height="44" rx="6" fill="#fff" stroke="#E0E0E0"/>
   <!-- 정상: 체크 path -->
@@ -46,7 +46,7 @@
 
   <!-- GOOD 범례 -->
   <path d="M273,116 L276,120 L283,112" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <text x="290" y="120" font-family="Noto Sans KR, sans-serif" font-size="12" font-weight="600" fill="#16A34A">색 + 패턴 + 텍스트 범례</text>
+  <text x="290" y="120" font-family="Noto Sans KR, sans-serif" font-size="12" font-weight="600" fill="#16A34A">색 + 패턴 범례</text>
 
   <rect x="268" y="128" width="248" height="36" rx="6" fill="#fff" stroke="#E0E0E0"/>
   <rect x="284" y="139" width="12" height="14" rx="2" fill="#2563EB"/>
