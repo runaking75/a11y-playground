@@ -1,0 +1,34 @@
+[
+  {
+    "id": "jaws",
+    "name": "JAWS",
+    "version": "2024",
+    "browser": "Chrome",
+    "browserVersion": "131",
+    "badge": "J"
+  },
+  {
+    "id": "nvda",
+    "name": "NVDA",
+    "version": "2024.1",
+    "browser": "Firefox",
+    "browserVersion": "133",
+    "badge": "N"
+  },
+  {
+    "id": "voiceover",
+    "name": "VoiceOver",
+    "version": "iOS 18",
+    "browser": "Safari",
+    "browserVersion": "",
+    "badge": "V"
+  },
+  {
+    "id": "talkback",
+    "name": "TalkBack",
+    "version": "15",
+    "browser": "Chrome",
+    "browserVersion": "Android",
+    "badge": "T"
+  }
+]

@@ -1,0 +1,831 @@
+{
+  "id": "wcag22-30-mapping",
+  "type": "mapping",
+  "title": "WCAG 2.2 → WCAG 3.0 비교",
+  "source": "https://www.w3.org/TR/wcag-3.0/",
+  "updated": "2026-03",
+  "overview": {
+    "desc": "WCAG 2.2 성공 기준이 차기 표준 WCAG 3.0에서 어떻게 재편되는지 매핑합니다. WCAG 3.0은 2026년 3월 Working Draft 기준이며, 최종 권고안까지 변경될 수 있습니다.",
+    "structure": "WCAG 2.2 (86 SC) → WCAG 3.0 (12 가이드라인 영역, 다수의 요구사항)",
+    "meta": [
+      {
+        "label": "WCAG 2.2",
+        "value": "4원칙 → 13지침 → 86 SC (A/AA/AAA 레벨)"
+      },
+      {
+        "label": "WCAG 3.0",
+        "value": "12 가이드라인 영역 → 요구사항(Requirements) + 주장(Assertions) — Bronze/Silver/Gold 점수 기반"
+      },
+      {
+        "label": "상태",
+        "value": "WCAG 3.0은 Working Draft (2026.03) — 최종 권고안 2028~2030년 예상. 현재 법규 기준은 WCAG 2.2 AA"
+      }
+    ]
+  },
+  "colWidths": [
+    "30%",
+    "28%",
+    "70px",
+    ""
+  ],
+  "colAlign": [
+    "",
+    "",
+    "center",
+    ""
+  ],
+  "colHeaders": [
+    {
+      "text": "WCAG 2.2",
+      "colspan": 1
+    },
+    "WCAG 3.0",
+    "상태",
+    "비고"
+  ],
+  "insights": [
+    {
+      "title": "WCAG 3.0의 핵심 변경점",
+      "status": "new",
+      "desc": "WCAG 3.0은 구조와 적합성 모델이 근본적으로 달라집니다. 2028~2030년경 최종 권고안 예상.",
+      "items": [
+        "**4원칙(POUR) 재편** — 인식/운용/이해/견고성 대신 12개 가이드라인 영역으로 재구성 (태깅으로 POUR 매핑은 유지)",
+        "**A/AA/AAA → Bronze/Silver/Gold** — Bronze(≈AA 수준), Silver(추가 요구사항+사용자 테스트), Gold(조직 차원 접근성 프로세스 증명)",
+        "**통과/실패 → 점수제** — 0(Very Poor)~4(Excellent) 점수 기반 평가. 일부 미충족이 있어도 전체 점수로 적합성 판정 가능",
+        "**Requirements + Assertions** — 기술적 요구사항 외에 '조직이 접근성 프로세스를 갖추고 있는가'를 선언(Assertion)으로 평가",
+        "**범위 확장** — 웹 콘텐츠뿐 아니라 앱, VR/AR, IoT, 음성 인터페이스, 알고리즘 공정성까지 포함",
+        "**APCA 대비 알고리즘** — 기존 4.5:1 비율 대신 인간 시각 과학 기반의 Advanced Perceptual Contrast Algorithm 도입 검토",
+        "**WCAG 2 대체 아님** — 3.0이 확정되어도 2.x는 법규 기준으로 수년간 병행 사용"
+      ]
+    },
+    {
+      "title": "WCAG 3.0에만 있는 새 영역",
+      "status": "new",
+      "desc": "WCAG 2.2에 없던 완전히 새로운 가이드라인 영역입니다.",
+      "items": [
+        "**2.2.3 Clear language** — 명확한 언어: 약어 설명, 비유적 표현 설명, 불필요한 단어 제거",
+        "**2.9.3 Avoid deception** — 기만 방지: 다크 패턴, 사전 선택 체크박스 등",
+        "**2.9.6 Unnecessary steps** — 불필요한 단계 제거",
+        "**2.10 Policy and protection** — 정책과 보호: 알고리즘 공정성, 위험 설명",
+        "**2.11.2 Feedback** — 피드백 메커니즘 제공",
+        "**2.12.1 Assistive technology control** — 보조 기술 제어: 가상 커서, 알림 조절"
+      ]
+    }
+  ],
+  "principles": [
+    {
+      "id": "1",
+      "name": "인식의 용이성",
+      "items": [
+        {
+          "wcag": "1.1.1",
+          "wcagName": "텍스트가 아닌 콘텐츠",
+          "note": "3개 요구사항으로 세분화 (감지/숨김/대안)",
+          "kwcag": "1.1",
+          "kwcagName": "이미지 대안 (Image alternatives)",
+          "status": "split"
+        },
+        {
+          "wcag": "1.2.1",
+          "wcagName": "오디오 전용 / 비디오 전용 (사전 녹화된)",
+          "note": "1.2.x 미디어 SC들이 미디어 대안(Media alternatives) + 자막(Captions) + 오디오 설명(Audio descriptions)으로 재편",
+          "kwcag": "1.2",
+          "kwcagName": "미디어 대안 (Media alternatives)",
+          "status": "merged"
+        },
+        {
+          "wcag": "1.2.2",
+          "wcagName": "자막 (사전 녹화된)",
+          "note": "자막이 독립 가이드라인으로, 조절/동기화/위치 등 8개 요구사항",
+          "kwcag": "1.4",
+          "kwcagName": "자막 (Captions)",
+          "status": "split"
+        },
+        {
+          "wcag": "1.2.3",
+          "wcagName": "오디오 설명 또는 미디어 대체 수단 (사전 녹화된)",
+          "note": "오디오 설명이 독립 가이드라인으로, 5개 요구사항",
+          "kwcag": "1.5",
+          "kwcagName": "오디오 설명 (Audio descriptions)",
+          "status": "split"
+        },
+        {
+          "wcag": "1.2.4",
+          "wcagName": "자막 (실시간)",
+          "note": "실시간 자막 제공(Captions available (live))으로 대응",
+          "kwcag": "1.4",
+          "kwcagName": "자막 (Captions)",
+          "status": "merged"
+        },
+        {
+          "wcag": "1.2.5",
+          "wcagName": "오디오 설명 (사전 녹화된)",
+          "note": "오디오 설명(Audio descriptions)으로 대응",
+          "kwcag": "1.5",
+          "kwcagName": "오디오 설명 (Audio descriptions)",
+          "status": "merged"
+        },
+        {
+          "wcag": "1.2.6",
+          "wcagName": "수어 (사전 녹화된)",
+          "note": "수어 제공(Sign language available) 요구사항",
+          "kwcag": "1.2",
+          "kwcagName": "미디어 대안 (Media alternatives)",
+          "status": "merged"
+        },
+        {
+          "wcag": "1.2.7",
+          "wcagName": "확장형 오디오 설명 (사전 녹화된)",
+          "note": "확장형 오디오 설명 제공(Extended audio descriptions available)",
+          "kwcag": "1.5",
+          "kwcagName": "오디오 설명 (Audio descriptions)",
+          "status": "merged"
+        },
+        {
+          "wcag": "1.2.8",
+          "wcagName": "미디어 대체 수단 (사전 녹음/녹화된)",
+          "note": "미디어 대안(Media alternatives)으로 대응",
+          "kwcag": "1.2",
+          "kwcagName": "미디어 대안 (Media alternatives)",
+          "status": "merged"
+        },
+        {
+          "wcag": "1.2.9",
+          "wcagName": "오디오 전용 (실시간)",
+          "note": "미디어 대안(Media alternatives)으로 대응",
+          "kwcag": "1.2",
+          "kwcagName": "미디어 대안 (Media alternatives)",
+          "status": "merged"
+        },
+        {
+          "wcag": "1.3.1",
+          "wcagName": "정보와 관계",
+          "note": "관계 감지(Relationships detectable) + 제목 구조(Heading structure) 등으로 세분화",
+          "kwcag": "7.3",
+          "kwcagName": "구조 (Structure)",
+          "status": "split"
+        },
+        {
+          "wcag": "1.3.2",
+          "wcagName": "유의미한 순서",
+          "note": "순서 감지(Order detectable)",
+          "kwcag": "7.3",
+          "kwcagName": "구조 (Structure)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "1.3.3",
+          "wcagName": "감각 특성",
+          "note": "도움 제공(Help available) 영역으로 이동",
+          "kwcag": "11.1",
+          "kwcagName": "도움 제공 (Help available)",
+          "status": "moved"
+        },
+        {
+          "wcag": "1.3.4",
+          "wcagName": "방향",
+          "note": "뷰포트 조절(Adjustable viewport) 영역으로 이동",
+          "kwcag": "12.3",
+          "kwcagName": "뷰포트 조절 (Adjustable viewport)",
+          "status": "moved"
+        },
+        {
+          "wcag": "1.3.5",
+          "wcagName": "입력 목적 식별",
+          "note": "입력 제약 사용(Input constraints used)",
+          "kwcag": "3.5",
+          "kwcagName": "컨트롤 정보 (Control information)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "1.3.6",
+          "wcagName": "목적 식별",
+          "note": "컨트롤 정보(Control information)로 대응",
+          "kwcag": "3.5",
+          "kwcagName": "컨트롤 정보 (Control information)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "1.4.1",
+          "wcagName": "색 사용",
+          "note": "색상만 의존 금지(Hue not relied on)",
+          "kwcag": "1.7",
+          "kwcagName": "단일 감각 의존 금지 (Single sense)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "1.4.2",
+          "wcagName": "오디오 제어",
+          "note": "미디어 제어(Media control) 영역으로 이동",
+          "kwcag": "12.4",
+          "kwcagName": "미디어 제어 (Media control)",
+          "status": "moved"
+        },
+        {
+          "wcag": "1.4.3",
+          "wcagName": "명도 대비 (최소)",
+          "note": "APCA 알고리즘 도입 검토 중, 텍스트/그래픽/인터랙티브별 분리",
+          "kwcag": "2.1",
+          "kwcagName": "텍스트 표현 (Text appearance)",
+          "status": "expanded"
+        },
+        {
+          "wcag": "1.4.4",
+          "wcagName": "텍스트 크기 조정",
+          "note": "텍스트 크기 조절 가능(Text size adjustable)",
+          "kwcag": "2.1",
+          "kwcagName": "텍스트 표현 (Text appearance)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "1.4.5",
+          "wcagName": "텍스트 이미지",
+          "note": "텍스트 커스터마이징 가능 여부로 접근",
+          "kwcag": "2.1",
+          "kwcagName": "텍스트 표현 (Text appearance)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "1.4.6",
+          "wcagName": "명도 대비 (향상된)",
+          "note": "향상된 대비 (APCA 적용 예정)",
+          "kwcag": "2.1",
+          "kwcagName": "텍스트 표현 (Text appearance)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "1.4.7",
+          "wcagName": "낮은 배경음 또는 배경음 없음",
+          "note": "미디어 제어(Media control) 영역으로 이동",
+          "kwcag": "12.4",
+          "kwcagName": "미디어 제어 (Media control)",
+          "status": "moved"
+        },
+        {
+          "wcag": "1.4.8",
+          "wcagName": "시각적 표현",
+          "note": "텍스트 색상 조절(Text color adjustable) + 커스터마이징 유지(Text customizations retained)",
+          "kwcag": "2.1",
+          "kwcagName": "텍스트 표현 (Text appearance)",
+          "status": "expanded"
+        },
+        {
+          "wcag": "1.4.9",
+          "wcagName": "텍스트 이미지 (예외 없음)",
+          "note": "",
+          "kwcag": "2.1",
+          "kwcagName": "텍스트 표현 (Text appearance)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "1.4.10",
+          "wcagName": "리플로우",
+          "note": "뷰포트 조절(Adjustable viewport) 영역으로 이동",
+          "kwcag": "12.3",
+          "kwcagName": "뷰포트 조절 (Adjustable viewport)",
+          "status": "moved"
+        },
+        {
+          "wcag": "1.4.11",
+          "wcagName": "비텍스트 대비",
+          "note": "그래픽 객체 대비 충분(Graphical object contrast sufficient)",
+          "kwcag": "1.7",
+          "kwcagName": "단일 감각 의존 금지 (Single sense)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "1.4.12",
+          "wcagName": "텍스트 간격",
+          "note": "텍스트 커스터마이징 유지(Text customizations retained)",
+          "kwcag": "2.1",
+          "kwcagName": "텍스트 표현 (Text appearance)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "1.4.13",
+          "wcagName": "마우스오버 혹은 키보드 초점을 받은 콘텐츠",
+          "note": "입력 조작(Input operation) 영역으로 이동",
+          "kwcag": "4.5",
+          "kwcagName": "입력 조작 (Input operation)",
+          "status": "moved"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "운용의 용이성",
+      "items": [
+        {
+          "wcag": "2.1.1",
+          "wcagName": "키보드",
+          "note": "10개 요구사항으로 세분화 (키보드 조작(Keyboard operable) / 키보드 접근(accessible) 등)",
+          "kwcag": "4.1",
+          "kwcagName": "키보드 입력 (Keyboard interface input)",
+          "status": "expanded"
+        },
+        {
+          "wcag": "2.1.2",
+          "wcagName": "키보드 함정 방지",
+          "note": "키보드 함정 없음(No keyboard traps)",
+          "kwcag": "4.1",
+          "kwcagName": "키보드 입력 (Keyboard interface input)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.1.3",
+          "wcagName": "키보드 (예외 없음)",
+          "note": "",
+          "kwcag": "4.1",
+          "kwcagName": "키보드 입력 (Keyboard interface input)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.1.4",
+          "wcagName": "문자 키 단축키",
+          "note": "키보드 충돌 없음(No keyboard conflicts) + 커스텀 키 문서화(Custom keys documented)",
+          "kwcag": "4.1",
+          "kwcagName": "키보드 입력 (Keyboard interface input)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.2.1",
+          "wcagName": "시간 조절",
+          "note": "충분한 시간(Adequate time) 영역으로 이동",
+          "kwcag": "9.2",
+          "kwcagName": "충분한 시간 (Adequate time)",
+          "status": "moved"
+        },
+        {
+          "wcag": "2.2.2",
+          "wcagName": "일시정지, 중지, 숨김",
+          "note": "물리적 위험 방지(Avoid physical harm) 영역으로 이동",
+          "kwcag": "6.1",
+          "kwcagName": "물리적 위험 방지 (Avoid physical harm)",
+          "status": "moved"
+        },
+        {
+          "wcag": "2.2.3",
+          "wcagName": "시간 제한 없음",
+          "note": "시간 제한 없음(No time limits)",
+          "kwcag": "9.2",
+          "kwcagName": "충분한 시간 (Adequate time)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.2.4",
+          "wcagName": "방해 금지",
+          "note": "보조 기술 제어(Assistive technology control)로 이동",
+          "kwcag": "12.1",
+          "kwcagName": "보조 기술 제어 (Assistive technology control)",
+          "status": "moved"
+        },
+        {
+          "wcag": "2.2.5",
+          "wcagName": "재인증",
+          "note": "정보 유지(Retain information)로 이동",
+          "kwcag": "9.4",
+          "kwcagName": "정보 유지 (Retain information)",
+          "status": "moved"
+        },
+        {
+          "wcag": "2.2.6",
+          "wcagName": "시간 초과(Timeouts)",
+          "note": "시간 제한 전달(Time limits conveyed)",
+          "kwcag": "9.2",
+          "kwcagName": "충분한 시간 (Adequate time)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.3.1",
+          "wcagName": "3회 또는 임계값 이하의 번쩍임",
+          "note": "번쩍임 없음(No flashing)",
+          "kwcag": "6.1",
+          "kwcagName": "물리적 위험 방지 (Avoid physical harm)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.3.2",
+          "wcagName": "3회 번쩍임",
+          "note": "번쩍임 없음 — 예외 없음(No flashing (no exceptions))",
+          "kwcag": "6.1",
+          "kwcagName": "물리적 위험 방지 (Avoid physical harm)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.3.3",
+          "wcagName": "대화형 애니메이션",
+          "note": "시각적 움직임 없음(No visual motion)",
+          "kwcag": "6.1",
+          "kwcagName": "물리적 위험 방지 (Avoid physical harm)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.4.1",
+          "wcagName": "블록 건너뛰기",
+          "note": "물리적·인지적 부담 경감(Physical or cognitive effort)으로 이동",
+          "kwcag": "4.2",
+          "kwcagName": "물리적·인지적 부담 경감 (Physical or cognitive effort)",
+          "status": "moved"
+        },
+        {
+          "wcag": "2.4.2",
+          "wcagName": "페이지 제목",
+          "note": "사용자 위치 안내(User orientation)로 이동",
+          "kwcag": "7.2",
+          "kwcagName": "사용자 위치 안내 (User orientation)",
+          "status": "moved"
+        },
+        {
+          "wcag": "2.4.3",
+          "wcagName": "포커스 순서",
+          "note": "콘텐츠 탐색(Navigating content)으로 이동",
+          "kwcag": "3.3",
+          "kwcagName": "콘텐츠 탐색 (Navigating content)",
+          "status": "moved"
+        },
+        {
+          "wcag": "2.4.4",
+          "wcagName": "링크 목적 (맥락 내)",
+          "note": "인터랙티브 요소 이름 제공(Interactive element names available)",
+          "kwcag": "3.5",
+          "kwcagName": "컨트롤 정보 (Control information)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.4.5",
+          "wcagName": "다양한 방법 제공",
+          "note": "사용자 위치 안내(User orientation)로 이동",
+          "kwcag": "7.2",
+          "kwcagName": "사용자 위치 안내 (User orientation)",
+          "status": "moved"
+        },
+        {
+          "wcag": "2.4.6",
+          "wcagName": "제목과 레이블",
+          "note": "제목 구조(Heading structure) + 섹션 레이블(Sections labeled)",
+          "kwcag": "7.3",
+          "kwcagName": "구조 (Structure)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.4.7",
+          "wcagName": "초점 시각화",
+          "note": "포커스 표시기 대비/크기 충분(Focus indicator contrast/size sufficient)",
+          "kwcag": "3.1",
+          "kwcagName": "키보드 포커스 외형 (Keyboard focus appearance)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.4.8",
+          "wcagName": "위치 제공",
+          "note": "사용자 위치 안내(User orientation)로 이동",
+          "kwcag": "7.2",
+          "kwcagName": "사용자 위치 안내 (User orientation)",
+          "status": "moved"
+        },
+        {
+          "wcag": "2.4.9",
+          "wcagName": "링크 목적 (링크 단독)",
+          "note": "",
+          "kwcag": "3.5",
+          "kwcagName": "컨트롤 정보 (Control information)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.4.10",
+          "wcagName": "섹션 제목",
+          "note": "섹션 레이블(Sections labeled)",
+          "kwcag": "7.3",
+          "kwcagName": "구조 (Structure)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.4.11",
+          "wcagName": "초점 표시 (최소)",
+          "note": "가림 방지(No obstruction) 영역으로 이동",
+          "kwcag": "7.4",
+          "kwcagName": "가림 방지 (No obstruction)",
+          "status": "moved"
+        },
+        {
+          "wcag": "2.4.12",
+          "wcagName": "초점 표시 (향상된)",
+          "note": "가림 방지(No obstruction) 영역으로 이동",
+          "kwcag": "7.4",
+          "kwcagName": "가림 방지 (No obstruction)",
+          "status": "moved"
+        },
+        {
+          "wcag": "2.4.13",
+          "wcagName": "초점 형태",
+          "note": "포커스 표시기 대비 + 크기 충분(Focus indicator contrast + size sufficient)",
+          "kwcag": "3.1",
+          "kwcagName": "키보드 포커스 외형 (Keyboard focus appearance)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.5.1",
+          "wcagName": "포인터 제스처",
+          "note": "경로 기반 제스처 의존 금지(Path-based gesture not relied on)",
+          "kwcag": "4.5",
+          "kwcagName": "입력 조작 (Input operation)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.5.2",
+          "wcagName": "포인터 취소",
+          "note": "포인터 활성화 제어 가능(Pointer activation controllable)",
+          "kwcag": "4.3",
+          "kwcagName": "포인터 입력 (Pointer input)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.5.3",
+          "wcagName": "이름 포함 레이블",
+          "note": "레이블이 프로그래밍 이름에 포함(Label included in programmatic name)",
+          "kwcag": "3.5",
+          "kwcagName": "컨트롤 정보 (Control information)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.5.4",
+          "wcagName": "동작 기반 실행",
+          "note": "신체 동작 의존 금지(Body movements not relied on)",
+          "kwcag": "4.5",
+          "kwcagName": "입력 조작 (Input operation)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.5.5",
+          "wcagName": "타겟 크기 (향상된)",
+          "note": "",
+          "kwcag": "4.3",
+          "kwcagName": "포인터 입력 (Pointer input)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.5.6",
+          "wcagName": "동시 입력 매커니즘",
+          "note": "입력 방식 유연(Input method flexible)",
+          "kwcag": "4.5",
+          "kwcagName": "입력 조작 (Input operation)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.5.7",
+          "wcagName": "끌기(Dragging) 동작",
+          "note": "단순 포인터 입력 가능(Simple pointer input available)",
+          "kwcag": "4.3",
+          "kwcagName": "포인터 입력 (Pointer input)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "2.5.8",
+          "wcagName": "타겟 크기 (최소)",
+          "note": "",
+          "kwcag": "4.3",
+          "kwcagName": "포인터 입력 (Pointer input)",
+          "status": "mapped"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "이해의 용이성",
+      "items": [
+        {
+          "wcag": "3.1.1",
+          "wcagName": "페이지 언어",
+          "note": "사용 언어 감지 가능(Human language detectable)",
+          "kwcag": "2.2",
+          "kwcagName": "텍스트 음성 변환 (Text-to-speech)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "3.1.2",
+          "wcagName": "부분 언어",
+          "note": "",
+          "kwcag": "2.2",
+          "kwcagName": "텍스트 음성 변환 (Text-to-speech)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "3.1.3",
+          "wcagName": "생소한 단어",
+          "note": "비유적 표현 설명(Non-literal language explained)",
+          "kwcag": "2.3",
+          "kwcagName": "명확한 언어 (Clear language)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "3.1.4",
+          "wcagName": "약어",
+          "note": "약어 설명(Abbreviations explained)",
+          "kwcag": "2.3",
+          "kwcagName": "명확한 언어 (Clear language)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "3.1.5",
+          "wcagName": "독해 수준",
+          "note": "불필요한 단어 없음(No unnecessary words) + 명확한 언어 검토(Clear language review)",
+          "kwcag": "2.3",
+          "kwcagName": "명확한 언어 (Clear language)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "3.1.6",
+          "wcagName": "발음",
+          "note": "",
+          "kwcag": "2.2",
+          "kwcagName": "텍스트 음성 변환 (Text-to-speech)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "3.2.1",
+          "wcagName": "초점 이동 시",
+          "note": "일관된 인터랙션(Consistent interactions)",
+          "kwcag": "3.4",
+          "kwcagName": "예측 가능한 동작 (Expected behavior)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "3.2.2",
+          "wcagName": "입력 시",
+          "note": "",
+          "kwcag": "3.4",
+          "kwcagName": "예측 가능한 동작 (Expected behavior)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "3.2.3",
+          "wcagName": "일관된 탐색",
+          "note": "일관성(Consistency) 영역으로 이동",
+          "kwcag": "8.1",
+          "kwcagName": "일관성 (Consistency)",
+          "status": "moved"
+        },
+        {
+          "wcag": "3.2.4",
+          "wcagName": "일관된 식별",
+          "note": "일관성(Consistency) 영역으로 이동",
+          "kwcag": "8.1",
+          "kwcagName": "일관성 (Consistency)",
+          "status": "moved"
+        },
+        {
+          "wcag": "3.2.5",
+          "wcagName": "요구에 의한 변화",
+          "note": "",
+          "kwcag": "3.4",
+          "kwcagName": "예측 가능한 동작 (Expected behavior)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "3.2.6",
+          "wcagName": "일관된 도움",
+          "note": "일관된 도움 제공(Consistent help available)",
+          "kwcag": "11.1",
+          "kwcagName": "도움 제공 (Help available)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "3.3.1",
+          "wcagName": "오류 식별",
+          "note": "오류 알림(Error notifications) + 오류 연결(Errors associated) 등 6개 요구사항",
+          "kwcag": "5.1",
+          "kwcagName": "오류 수정 (Correct errors)",
+          "status": "split"
+        },
+        {
+          "wcag": "3.3.2",
+          "wcagName": "레이블 또는 설명",
+          "note": "인터랙티브 요소 이름 제공(Interactive element names available)",
+          "kwcag": "3.5",
+          "kwcagName": "컨트롤 정보 (Control information)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "3.3.3",
+          "wcagName": "오류 수정 제안",
+          "note": "오류 수정 제안(Error suggestions provided)",
+          "kwcag": "5.1",
+          "kwcagName": "오류 수정 (Correct errors)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "3.3.4",
+          "wcagName": "오류 예방 (법률, 금융, 데이터)",
+          "note": "오류 예방 가능(Errors preventable)",
+          "kwcag": "5.2",
+          "kwcagName": "오류 예방 (Prevent errors)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "3.3.5",
+          "wcagName": "도움말",
+          "note": "맥락별 도움 제공(Contextual help available)",
+          "kwcag": "11.1",
+          "kwcagName": "도움 제공 (Help available)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "3.3.6",
+          "wcagName": "오류 예방 (전체)",
+          "note": "",
+          "kwcag": "5.2",
+          "kwcagName": "오류 예방 (Prevent errors)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "3.3.7",
+          "wcagName": "반복 입력",
+          "note": "반복 입력 없음(No redundant entry)",
+          "kwcag": "9.4",
+          "kwcagName": "정보 유지 (Retain information)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "3.3.8",
+          "wcagName": "접근 가능한 인증 (최소)",
+          "note": "인지 테스트 대안 제공(Cognitive test alternatives available)",
+          "kwcag": "9.1",
+          "kwcagName": "배제적 인지 과제 방지 (Avoid exclusionary cognitive tasks)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "3.3.9",
+          "wcagName": "접근 가능한 인증 (향상된)",
+          "note": "",
+          "kwcag": "9.1",
+          "kwcagName": "배제적 인지 과제 방지 (Avoid exclusionary cognitive tasks)",
+          "status": "mapped"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "견고성",
+      "items": [
+        {
+          "wcag": "4.1.1",
+          "wcagName": "파싱 (폐기)",
+          "note": "WCAG 2.2에서 이미 폐기, 3.0에 대응 없음",
+          "kwcag": "—",
+          "kwcagName": "",
+          "deprecated": true,
+          "status": "deprecated"
+        },
+        {
+          "wcag": "4.1.2",
+          "wcagName": "이름, 역할, 값",
+          "note": "역할·값·상태·속성 제공(Roles, values, states, properties available)",
+          "kwcag": "3.5",
+          "kwcagName": "컨트롤 정보 (Control information)",
+          "status": "mapped"
+        },
+        {
+          "wcag": "4.1.3",
+          "wcagName": "상태 메시지",
+          "note": "콘텐츠 변경 알림(Content changes) 영역으로 이동",
+          "kwcag": "12.5",
+          "kwcagName": "콘텐츠 변경 알림 (Content changes)",
+          "status": "moved"
+        }
+      ]
+    }
+  ],
+  "statusTypes": [
+    {
+      "key": "mapped",
+      "label": "대응",
+      "desc": "1:1 대응"
+    },
+    {
+      "key": "moved",
+      "label": "이동",
+      "desc": "다른 영역으로 재배치"
+    },
+    {
+      "key": "merged",
+      "label": "통합",
+      "desc": "여러 SC가 하나로"
+    },
+    {
+      "key": "split",
+      "label": "분리",
+      "desc": "1개 SC가 여러 요구사항으로"
+    },
+    {
+      "key": "expanded",
+      "label": "확장",
+      "desc": "범위 넓어짐"
+    },
+    {
+      "key": "deprecated",
+      "label": "폐기",
+      "desc": "폐기 또는 대응 없음"
+    }
+  ],
+  "hideFilters": true
+}

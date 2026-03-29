@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="100">
+  <text x="4" y="16" font-family="Noto Sans KR, sans-serif" font-size="14" font-weight="700" fill="#424242">아이콘 버튼의 접근성 처리</text>
+
+  <!-- BAD: 아이콘만 -->
+  <text x="4" y="42" font-family="Noto Sans KR, sans-serif" font-size="12" font-weight="600" fill="#EF4444">✗ 아이콘만 (이름 없음)</text>
+  <rect x="4" y="50" width="248" height="44" rx="6" fill="#fff" stroke="#E0E0E0"/>
+  <!-- 닫기 아이콘 -->
+  <rect x="20" y="58" width="28" height="28" rx="4" fill="none" stroke="#E0E0E0"/>
+  <line x1="28" y1="66" x2="40" y2="78" stroke="#424242" stroke-width="2" stroke-linecap="round"/>
+  <line x1="40" y1="66" x2="28" y2="78" stroke="#424242" stroke-width="2" stroke-linecap="round"/>
+  <!-- 검색 아이콘 -->
+  <rect x="60" y="58" width="28" height="28" rx="4" fill="none" stroke="#E0E0E0"/>
+  <circle cx="72" cy="70" r="6" fill="none" stroke="#424242" stroke-width="2"/>
+  <line x1="77" y1="75" x2="82" y2="80" stroke="#424242" stroke-width="2" stroke-linecap="round"/>
+  <!-- 메뉴 아이콘 -->
+  <rect x="100" y="58" width="28" height="28" rx="4" fill="none" stroke="#E0E0E0"/>
+  <line x1="108" y1="66" x2="120" y2="66" stroke="#424242" stroke-width="2" stroke-linecap="round"/>
+  <line x1="108" y1="72" x2="120" y2="72" stroke="#424242" stroke-width="2" stroke-linecap="round"/>
+  <line x1="108" y1="78" x2="120" y2="78" stroke="#424242" stroke-width="2" stroke-linecap="round"/>
+  <text x="144" y="76" font-family="Noto Sans KR, sans-serif" font-size="11" fill="#9E9E9E">SR: "버튼" (용도 불명)</text>
+
+  <!-- GOOD: 아이콘 + aria-label -->
+  <text x="268" y="42" font-family="Noto Sans KR, sans-serif" font-size="12" font-weight="600" fill="#22C55E">✓ aria-label 적용</text>
+  <rect x="268" y="50" width="248" height="44" rx="6" fill="#fff" stroke="#E0E0E0"/>
+  <rect x="284" y="58" width="28" height="28" rx="4" fill="none" stroke="#E0E0E0"/>
+  <line x1="292" y1="66" x2="304" y2="78" stroke="#424242" stroke-width="2" stroke-linecap="round"/>
+  <line x1="304" y1="66" x2="292" y2="78" stroke="#424242" stroke-width="2" stroke-linecap="round"/>
+  <rect x="324" y="58" width="28" height="28" rx="4" fill="none" stroke="#E0E0E0"/>
+  <circle cx="336" cy="70" r="6" fill="none" stroke="#424242" stroke-width="2"/>
+  <line x1="341" y1="75" x2="346" y2="80" stroke="#424242" stroke-width="2" stroke-linecap="round"/>
+  <rect x="364" y="58" width="28" height="28" rx="4" fill="none" stroke="#E0E0E0"/>
+  <line x1="372" y1="66" x2="384" y2="66" stroke="#424242" stroke-width="2" stroke-linecap="round"/>
+  <line x1="372" y1="72" x2="384" y2="72" stroke="#424242" stroke-width="2" stroke-linecap="round"/>
+  <line x1="372" y1="78" x2="384" y2="78" stroke="#424242" stroke-width="2" stroke-linecap="round"/>
+  <text x="404" y="76" font-family="Noto Sans KR, sans-serif" font-size="11" fill="#9E9E9E">SR: "닫기" "검색" "메뉴"</text>
+</svg>

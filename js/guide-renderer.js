@@ -462,15 +462,17 @@ var GuideRenderer = {
     // 카운트 계산
     var counts = { total: 0, A: 0, AA: 0, AAA: 0 };
     var statusLabels = {};
-    for (var st = 0; st < data.statusTypes.length; st++) {
-      var key = data.statusTypes[st].key;
-      statusLabels[key] = data.statusTypes[st].label;
-      counts[key] = 0;
+    if (data.statusTypes) {
+      for (var st = 0; st < data.statusTypes.length; st++) {
+        var key = data.statusTypes[st].key;
+        statusLabels[key] = data.statusTypes[st].label;
+        counts[key] = 0;
+      }
     }
     for (var p = 0; p < data.principles.length; p++) {
       var items = data.principles[p].items;
       for (var i = 0; i < items.length; i++) {
-        counts[items[i].status]++;
+        if (items[i].status) counts[items[i].status]++;
         counts.total++;
         if (items[i].level === 'A') counts.A++;
         else if (items[i].level === 'AA') counts.AA++;
@@ -504,20 +506,24 @@ var GuideRenderer = {
 
     html += '<div class="ap-mapping">';
 
+    if (!data.hideFilters) {
+    this.hideFilters = false;
     // 필터 바 (stats + 상태필터 통합)
     html += '<div class="ap-mapping__filters" role="search" aria-label="필터">';
-    html += '<div class="ap-mapping__filter-group" role="group" aria-label="매핑 상태">';
-    html += '<span class="ap-mapping__filter-label">상태</span>';
-    html += '<button class="ap-guide-page__filter-btn is-active" data-mf="status" data-mv="all" type="button">전체 (' + counts.total + ')</button>';
-    for (var s = 0; s < data.statusTypes.length; s++) {
-      var st = data.statusTypes[s];
-      var count = counts[st.key] || 0;
-      html += '<button class="ap-guide-page__filter-btn" data-mf="status" data-mv="' + st.key + '" type="button">';
-      html += '<span class="ap-mapping__dot ap-mapping__dot--' + st.key + '" aria-hidden="true"></span>';
-      html += st.label + ' (' + count + ')';
-      html += '</button>';
+    if (data.statusTypes && data.statusTypes.length > 0) {
+      html += '<div class="ap-mapping__filter-group" role="group" aria-label="매핑 상태">';
+      html += '<span class="ap-mapping__filter-label">상태</span>';
+      html += '<button class="ap-guide-page__filter-btn is-active" data-mf="status" data-mv="all" type="button">전체 (' + counts.total + ')</button>';
+      for (var s = 0; s < data.statusTypes.length; s++) {
+        var st = data.statusTypes[s];
+        var count = counts[st.key] || 0;
+        html += '<button class="ap-guide-page__filter-btn" data-mf="status" data-mv="' + st.key + '" type="button">';
+        html += '<span class="ap-mapping__dot ap-mapping__dot--' + st.key + '" aria-hidden="true"></span>';
+        html += st.label + ' (' + count + ')';
+        html += '</button>';
+      }
+      html += '</div>';
     }
-    html += '</div>';
     // 레벨 필터 (레벨이 있는 경우만)
     var hasLevels = counts.A > 0 || counts.AA > 0 || counts.AAA > 0;
     this.hasLevels = hasLevels;
@@ -538,6 +544,10 @@ var GuideRenderer = {
 
     // 결과 카운트
     html += '<div class="ap-mapping__count" aria-live="polite"><strong id="mapping-visible-count">' + counts.total + '</strong>개 항목 표시 중</div>';
+    } else {
+      this.hasLevels = false;
+      this.hideFilters = true;
+    }
 
     // 원칙별 테이블
     for (var p = 0; p < data.principles.length; p++) {
@@ -652,20 +662,27 @@ var GuideRenderer = {
     }
 
     // 셀 데이터 배열
-    var cells = [
-      '<span class="ap-mapping__dot ap-mapping__dot--' + item.status + '" aria-hidden="true"></span>',
-      wcagHtml
-    ];
+    var cells = [];
+    if (!this.hideFilters) {
+      if (item.status) {
+        cells.push('<span class="ap-mapping__dot ap-mapping__dot--' + item.status + '" aria-hidden="true"></span>');
+      } else {
+        cells.push('');
+      }
+    }
+    cells.push(wcagHtml);
     if (this.hasLevels) {
       cells.push(levelHtml);
     }
+    cells.push(kwcagHtml);
+    if (item.status && statusLabels[item.status]) {
+      cells.push('<span class="ap-mapping__tag ap-mapping__tag--' + item.status + '">' + (statusLabels[item.status] || item.status) + '</span>');
+    }
     cells.push(
-      kwcagHtml,
-      '<span class="ap-mapping__tag ap-mapping__tag--' + item.status + '">' + (statusLabels[item.status] || item.status) + '</span>',
       '<span class="ap-mapping__note">' + this.escapeAndFormat(item.note || '') + '</span>'
     );
 
-    var html = '<tr data-status="' + item.status + '" data-level="' + item.level + '" data-search="' + searchText + '">';
+    var html = '<tr data-status="' + (item.status || '') + '" data-level="' + (item.level || '') + '" data-search="' + searchText + '">';
     for (var i = 0; i < cells.length; i++) {
       var tdStyle = aligns[i] ? ' style="text-align:' + aligns[i] + '"' : '';
       html += '<td' + tdStyle + '>' + cells[i] + '</td>';
@@ -777,9 +794,30 @@ var GuideRenderer = {
         var itemId = 'faq-' + cat.id + '-' + i;
         var searchText = (item.q + ' ' + item.a).toLowerCase();
 
+        // 태그에서 대표 배지 생성 (헤더용)
+        var headerBadges = '';
+        if (item.tags && item.tags.length > 0) {
+          var shown = {};
+          for (var t = 0; t < item.tags.length; t++) {
+            var tagText = item.tags[t];
+            var badgeLabel = '';
+            var badgeCls = '';
+            if (tagText.indexOf('KWCAG') === 0 && !shown.kwcag) {
+              badgeLabel = 'KWCAG'; badgeCls = 'ap-tag--kwcag'; shown.kwcag = true;
+            } else if (tagText.indexOf('모바일') === 0 && !shown.mobile) {
+              badgeLabel = '모바일'; badgeCls = 'ap-tag--mobile'; shown.mobile = true;
+            } else if ((tagText.indexOf('SC') === 0 || tagText.indexOf('WCAG') === 0) && !shown.wcag) {
+              badgeLabel = 'WCAG'; badgeCls = 'ap-tag--wcag'; shown.wcag = true;
+            }
+            if (badgeLabel) {
+              headerBadges += '<span class="ap-tag ap-tag--sm ' + badgeCls + '">' + badgeLabel + '</span>';
+            }
+          }
+        }
+
         html += '<div class="ap-gp-criterion" id="' + itemId + '" data-search="' + this.escapeAttr(searchText) + '">';
         html += '<button class="ap-gp-criterion__header" data-toggle="faq" aria-expanded="false" type="button">';
-        html += '<span class="ap-gp-criterion__name">' + item.q + '</span>';
+        html += '<span class="ap-gp-criterion__name">' + item.q + headerBadges + '</span>';
         html += '<span class="ap-gp-criterion__toggle material-icons-outlined" aria-hidden="true">expand_more</span>';
         html += '</button>';
         html += '<div class="ap-gp-criterion__body" style="display:none">';
@@ -787,9 +825,11 @@ var GuideRenderer = {
         if (item.tags && item.tags.length > 0) {
           html += '<div class="ap-faq__tags">';
           for (var t = 0; t < item.tags.length; t++) {
-            var isKwcag = item.tags[t].indexOf('KWCAG') === 0;
-            var cls = isKwcag ? 'ap-tag--kwcag' : 'ap-tag--wcag';
-            html += '<span class="ap-tag ' + cls + '">' + item.tags[t] + '</span>';
+            var tagText = item.tags[t];
+            var cls = 'ap-tag--wcag';
+            if (tagText.indexOf('KWCAG') === 0) cls = 'ap-tag--kwcag';
+            else if (tagText.indexOf('모바일') === 0) cls = 'ap-tag--mobile';
+            html += '<span class="ap-tag ' + cls + '">' + tagText + '</span>';
           }
           html += '</div>';
         }
