@@ -132,6 +132,13 @@
           "status": "pass"
         },
         {
+          "id": "checklist",
+          "name": "검수 체크리스트",
+          "icon": "checklist",
+          "type": "guide",
+          "status": "pass"
+        },
+        {
           "id": "usability",
           "name": "사용성 권장사항",
           "icon": "thumb_up",

@@ -1,0 +1,1034 @@
+{
+  "id": "checklist",
+  "type": "checklist",
+  "title": "접근성 검수 체크리스트",
+  "updated": "2025-03-29",
+  "description": "WCAG 2.2 / KWCAG 2.2 / 모바일 앱 접근성 지침(KS X 3253:2025) 기반 통합 체크리스트",
+  "categories": [
+    {
+      "id": "alt-text",
+      "name": "대체 텍스트",
+      "items": [
+        {
+          "no": 1,
+          "check": "의미 있는 이미지에 적절한 대체 텍스트(alt)가 제공되는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.1.1",
+          "kwcag": "1.1.1",
+          "mobile": "1.1.1",
+          "level": "A",
+          "how": "모든 img에 alt 속성 확인, 이미지 목적을 정확히 전달하는지 SR로 검증",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 2,
+          "check": "장식용 이미지에 alt=\"\"가 적용되어 스크린리더가 건너뛰는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.1.1",
+          "kwcag": "1.1.1",
+          "mobile": "1.1.1",
+          "level": "A",
+          "how": "장식 이미지에 alt=\"\" 또는 role=\"presentation\" 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 3,
+          "check": "이미지 버튼/링크에 대체 텍스트가 있는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.1.1",
+          "kwcag": "1.1.1",
+          "mobile": "1.1.1",
+          "level": "A",
+          "how": "아이콘 버튼에 aria-label 또는 sr-only 텍스트 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 4,
+          "check": "CAPTCHA에 대체 수단이 제공되는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.1.1",
+          "kwcag": "1.1.1",
+          "mobile": "",
+          "level": "A",
+          "how": "오디오 CAPTCHA 등 대체 수단 제공 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 5,
+          "check": "복잡한 이미지(차트, 그래프)에 충분한 설명이 제공되는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.1.1",
+          "kwcag": "1.1.1",
+          "mobile": "1.1.1",
+          "level": "A",
+          "how": "차트에 데이터 테이블 병행 또는 긴 대체 텍스트 제공 확인",
+          "web": true,
+          "app": true
+        }
+      ]
+    },
+    {
+      "id": "multimedia",
+      "name": "멀티미디어",
+      "items": [
+        {
+          "no": 6,
+          "check": "녹화 영상에 자막(caption)이 제공되는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.2.2",
+          "kwcag": "1.1.2",
+          "mobile": "1.1.2",
+          "level": "A",
+          "how": "동영상 재생 시 자막 표시 확인, 대사/효과음 모두 포함",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 7,
+          "check": "녹화 영상에 화면해설(audio description)이 제공되는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.2.3",
+          "kwcag": "",
+          "mobile": "",
+          "level": "A",
+          "how": "시각적 정보가 음성으로도 전달되는지 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 8,
+          "check": "실시간 영상에 자막이 제공되는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.2.4",
+          "kwcag": "1.1.2",
+          "mobile": "",
+          "level": "AA",
+          "how": "라이브 스트리밍 시 실시간 자막 제공 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 9,
+          "check": "녹음 콘텐츠에 대본(transcript)이 제공되는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.2.1",
+          "kwcag": "1.1.2",
+          "mobile": "",
+          "level": "A",
+          "how": "오디오 콘텐츠에 텍스트 대본 링크 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 10,
+          "check": "수어 통역이 제공되는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.2.6",
+          "kwcag": "",
+          "mobile": "",
+          "level": "AAA",
+          "how": "수어 통역 영상 제공 여부 확인",
+          "web": true,
+          "app": true
+        }
+      ]
+    },
+    {
+      "id": "color-contrast",
+      "name": "색상 & 명도 대비",
+      "items": [
+        {
+          "no": 11,
+          "check": "일반 텍스트(18px 미만)의 명도 대비가 4.5:1 이상인가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.4.3",
+          "kwcag": "1.3.3",
+          "mobile": "1.3.1",
+          "level": "AA",
+          "how": "Colour Contrast Analyser로 전경/배경 대비 측정",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 12,
+          "check": "큰 텍스트(18px+ 또는 14px bold+)의 명도 대비가 3:1 이상인가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.4.3",
+          "kwcag": "1.3.3",
+          "mobile": "1.3.1",
+          "level": "AA",
+          "how": "큰 텍스트 기준 확인 후 대비 측정",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 13,
+          "check": "텍스트 명도 대비가 7:1 이상인가 (향상된 수준)",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.4.6",
+          "kwcag": "",
+          "mobile": "",
+          "level": "AAA",
+          "how": "CCA로 7:1 기준 측정",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 14,
+          "check": "비텍스트 UI 요소(아이콘, 입력필드 테두리, 포커스 표시)의 대비가 3:1 이상인가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.4.11",
+          "kwcag": "1.3.3",
+          "mobile": "1.3.1",
+          "level": "AA",
+          "how": "버튼 테두리, 아이콘, 폼 요소의 배경 대비 측정",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 15,
+          "check": "색상만으로 정보를 전달하지 않는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.4.1",
+          "kwcag": "1.3.1",
+          "mobile": "1.3.1",
+          "level": "A",
+          "how": "상태 표시, 범례, 필수 항목 등에 색 외 수단(텍스트, 아이콘, 패턴) 병행 확인",
+          "web": true,
+          "app": true
+        }
+      ]
+    },
+    {
+      "id": "text-content",
+      "name": "텍스트 & 콘텐츠",
+      "items": [
+        {
+          "no": 16,
+          "check": "텍스트를 200%까지 확대해도 콘텐츠 손실이 없는가",
+          "platform": "PC/웹뷰",
+          "wcag": "1.4.4",
+          "kwcag": "1.3.2",
+          "mobile": "",
+          "level": "AA",
+          "how": "브라우저 줌 200% 적용 후 텍스트 잘림, 겹침 확인",
+          "web": true,
+          "app": false
+        },
+        {
+          "no": 17,
+          "check": "320px 뷰포트에서 가로 스크롤 없이 콘텐츠가 리플로우되는가",
+          "platform": "PC/웹뷰",
+          "wcag": "1.4.10",
+          "kwcag": "1.3.2",
+          "mobile": "",
+          "level": "AA",
+          "how": "브라우저 400% 줌 또는 320px 뷰포트에서 가로 스크롤 발생 확인",
+          "web": true,
+          "app": false
+        },
+        {
+          "no": 18,
+          "check": "텍스트 간격(줄높이, 단어/글자 간격) 변경 시 콘텐츠가 손실되지 않는가",
+          "platform": "PC/웹뷰",
+          "wcag": "1.4.12",
+          "kwcag": "",
+          "mobile": "",
+          "level": "AA",
+          "how": "줄높이 1.5배, 단어간격 0.16em 등 적용 후 잘림 확인",
+          "web": true,
+          "app": false
+        },
+        {
+          "no": 19,
+          "check": "텍스트 이미지 대신 실제 텍스트를 사용하는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.4.5",
+          "kwcag": "1.3.4",
+          "mobile": "",
+          "level": "AA",
+          "how": "텍스트를 이미지로 대체한 경우 확인, 로고 등 필수적 경우 예외",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 20,
+          "check": "텍스트 이미지가 전혀 사용되지 않는가 (향상된 수준)",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.4.9",
+          "kwcag": "",
+          "mobile": "",
+          "level": "AAA",
+          "how": "로고를 포함한 모든 텍스트가 실제 텍스트인지 확인",
+          "web": true,
+          "app": true
+        }
+      ]
+    },
+    {
+      "id": "structure",
+      "name": "구조 & 시맨틱",
+      "items": [
+        {
+          "no": 21,
+          "check": "정보와 구조가 프로그래밍적으로 결정 가능한가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.3.1",
+          "kwcag": "1.3.1",
+          "mobile": "1.1.1",
+          "level": "A",
+          "how": "헤딩, 목록, 테이블, 폼 등에 적절한 시맨틱 마크업 사용 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 22,
+          "check": "콘텐츠의 읽기 순서가 의미에 영향을 주는 경우 올바른 순서인가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.3.2",
+          "kwcag": "1.3.2",
+          "mobile": "",
+          "level": "A",
+          "how": "CSS 제거 후 콘텐츠 순서가 논리적인지 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 23,
+          "check": "페이지에 적절한 랜드마크(header, nav, main, footer)가 사용되는가",
+          "platform": "PC/웹뷰",
+          "wcag": "1.3.1",
+          "kwcag": "1.3.2",
+          "mobile": "",
+          "level": "A",
+          "how": "SR 랜드마크 탐색으로 영역 구분 확인",
+          "web": true,
+          "app": false
+        },
+        {
+          "no": 24,
+          "check": "테이블에 적절한 헤더(th)와 캡션이 사용되는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.3.1",
+          "kwcag": "1.3.1",
+          "mobile": "",
+          "level": "A",
+          "how": "데이터 테이블에 th, scope, caption 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 25,
+          "check": "화면 방향이 세로/가로 모두 지원되는가",
+          "platform": "모바일앱",
+          "wcag": "1.3.4",
+          "kwcag": "",
+          "mobile": "1.4.1",
+          "level": "AA",
+          "how": "기기 회전 시 콘텐츠 정상 표시 확인",
+          "web": false,
+          "app": true
+        },
+        {
+          "no": 26,
+          "check": "입력 목적이 프로그래밍적으로 식별 가능한가 (autocomplete)",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.3.5",
+          "kwcag": "",
+          "mobile": "",
+          "level": "AA",
+          "how": "이름, 이메일, 전화번호 등 필드에 autocomplete 속성 확인",
+          "web": true,
+          "app": true
+        }
+      ]
+    },
+    {
+      "id": "keyboard",
+      "name": "키보드 접근성",
+      "items": [
+        {
+          "no": 27,
+          "check": "모든 기능이 키보드로 조작 가능한가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "2.1.1",
+          "kwcag": "2.1.1",
+          "mobile": "2.1.1",
+          "level": "A",
+          "how": "Tab/Enter/Space/Arrow로 모든 인터랙션 수행 가능 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 28,
+          "check": "키보드 트랩이 발생하지 않는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "2.1.2",
+          "kwcag": "2.1.1",
+          "mobile": "2.1.1",
+          "level": "A",
+          "how": "Tab 키로 모든 요소를 빠져나올 수 있는지 확인, 모달 포함",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 29,
+          "check": "단축키가 있는 경우 해제/재설정 가능한가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "2.1.4",
+          "kwcag": "",
+          "mobile": "",
+          "level": "A",
+          "how": "단일 문자 단축키 비활성화/재매핑 가능 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 30,
+          "check": "드래그 동작에 키보드 대안이 제공되는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "2.5.7",
+          "kwcag": "",
+          "mobile": "",
+          "level": "AA",
+          "how": "드래그 앤 드롭에 버튼/키보드 대안 확인",
+          "web": true,
+          "app": true
+        }
+      ]
+    },
+    {
+      "id": "focus",
+      "name": "포커스 관리",
+      "items": [
+        {
+          "no": 31,
+          "check": "포커스 표시가 시각적으로 명확한가 (최소 2px)",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "2.4.7",
+          "kwcag": "2.1.3",
+          "mobile": "",
+          "level": "AA",
+          "how": "Tab 이동 시 현재 포커스 위치가 눈에 보이는지 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 32,
+          "check": "포커스 표시가 향상된 기준을 충족하는가",
+          "platform": "PC/웹뷰",
+          "wcag": "2.4.11",
+          "kwcag": "",
+          "mobile": "",
+          "level": "AA",
+          "how": "포커스 표시 면적, 대비 등 2.4.11 기준 충족 확인",
+          "web": true,
+          "app": false
+        },
+        {
+          "no": 33,
+          "check": "포커스 표시의 형태가 충분한가 (AAA)",
+          "platform": "PC/웹뷰",
+          "wcag": "2.4.12",
+          "kwcag": "",
+          "mobile": "",
+          "level": "AAA",
+          "how": "포커스 표시 2px 이상 솔리드 또는 동등 면적 확인",
+          "web": true,
+          "app": false
+        },
+        {
+          "no": 34,
+          "check": "포커스 순서가 논리적이고 시각적 순서와 일치하는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "2.4.3",
+          "kwcag": "2.1.1",
+          "mobile": "2.1.1",
+          "level": "A",
+          "how": "Tab 이동 순서가 시각적 레이아웃과 일치하는지 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 35,
+          "check": "포커스된 요소가 다른 콘텐츠에 가려지지 않는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "2.4.11",
+          "kwcag": "",
+          "mobile": "",
+          "level": "AA",
+          "how": "스티키 헤더, 쿠키 배너 등에 포커스 요소가 가려지는지 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 36,
+          "check": "모달/다이얼로그에서 포커스가 올바르게 관리되는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "2.4.3",
+          "kwcag": "2.1.1",
+          "mobile": "",
+          "level": "A",
+          "how": "모달 열림 시 포커스 이동, 닫힘 시 원래 위치 복귀 확인",
+          "web": true,
+          "app": true
+        }
+      ]
+    },
+    {
+      "id": "timing",
+      "name": "시간 & 자동 콘텐츠",
+      "items": [
+        {
+          "no": 37,
+          "check": "시간 제한이 있는 경우 연장/해제 가능한가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "2.2.1",
+          "kwcag": "2.2.1",
+          "mobile": "2.2.1",
+          "level": "A",
+          "how": "세션 만료 전 연장 안내 제공 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 38,
+          "check": "자동 움직이는 콘텐츠를 정지/숨김 가능한가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "2.2.2",
+          "kwcag": "2.2.1",
+          "mobile": "2.2.1",
+          "level": "A",
+          "how": "슬라이더, 마퀴, 자동 갱신 콘텐츠에 정지 버튼 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 39,
+          "check": "소리가 자동 재생되지 않거나 3초 이내 정지되는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.4.2",
+          "kwcag": "1.1.3",
+          "mobile": "1.1.3",
+          "level": "A",
+          "how": "페이지 로드 시 자동 재생 소리 확인, 정지/음량 조절 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 40,
+          "check": "1초에 3회 이상 깜빡이는 콘텐츠가 없는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "2.3.1",
+          "kwcag": "2.3.1",
+          "mobile": "2.3.1",
+          "level": "A",
+          "how": "깜빡임/점멸 콘텐츠 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 41,
+          "check": "모션 애니메이션을 비활성화할 수 있는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "2.3.3",
+          "kwcag": "",
+          "mobile": "",
+          "level": "AAA",
+          "how": "prefers-reduced-motion 미디어 쿼리 적용 확인",
+          "web": true,
+          "app": true
+        }
+      ]
+    },
+    {
+      "id": "navigation",
+      "name": "네비게이션",
+      "items": [
+        {
+          "no": 42,
+          "check": "반복 콘텐츠를 건너뛸 수 있는 스킵 네비게이션이 있는가",
+          "platform": "PC/웹뷰",
+          "wcag": "2.4.1",
+          "kwcag": "2.1.2",
+          "mobile": "",
+          "level": "A",
+          "how": "Tab 첫 요소에서 '본문으로 건너뛰기' 링크 확인",
+          "web": true,
+          "app": false
+        },
+        {
+          "no": 43,
+          "check": "페이지에 적절한 제목(title)이 있는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "2.4.2",
+          "kwcag": "2.4.2",
+          "mobile": "2.4.1",
+          "level": "A",
+          "how": "브라우저 탭/앱 타이틀이 페이지 내용을 설명하는지 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 44,
+          "check": "링크 텍스트만으로 목적을 이해할 수 있는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "2.4.4",
+          "kwcag": "2.4.1",
+          "mobile": "2.4.1",
+          "level": "A",
+          "how": "'여기', '더보기' 등 모호한 링크 텍스트 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 45,
+          "check": "같은 목적의 링크 텍스트가 일관적인가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "2.4.9",
+          "kwcag": "",
+          "mobile": "",
+          "level": "AAA",
+          "how": "동일 대상 링크가 다른 텍스트를 사용하는지 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 46,
+          "check": "여러 페이지에서 반복되는 네비게이션의 순서가 일관적인가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "3.2.3",
+          "kwcag": "",
+          "mobile": "",
+          "level": "AA",
+          "how": "메인 네비게이션 순서가 페이지마다 동일한지 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 47,
+          "check": "두 가지 이상의 탐색 방법이 제공되는가 (사이트맵, 검색 등)",
+          "platform": "PC/웹뷰",
+          "wcag": "2.4.5",
+          "kwcag": "",
+          "mobile": "",
+          "level": "AA",
+          "how": "GNB 외 검색, 사이트맵, A-Z 색인 등 제공 확인",
+          "web": true,
+          "app": false
+        },
+        {
+          "no": 48,
+          "check": "현재 위치 정보가 제공되는가 (breadcrumb 등)",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "2.4.8",
+          "kwcag": "",
+          "mobile": "",
+          "level": "AAA",
+          "how": "breadcrumb, 현재 메뉴 강조 등 확인",
+          "web": true,
+          "app": true
+        }
+      ]
+    },
+    {
+      "id": "form",
+      "name": "폼 & 입력",
+      "items": [
+        {
+          "no": 49,
+          "check": "모든 입력 필드에 연결된 레이블이 있는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.3.1",
+          "kwcag": "1.3.1",
+          "mobile": "1.1.1",
+          "level": "A",
+          "how": "label-for 또는 aria-label/aria-labelledby 연결 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 50,
+          "check": "필수 입력 필드가 색상 외 수단으로 표시되는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.4.1",
+          "kwcag": "1.3.1",
+          "mobile": "",
+          "level": "A",
+          "how": "required 속성, '(필수)' 텍스트 등 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 51,
+          "check": "입력 오류 발생 시 오류 위치와 내용이 텍스트로 안내되는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "3.3.1",
+          "kwcag": "3.4.1",
+          "mobile": "3.4.1",
+          "level": "A",
+          "how": "유효성 검증 실패 시 어떤 필드가 왜 오류인지 텍스트로 안내 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 52,
+          "check": "오류 수정 방법이 제안되는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "3.3.3",
+          "kwcag": "3.4.1",
+          "mobile": "3.4.1",
+          "level": "AA",
+          "how": "오류 메시지에 수정 방법이 포함되는지 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 53,
+          "check": "법적/재무적 데이터 제출 시 확인/취소/검토가 가능한가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "3.3.4",
+          "kwcag": "3.4.1",
+          "mobile": "",
+          "level": "AA",
+          "how": "결제, 계약 등에서 되돌리기/확인 단계 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 54,
+          "check": "터치 타겟이 최소 24×24px 이상인가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "2.5.8",
+          "kwcag": "2.1.3",
+          "mobile": "1.1.1",
+          "level": "AA",
+          "how": "인터랙티브 요소의 터치 영역 크기 측정",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 55,
+          "check": "터치 타겟이 44×44px 이상인가 (향상된 수준)",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "2.5.5",
+          "kwcag": "",
+          "mobile": "",
+          "level": "AAA",
+          "how": "모든 터치 타겟 44×44px 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 56,
+          "check": "복잡한 제스처에 단일 포인터 대안이 있는가",
+          "platform": "모바일앱",
+          "wcag": "2.5.1",
+          "kwcag": "",
+          "mobile": "2.1.1",
+          "level": "A",
+          "how": "스와이프, 핀치 등에 버튼 대안 확인",
+          "web": false,
+          "app": true
+        },
+        {
+          "no": 57,
+          "check": "인증 시 인지 기능 테스트(퍼즐, 기억)에 대안이 있는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "3.3.7",
+          "kwcag": "",
+          "mobile": "",
+          "level": "A",
+          "how": "로그인 시 비밀번호 관리자, 생체인증 등 대안 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 58,
+          "check": "인증 대안이 향상된 수준을 충족하는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "3.3.8",
+          "kwcag": "",
+          "mobile": "",
+          "level": "AAA",
+          "how": "인지 기능 테스트 완전 제거 확인",
+          "web": true,
+          "app": true
+        }
+      ]
+    },
+    {
+      "id": "interaction",
+      "name": "인터랙션 & 동작",
+      "items": [
+        {
+          "no": 59,
+          "check": "호버/포커스로 나타나는 콘텐츠가 지속 가능하고 해제 가능한가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "1.4.13",
+          "kwcag": "",
+          "mobile": "",
+          "level": "AA",
+          "how": "툴팁 등이 마우스 이동 시 유지되고, Esc로 닫히는지 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 60,
+          "check": "포인터 다운 이벤트만으로 기능이 실행되지 않는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "2.5.2",
+          "kwcag": "",
+          "mobile": "",
+          "level": "A",
+          "how": "클릭(up) 이벤트 사용, 실수 취소(드래그 후 영역 밖 릴리스) 가능 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 61,
+          "check": "기기 흔들기 등 모션 입력에 UI 대안이 있는가",
+          "platform": "모바일앱",
+          "wcag": "2.5.4",
+          "kwcag": "",
+          "mobile": "",
+          "level": "A",
+          "how": "모션 기반 기능에 버튼 대안 확인, 모션 비활성화 가능 확인",
+          "web": false,
+          "app": true
+        },
+        {
+          "no": 62,
+          "check": "포커스/입력 시 예상치 못한 컨텍스트 변경이 없는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "3.2.1",
+          "kwcag": "3.3.1",
+          "mobile": "3.3.1",
+          "level": "A",
+          "how": "탭 포커스만으로 페이지 이동, 팝업 등 발생하지 않는지 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 63,
+          "check": "설정 변경 시 사전 안내 없이 컨텍스트가 변경되지 않는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "3.2.2",
+          "kwcag": "3.3.1",
+          "mobile": "3.3.1",
+          "level": "A",
+          "how": "셀렉트박스 변경만으로 페이지 이동 등 발생하지 않는지 확인",
+          "web": true,
+          "app": true
+        }
+      ]
+    },
+    {
+      "id": "aria-markup",
+      "name": "ARIA & 마크업",
+      "items": [
+        {
+          "no": 64,
+          "check": "사용자 정의 컴포넌트에 적절한 ARIA role/state/property가 있는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "4.1.2",
+          "kwcag": "4.2.1",
+          "mobile": "4.2.1",
+          "level": "A",
+          "how": "탭, 모달, 메뉴 등 커스텀 위젯의 role, aria-expanded 등 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 65,
+          "check": "상태 변경 시 스크린리더에 알림이 전달되는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "4.1.3",
+          "kwcag": "4.2.1",
+          "mobile": "4.2.1",
+          "level": "AA",
+          "how": "토스트, 에러 메시지 등에 aria-live 또는 role=\"alert\" 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 66,
+          "check": "HTML 문법 오류가 없는가 (id 중복, 태그 중첩 등)",
+          "platform": "PC/웹뷰",
+          "wcag": "4.1.1",
+          "kwcag": "4.1.1",
+          "mobile": "",
+          "level": "A",
+          "how": "W3C Validator로 마크업 검증",
+          "web": true,
+          "app": false
+        },
+        {
+          "no": 67,
+          "check": "페이지 언어(lang)가 올바르게 지정되어 있는가",
+          "platform": "PC/웹뷰",
+          "wcag": "3.1.1",
+          "kwcag": "3.1.1",
+          "mobile": "",
+          "level": "A",
+          "how": "html 태그에 lang=\"ko\" 등 확인",
+          "web": true,
+          "app": false
+        },
+        {
+          "no": 68,
+          "check": "부분적으로 다른 언어가 사용된 경우 해당 요소에 lang이 지정되어 있는가",
+          "platform": "PC/웹뷰",
+          "wcag": "3.1.2",
+          "kwcag": "",
+          "mobile": "",
+          "level": "AA",
+          "how": "영문 인용, 외국어 단어 등에 lang 속성 확인",
+          "web": true,
+          "app": false
+        }
+      ]
+    },
+    {
+      "id": "mobile-specific",
+      "name": "모바일 전용",
+      "items": [
+        {
+          "no": 69,
+          "check": "네이티브 컨트롤에 접근성 레이블이 제공되는가 (contentDescription/accessibilityLabel)",
+          "platform": "모바일앱",
+          "wcag": "",
+          "kwcag": "4.2.1",
+          "mobile": "4.2.1",
+          "level": "A",
+          "how": "TalkBack/VoiceOver로 모든 컨트롤 읽힘 확인",
+          "web": false,
+          "app": true
+        },
+        {
+          "no": 70,
+          "check": "스크린리더 탐색 순서가 시각적 순서와 일치하는가",
+          "platform": "모바일앱",
+          "wcag": "",
+          "kwcag": "2.1.1",
+          "mobile": "2.1.1",
+          "level": "A",
+          "how": "TalkBack/VoiceOver 스와이프 순서 확인",
+          "web": false,
+          "app": true
+        },
+        {
+          "no": 71,
+          "check": "사용자 알림(notification)이 접근 가능한가",
+          "platform": "모바일앱",
+          "wcag": "",
+          "kwcag": "4.2.1",
+          "mobile": "4.2.1",
+          "level": "A",
+          "how": "알림 발생 시 SR이 자동으로 읽어주는지 확인",
+          "web": false,
+          "app": true
+        },
+        {
+          "no": 72,
+          "check": "OS 접근성 설정(글자 크기, 색상 반전 등)에 앱이 대응하는가",
+          "platform": "모바일앱",
+          "wcag": "",
+          "kwcag": "1.3.2",
+          "mobile": "1.3.2",
+          "level": "A",
+          "how": "시스템 글꼴 크기 변경 시 앱 내 텍스트 반영 확인",
+          "web": false,
+          "app": true
+        },
+        {
+          "no": 73,
+          "check": "컨트롤 간 충분한 간격이 확보되어 오조작이 방지되는가",
+          "platform": "모바일앱",
+          "wcag": "",
+          "kwcag": "2.1.3",
+          "mobile": "1.1.1",
+          "level": "A",
+          "how": "인접 버튼 간 터치 영역 겹침 없는지 확인",
+          "web": false,
+          "app": true
+        }
+      ]
+    },
+    {
+      "id": "sr-testing",
+      "name": "스크린리더 테스트",
+      "items": [
+        {
+          "no": 74,
+          "check": "JAWS + Chrome/Edge에서 주요 기능이 정상 동작하는가",
+          "platform": "PC/웹뷰",
+          "wcag": "",
+          "kwcag": "4.2.1",
+          "mobile": "",
+          "level": "A",
+          "how": "JAWS로 전체 페이지 탐색, 폼 입력, 버튼 클릭 등 테스트",
+          "web": true,
+          "app": false
+        },
+        {
+          "no": 75,
+          "check": "NVDA + Chrome/Firefox에서 주요 기능이 정상 동작하는가",
+          "platform": "PC/웹뷰",
+          "wcag": "",
+          "kwcag": "4.2.1",
+          "mobile": "",
+          "level": "A",
+          "how": "NVDA로 전체 페이지 탐색, 폼 입력, 버튼 클릭 등 테스트",
+          "web": true,
+          "app": false
+        },
+        {
+          "no": 76,
+          "check": "VoiceOver + Safari(iOS/Mac)에서 주요 기능이 정상 동작하는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "",
+          "kwcag": "4.2.1",
+          "mobile": "4.2.1",
+          "level": "A",
+          "how": "VoiceOver로 전체 페이지 탐색, 제스처 동작 확인",
+          "web": true,
+          "app": true
+        },
+        {
+          "no": 77,
+          "check": "TalkBack + Chrome(Android)에서 주요 기능이 정상 동작하는가",
+          "platform": "PC/웹뷰, 모바일앱",
+          "wcag": "",
+          "kwcag": "4.2.1",
+          "mobile": "4.2.1",
+          "level": "A",
+          "how": "TalkBack으로 전체 탐색, 스와이프/더블탭 동작 확인",
+          "web": true,
+          "app": true
+        }
+      ]
+    }
+  ],
+  "overview": {
+    "desc": "WCAG 2.2, KWCAG 2.2, 모바일 앱 접근성 지침(KS X 3253:2025)을 기반으로 웹과 앱의 접근성 검수에 필요한 점검 항목을 통합 정리한 체크리스트입니다.",
+    "meta": [
+      {
+        "label": "대상",
+        "value": "PC/모바일 웹뷰 + 모바일 앱(네이티브)"
+      },
+      {
+        "label": "기준",
+        "value": "A (46항목) · AA (22항목) · AAA (9항목) — 총 77개"
+      },
+      {
+        "label": "카테고리",
+        "value": "14개 영역별 분류"
+      }
+    ]
+  }
+}

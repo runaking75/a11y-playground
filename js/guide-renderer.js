@@ -50,8 +50,8 @@ var GuideRenderer = {
     }
     html += '</div>';
 
-    // 개요
-    if (data.overview) {
+    // 개요 (체크리스트는 자체 처리)
+    if (data.overview && data.type !== 'checklist') {
       html += '<div class="ap-guide-page__overview">';
       html += '<p>' + data.overview.desc + '</p>';
       html += '<div class="ap-guide-page__meta">';
@@ -70,6 +70,30 @@ var GuideRenderer = {
         html += '</div>';
       }
       html += '</div>';
+    }
+
+    // 체크리스트 타입: 별도 렌더링
+    if (data.type === 'checklist') {
+      this.injectChecklistStyles();
+      // 개요
+      if (data.overview) {
+        html += '<div class="ap-guide-page__overview">';
+        html += '<p>' + data.overview.desc + '</p>';
+        if (data.overview.meta) {
+          html += '<div class="ap-guide-page__meta">';
+          for (var m = 0; m < data.overview.meta.length; m++) {
+            var meta = data.overview.meta[m];
+            html += '<span><strong>' + meta.label + ':</strong> ' + meta.value + '</span>';
+          }
+          html += '</div>';
+        }
+        html += '</div>';
+      }
+      html += this.renderChecklist(data);
+      contentEl.innerHTML = html;
+      if (tocListEl) tocListEl.innerHTML = this.renderChecklistToc(data);
+      this.bindChecklistEvents(data);
+      return;
     }
 
     // 레벨 필터 (WCAG 원칙별 페이지)
@@ -810,7 +834,7 @@ var GuideRenderer = {
               badgeLabel = 'WCAG'; badgeCls = 'ap-tag--wcag'; shown.wcag = true;
             }
             if (badgeLabel) {
-              headerBadges += '<span class="ap-tag ap-tag--sm ' + badgeCls + '">' + badgeLabel + '</span>';
+              headerBadges += '<span class="ap-level ' + badgeCls + '">' + badgeLabel + '</span>';
             }
           }
         }
@@ -1052,6 +1076,284 @@ var GuideRenderer = {
     });
 
     var countEl = document.getElementById('mapping-visible-count');
+    if (countEl) countEl.textContent = visible;
+  },
+
+  // ========== 체크리스트 렌더링 ==========
+
+  injectChecklistStyles: function() {
+    if (document.getElementById('checklist-injected-css')) return;
+    var style = document.createElement('style');
+    style.id = 'checklist-injected-css';
+    style.textContent = 
+      '.ap-checklist__category{margin-bottom:32px}' +
+      '.ap-checklist__category-title{font-size:18px;font-weight:700;color:#1A1A1A;margin:0 0 12px;padding-bottom:8px;border-bottom:2px solid #E0E0E0}' +
+      '.ap-checklist__category-count{font-weight:400;color:#757575;font-size:14px}' +
+      '.ap-checklist__no{text-align:center;font-weight:600;color:#757575}' +
+      '.ap-checklist__check{line-height:1.5}' +
+      '.ap-checklist__platform,.ap-checklist__sc,.ap-checklist__level{text-align:center;white-space:nowrap}' +
+      '.ap-checklist__sc{font-family:monospace;font-size:12px}' +
+      '.ap-checklist__how{font-size:12px;color:#757575;line-height:1.5}' +
+      '.ap-checklist__row.is-hidden{display:none}' +
+      '.ap-checklist__row:hover{background:#F5F5F5}' +
+      '.ap-guide-page__checklist-desc{margin:0 0 16px;color:#757575;line-height:1.6}';
+    document.head.appendChild(style);
+  },
+
+  checklistFilters: { level: 'all', tab: 'web' },
+
+  renderChecklist: function(data) {
+    var html = '';
+    var webCount = 0, appCount = 0;
+
+    for (var i = 0; i < data.categories.length; i++) {
+      for (var j = 0; j < data.categories[i].items.length; j++) {
+        var item = data.categories[i].items[j];
+        if (item.web) webCount++;
+        if (item.app) appCount++;
+      }
+    }
+
+    html += '<div class="ap-mapping">';
+
+    // 탭 (웹/앱 전환)
+    html += '<div class="ap-mapping__filters" role="tablist" aria-label="플랫폼 선택">';
+    html += '<div class="ap-mapping__filter-group" id="checklist-tab">';
+    html += '<span class="ap-mapping__filter-label">플랫폼</span>';
+    html += '<button class="ap-guide-page__filter-btn is-active" data-tab="web" role="tab" type="button">웹 (' + webCount + ')</button>';
+    html += '<button class="ap-guide-page__filter-btn" data-tab="app" role="tab" type="button">앱 (' + appCount + ')</button>';
+    html += '</div>';
+
+    html += '<div class="ap-mapping__filter-sep" aria-hidden="true"></div>';
+
+    // 레벨 필터
+    html += '<div class="ap-mapping__filter-group" id="checklist-filter">';
+    html += '<span class="ap-mapping__filter-label">레벨</span>';
+    html += '<button class="ap-guide-page__filter-btn is-active" data-level="all" type="button">전체</button>';
+    html += '<button class="ap-guide-page__filter-btn" data-level="A" type="button">A</button>';
+    html += '<button class="ap-guide-page__filter-btn" data-level="AA" type="button">AA</button>';
+    html += '<button class="ap-guide-page__filter-btn" data-level="AAA" type="button">AAA</button>';
+    html += '</div>';
+
+    html += '</div>';
+
+    // 카운트
+    html += '<div class="ap-mapping__count" aria-live="polite"><strong id="checklist-visible-count">' + webCount + '</strong>개 항목 표시 중</div>';
+
+    // 웹 탭
+    html += '<div class="ap-checklist__tab-panel" id="checklist-panel-web">';
+    html += this.renderChecklistTable(data, 'web');
+    html += '</div>';
+
+    // 앱 탭
+    html += '<div class="ap-checklist__tab-panel" id="checklist-panel-app" style="display:none">';
+    html += this.renderChecklistTable(data, 'app');
+    html += '</div>';
+
+    html += '</div>';
+    return html;
+  },
+
+  renderChecklistTable: function(data, type) {
+    var html = '';
+    var isWeb = type === 'web';
+    var scLabel = isWeb ? 'KWCAG' : '모바일';
+    var num = 1;
+
+    for (var c = 0; c < data.categories.length; c++) {
+      var cat = data.categories[c];
+      var filtered = [];
+      for (var fi = 0; fi < cat.items.length; fi++) {
+        if (isWeb ? cat.items[fi].web : cat.items[fi].app) filtered.push(cat.items[fi]);
+      }
+      if (filtered.length === 0) continue;
+
+      html += '<div class="ap-mapping__principle ap-checklist__section" id="' + type + '-cat-' + cat.id + '">';
+      html += '<div class="ap-mapping__principle-header">';
+      html += '<span class="ap-mapping__principle-num">' + num + '</span>';
+      html += '<h2 class="ap-mapping__principle-title">' + cat.name + ' <span class="ap-checklist__category-count">(' + filtered.length + ')</span></h2>';
+      html += '</div>';
+      html += '<div class="ap-table-wrap"><table class="ap-table">';
+      html += '<colgroup>';
+      html += '<col style="width:50px">';
+      html += '<col>';
+      html += '<col style="width:70px">';
+      html += '<col style="width:70px">';
+      html += '<col style="width:70px">';
+      html += '<col>';
+      html += '</colgroup>';
+      html += '<thead><tr>';
+      html += '<th>No.</th>';
+      html += '<th>점검 항목</th>';
+      html += '<th>WCAG</th>';
+      html += '<th>레벨</th>';
+      html += '<th>' + scLabel + '</th>';
+      html += '<th>점검 방법</th>';
+      html += '</tr></thead><tbody>';
+
+      for (var t = 0; t < filtered.length; t++) {
+        var item = filtered[t];
+        var levelClass = 'ap-level--' + item.level.toLowerCase();
+        var scValue = isWeb ? (item.kwcag || '—') : (item.mobile || '—');
+        html += '<tr class="ap-checklist__row" data-level="' + item.level + '">';
+        html += '<td class="ap-checklist__no">' + item.no + '</td>';
+        html += '<td class="ap-checklist__check">' + item.check + '</td>';
+        html += '<td class="ap-checklist__sc">' + (item.wcag || '—') + '</td>';
+        html += '<td class="ap-checklist__level"><span class="ap-level ' + levelClass + '">' + item.level + '</span></td>';
+        html += '<td class="ap-checklist__sc">' + scValue + '</td>';
+        html += '<td class="ap-checklist__how">' + item.how + '</td>';
+        html += '</tr>';
+      }
+
+      html += '</tbody></table></div></div>';
+      num++;
+    }
+    return html;
+  },
+
+  renderChecklistToc: function(data, type) {
+    type = type || 'web';
+    var isWeb = type === 'web';
+    var html = '';
+    var num = 1;
+    for (var i = 0; i < data.categories.length; i++) {
+      var cat = data.categories[i];
+      var count = 0;
+      for (var j = 0; j < cat.items.length; j++) {
+        if (isWeb ? cat.items[j].web : cat.items[j].app) count++;
+      }
+      if (count === 0) continue;
+      html += '<a href="javascript:void(0)" class="ap-guide-page__toc-link" data-target="' + type + '-cat-' + cat.id + '">' + num + '. ' + cat.name + ' (' + count + ')</a>';
+      num++;
+    }
+    return html;
+  },
+
+  bindChecklistEvents: function(data) {
+    var self = this;
+
+    // 탭 전환
+    var tabBtns = document.querySelectorAll('#checklist-tab .ap-guide-page__filter-btn');
+    tabBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        tabBtns.forEach(function(b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        self.checklistFilters.tab = btn.dataset.tab;
+
+        // 패널 전환
+        var webPanel = document.getElementById('checklist-panel-web');
+        var appPanel = document.getElementById('checklist-panel-app');
+        if (btn.dataset.tab === 'web') {
+          webPanel.style.display = '';
+          appPanel.style.display = 'none';
+        } else {
+          webPanel.style.display = 'none';
+          appPanel.style.display = '';
+        }
+
+        // TOC 갱신
+        var tocListEl = document.querySelector('.ap-guide-page__toc-list');
+        if (tocListEl) {
+          tocListEl.innerHTML = self.renderChecklistToc(data, btn.dataset.tab);
+          self.bindChecklistTocClicks();
+        }
+
+        // 필터 재적용 + 카운트 갱신
+        self.applyChecklistFilters();
+
+        // 스크롤 스파이 재설정
+        self.setupChecklistScrollSpy();
+      });
+    });
+
+    // 레벨 필터
+    var levelBtns = document.querySelectorAll('#checklist-filter .ap-guide-page__filter-btn');
+    levelBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        levelBtns.forEach(function(b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        self.checklistFilters.level = btn.dataset.level;
+        self.applyChecklistFilters();
+      });
+    });
+
+    // TOC 클릭
+    this.bindChecklistTocClicks();
+
+    // 스크롤 스파이
+    this.setupChecklistScrollSpy();
+  },
+
+  bindChecklistTocClicks: function() {
+    var tocLinks = document.querySelectorAll('.ap-guide-page__toc-list .ap-guide-page__toc-link[data-target]');
+    tocLinks.forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var target = document.getElementById(link.dataset.target);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  },
+
+  setupChecklistScrollSpy: function() {
+    if (this._scrollSpy) this._scrollSpy.destroy();
+    var mainEl = document.querySelector('.ap-main');
+    var tab = this.checklistFilters.tab || 'web';
+    if (!mainEl) return;
+
+    var onScroll = function() {
+      var sections = document.querySelectorAll('#checklist-panel-' + tab + ' .ap-checklist__section');
+      var tocLinks = document.querySelectorAll('.ap-guide-page__toc-list .ap-guide-page__toc-link[data-target]');
+      if (!sections.length || !tocLinks.length) return;
+      var currentId = '';
+
+      var atBottom = mainEl.scrollTop > 0 &&
+                     mainEl.scrollTop + mainEl.clientHeight >= mainEl.scrollHeight - 10;
+      if (atBottom) {
+        currentId = sections[sections.length - 1].id;
+      } else {
+        for (var i = sections.length - 1; i >= 0; i--) {
+          if (sections[i].getBoundingClientRect().top <= 120) {
+            currentId = sections[i].id;
+            break;
+          }
+        }
+      }
+
+      tocLinks.forEach(function(l) { l.classList.remove('is-active'); });
+      if (currentId) {
+        tocLinks.forEach(function(l) {
+          if (l.dataset.target === currentId) l.classList.add('is-active');
+        });
+      } else if (tocLinks.length) {
+        tocLinks[0].classList.add('is-active');
+      }
+    };
+    mainEl.addEventListener('scroll', onScroll);
+    onScroll();
+    this._scrollSpy = { destroy: function() { mainEl.removeEventListener('scroll', onScroll); } };
+  },
+
+  applyChecklistFilters: function() {
+    var tab = this.checklistFilters.tab || 'web';
+    var panel = document.getElementById('checklist-panel-' + tab);
+    if (!panel) return;
+    var rows = panel.querySelectorAll('.ap-checklist__row');
+    var visible = 0;
+    var self = this;
+
+    rows.forEach(function(row) {
+      var matchLevel = self.checklistFilters.level === 'all' || row.dataset.level === self.checklistFilters.level;
+      if (matchLevel) {
+        row.classList.remove('is-hidden');
+        visible++;
+      } else {
+        row.classList.add('is-hidden');
+      }
+    });
+
+    var countEl = document.getElementById('checklist-visible-count');
     if (countEl) countEl.textContent = visible;
   }
 };
